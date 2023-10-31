@@ -19,16 +19,19 @@ return new class extends Migration
                 )
                 ->cascadeOnDelete();
             $table->foreignId('assigned_to')
+                ->nullable()
                 ->constrained(
                     table: 'users'
                 )
                 ->cascadeOnDelete();
             $table->string('subject', 255);
             $table->text('description');
-            $table->text('summary');
+            $table->text('summary')
+                ->nullable();
             $table->enum('priority', ['low', 'medium', 'high'])
                 ->default('low');
             $table->foreignId('classroom_id')
+                ->nullable()
                 ->constrained();
             $table->timestamp('created_on')
                 ->useCurrent();
