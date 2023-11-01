@@ -23,6 +23,7 @@ return new class extends Migration
                     table: 'users'
                 )
                 ->cascadeOnDelete();
+            $table->text('response', 2000);
             $table->timestamp('send_on')
                 ->useCurrent();
             $table->boolean('is_seen')

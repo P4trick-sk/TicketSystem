@@ -21,12 +21,6 @@ class TicketRepository implements TicketRepositoryInterface
             ->get();
     }
 
-    public function getAllActiveUserTickets($userId) {
-        return Ticket::where('created_by', $userId)
-            ->where('status', 'active')
-            ->get();
-    }
-
     public function deleteTicket($ticketId)
     {
         // TODO: Implement deleteTicket() method.

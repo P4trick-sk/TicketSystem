@@ -60,4 +60,8 @@ class User extends Authenticatable
         }
         return false;
     }
+
+    public function responses() {
+        return $this->hasMany(Ticket::class, 'created_by');
+    }
 }
