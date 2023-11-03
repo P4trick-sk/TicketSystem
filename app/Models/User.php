@@ -3,7 +3,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
@@ -27,7 +29,8 @@ class User extends Authenticatable
         'email',
         'password',
         'reg_ip',
-        'last_ip'
+        'last_ip',
+        'logged_at',
     ];
 
     /**
@@ -54,14 +57,33 @@ class User extends Authenticatable
      * Returns whenever user has admin role or not.
      * @return bool
      */
-    public function isAdmin() {
+    public function isAdmin(): bool
+    {
         if ($this->role == 'admin'){
             return true;
         }
         return false;
     }
 
-    public function responses() {
+    /**
+     * Updates login info at login.
+     * @param Carbon $logged_at
+     * @param string|null $last_ip
+     * @return void
+     */
+    public function updateLoginInfo(Carbon  $logged_at, ?string $last_ip): void
+    {
+        $this->update([
+            'logged_at' => $logged_at,
+            'last_ip' => $last_ip,
+        ]);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function responses(): HasMany
+    {
         return $this->hasMany(Ticket::class, 'created_by');
     }
 }
