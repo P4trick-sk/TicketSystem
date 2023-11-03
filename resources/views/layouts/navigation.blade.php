@@ -38,6 +38,12 @@
                             {{ __('Profile') }}
                         </x-dropdown-link>--}}
 
+                        @if(Auth::user()->isAdmin())
+                            <x-dropdown-link :href="route('admin.index')">
+                                {{ __('Administracia') }}
+                            </x-dropdown-link>
+                        @endif
+
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
