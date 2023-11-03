@@ -43,6 +43,8 @@ class TicketsController extends Controller
      */
     public function store(TicketCreateRequest $request): RedirectResponse
     {
+        $this->authorize('create', Ticket::class);
+
         $ticket = $this->ticketRepository->createTicket([
             'subject' => $request->subject,
             'description' => $request->description,
@@ -50,8 +52,6 @@ class TicketsController extends Controller
         ]);
 
         /*event(new Registered($user));*/
-
-        // TODO: Pridať kartu ticketu ako component do blade
 
         return to_route('tickets.show', $ticket->id);
     }
