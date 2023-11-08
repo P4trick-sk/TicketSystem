@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\UserRole;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
 
@@ -51,6 +51,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'role' => UserRole::class,
     ];
 
     /**
@@ -59,7 +60,7 @@ class User extends Authenticatable
      */
     public function isAdmin(): bool
     {
-        if ($this->role == 'admin'){
+        if ($this->role == UserRole::Admin){
             return true;
         }
         return false;
@@ -77,13 +78,5 @@ class User extends Authenticatable
             'logged_at' => $logged_at,
             'last_ip' => $last_ip,
         ]);
-    }
-
-    /**
-     * @return HasMany
-     */
-    public function responses(): HasMany
-    {
-        return $this->hasMany(Ticket::class, 'created_by');
     }
 }

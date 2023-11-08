@@ -1,8 +1,7 @@
 <?php
 
-use App\Http\Controllers\AdminPanelController;
-use App\Http\Controllers\TicketsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TicketsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,8 +32,6 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin', [AdminPanelController::class, 'index'])->name('admin.index');
-});
 
+require __DIR__.'/admin.php';
 require __DIR__.'/auth.php';

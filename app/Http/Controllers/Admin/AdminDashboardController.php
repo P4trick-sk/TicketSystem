@@ -1,23 +1,19 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Repositories\TicketRepositoryInterface;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
-class AdminPanelController extends Controller
+class AdminDashboardController extends Controller
 {
-    public function __construct(TicketRepositoryInterface $ticketRepository) {
-        $this->ticketRepository = $ticketRepository;
-    }
-
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): View
     {
-        $tickets = $this->ticketRepository->getAllTickets();
-        return view('admin.dashboard')->with('tickets', $tickets);
+        return view('admin.dashboard');
     }
 
     /**
