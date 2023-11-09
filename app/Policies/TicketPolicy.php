@@ -9,6 +9,21 @@ use Illuminate\Auth\Access\Response;
 class TicketPolicy
 {
     /**
+     * Enables admin to perform any action.
+     * @param User $user
+     * @param string $ability
+     * @return bool|null
+     */
+    public function before(User $user, string $ability): bool|null
+    {
+        if ($user->isAdmin()) {
+            return true;
+        }
+
+        return null;
+    }
+
+    /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
@@ -19,9 +34,21 @@ class TicketPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Ticket $ticket): bool
+    public function view(User $user, Ticket $ticket): Response
     {
-        //
+        if ($user->isBanned()) {
+            return Response::deny('Ste zabanovaný.');
+        }
+
+        if (isset($ticket->assignedTo->id)){
+            return $user->id == $ticket->createdBy->id || $user->id == $ticket->assignedTo->id
+                ? Response::allow()
+                : Response::deny('Nemáte oprávnenie na prezeranie ticketu.');
+        } else {
+            return $user->id == $ticket->createdBy->id || $user->isTeacher()
+                ? Response::allow()
+                : Response::deny('Nemáte oprávnenie na prezeranie ticketu.');
+        }
     }
 
     /**
@@ -29,7 +56,7 @@ class TicketPolicy
      */
     public function create(User $user): Response
     {
-        return $user->status !== 'banned'
+        return $user->isNotBanned()
             ? Response::allow()
             : Response::deny('Nemôžete vytvárať tickety, ste zabanovaný.');
     }
@@ -64,5 +91,19 @@ class TicketPolicy
     public function forceDelete(User $user, Ticket $ticket): bool
     {
         //
+    }
+
+    /**
+     * Determine whether the user can create models.
+     */
+    public function canRespond(User $user, Ticket $ticket): Response
+    {
+        if ($user->isBanned()) {
+            return Response::deny('Ste zabanovaný.');
+        }
+
+        return $user->id == $ticket->createdBy->id || $user->id == $ticket->assignedTo?->id
+            ? Response::allow()
+            : Response::deny('Nemáte oprávnenie na tento ticket odpovedať.');
     }
 }

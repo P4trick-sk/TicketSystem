@@ -60,10 +60,31 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function isAdmin(): bool
     {
-        if ($this->role == UserRole::Admin){
+        if ($this->role == UserRole::Admin) {
             return true;
         }
         return false;
+    }
+
+    public function isTeacher(): bool
+    {
+        if ($this->role == UserRole::Teacher) {
+            return true;
+        }
+        return false;
+    }
+
+    public function isBanned(): bool
+    {
+        if ($this->status == 'banned'){
+            return true;
+        }
+        return false;
+    }
+
+    public function isNotBanned(): bool
+    {
+        return !$this->isBanned();
     }
 
     /**

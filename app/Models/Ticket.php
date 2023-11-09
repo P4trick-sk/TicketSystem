@@ -45,6 +45,6 @@ class Ticket extends Model
      */
     public function responses(): HasMany
     {
-        return $this->hasMany(Ticket::class, 'created_by');
+        return $this->hasMany(TicketResponse::class, 'ticket_id');
     }
 }

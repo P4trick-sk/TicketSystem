@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminTicketsController;
 use App\Http\Controllers\Admin\ManageUsersController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Admin\UserBanController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'admin'])->group(function () {
@@ -19,4 +20,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/users', [ManageUsersController::class, 'store'])->name('admin.users.store');
     Route::get('/admin/users/{id}/edit', [ManageUsersController::class, 'edit'])->name('admin.users.edit');
     Route::patch('/admin/users/{id}', [ManageUsersController::class, 'update'])->name('admin.users.update');
+    Route::patch('/admin/users/{id}/ban', [UserBanController::class, 'ban'])->name('admin.users.ban');
+    Route::patch('/admin/users/{id}/unban', [UserBanController::class, 'unban'])->name('admin.users.unban');
 });

@@ -16,5 +16,5 @@ return [
     'failed' => 'Údaje sú neplatné.',
     'password' => 'Zlé heslo.',
     'throttle' => 'Príliš veľa pokusov, skúste znova o :seconds sekúnd.',
-
+    'banned' => 'Ste zabanovaný',
 ];

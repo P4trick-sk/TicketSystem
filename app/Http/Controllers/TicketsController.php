@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\TicketCreateRequest;
+use App\Http\Requests\StoreTicketRequest;
 use App\Models\User;
 use App\Models\Ticket;
 use App\Repositories\TicketRepositoryInterface;
@@ -24,10 +24,11 @@ class TicketsController extends Controller
      */
     public function index(Request $request): View
     {
-        /*dd($request->user()->hasVerifiedEmail());*/
-        /*dd($request->user()->responses()->first()->subject);*/
-        $tickets = $this->ticketRepository->getAllUserTickets($request->user()->id);
-        return view('dashboard')->with('tickets', $tickets);
+        return view('dashboard')->with([
+            'myTickets' => $this->ticketRepository->getAllTicketsCreatedByUser($request->user()->id),
+            'myAssignedTickets' => $this->ticketRepository->getAllTicketsAssignedToUser($request->user()->id),
+            'unassignedTickets' => $this->ticketRepository->getAllUnassignedTickets(),
+        ]);
     }
 
     /**
@@ -41,7 +42,7 @@ class TicketsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(TicketCreateRequest $request): RedirectResponse
+    public function store(StoreTicketRequest $request): RedirectResponse
     {
         $this->authorize('create', Ticket::class);
 
@@ -62,6 +63,9 @@ class TicketsController extends Controller
     public function show(string $id): View
     {
         $ticket = $this->ticketRepository->getTicketById($id);
+
+        $this->authorize('view', $ticket);
+
         return view('tickets.show')->with('ticket', $ticket);
     }
 

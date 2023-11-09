@@ -76,16 +76,6 @@ class ManageUsersController extends Controller
      */
     public function show(string $id): View
     {
-
-        /*$status = Password::sendResetLink(
-            ['email' => 'lehoxot703@othao.com']
-        );
-
-
-        dd($status, 1);*/
-
-        /*Mail::to(Auth::user())->send(new MailTest());*/
-
         $user = User::findOrFail($id);
         return view('admin.users.show')->with('user', $user);
     }
@@ -111,12 +101,15 @@ class ManageUsersController extends Controller
             'role' => [new Enum(UserRole::class)],
         ]);
 
-        User::where('id', $id)
-            ->update([
-                'name' => $request->name,
-                'email' => $request->email,
-                'role' => $request->role,
-            ]);
+        $user = User::find($id);
+
+        $user->fill($request->only('name', 'email', 'role'));
+
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
+        }
+
+        $user->save();
 
         return to_route('admin.users.show', $id);
     }

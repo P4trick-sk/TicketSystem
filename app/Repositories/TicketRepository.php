@@ -16,9 +16,16 @@ class TicketRepository implements TicketRepositoryInterface
         return Ticket::findOrFail($ticketId);
     }
 
-    public function getAllUserTickets($userId) {
-        return Ticket::where('created_by', $userId)
-            ->get();
+    public function getAllTicketsCreatedByUser($userId) {
+        return Ticket::where('created_by', $userId)->get();
+    }
+
+    public function getAllTicketsAssignedToUser($userId) {
+        return Ticket::where('assigned_to', $userId)->get();
+    }
+
+    public function getAllUnassignedTickets() {
+        return Ticket::where('assigned_to', null)->get();
     }
 
     public function deleteTicket($ticketId)

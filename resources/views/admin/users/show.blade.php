@@ -7,10 +7,32 @@
 
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="p-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-            <a style="text-decoration: underline" class="font-semibold text-gray-900 dark:text-gray-100"
-               href="{{ route('admin.users.edit', $user->id) }}">
-                Upraviť
-            </a>
+            <div class="flex justify-between items-center">
+                <a style="text-decoration: underline" class="font-semibold text-gray-900 dark:text-gray-100"
+                   href="{{ route('admin.users.edit', $user->id) }}">
+                    Upraviť
+                </a>
+                @if($user->isBanned())
+                    <form method="POST" action="{{ route('admin.users.unban', $user->id) }}">
+                        @csrf
+                        @method('patch')
+
+                        <x-primary-button class="ml-4">
+                            {{ __('Unban') }}
+                        </x-primary-button>
+                    </form>
+                @else
+                    <form method="POST" action="{{ route('admin.users.ban', $user->id) }}">
+                        @csrf
+                        @method('patch')
+
+                        <x-primary-button class="ml-4">
+                            {{ __('Ban') }}
+                        </x-primary-button>
+                    </form>
+                @endif
+            </div>
+            <x-input-error :messages="$errors->get('ban')" class="mt-2" />
             <dl class="divide-y divide-gray-100">
                 <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                     <dt class="text-gray-900 dark:text-gray-100 font-semibold text-sm font-medium leading-6 text-gray-900">Email</dt>

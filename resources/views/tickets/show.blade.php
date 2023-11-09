@@ -36,9 +36,22 @@
         </div>
     </div>
 
+    @foreach ($ticket->responses as $response)
+        <div class="mt-6 max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="p-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="text-gray-900 dark:text-gray-100">
+                    {{ $response->response }}
+                </div>
+                <div class="text-gray-900 dark:text-gray-100">
+                    <b>{{ $response->responseBy->name }}</b> - <i>{{ $response->send_on }}</i>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
     <div class="mt-6 max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="p-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-            <form method="POST" action="{{ route('register') }}">
+            <form method="POST" action="{{ route('tickets.comment', $ticket->id) }}">
                 @csrf
 
                 <!-- Name -->
