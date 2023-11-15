@@ -38,7 +38,7 @@ class TicketPolicy
     {
         if ($user->isBanned()) {
             return Response::deny('Ste zabanovaný.');
-        }
+        }//odstraniť
 
         if (isset($ticket->assignedTo->id)){
             return $user->id == $ticket->createdBy->id || $user->id == $ticket->assignedTo->id
@@ -64,9 +64,11 @@ class TicketPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Ticket $ticket): bool
+    public function update(User $user, Ticket $ticket): Response
     {
-        //
+        return $user->id == $ticket->createdBy->id
+            ? Response::allow()
+            : Response::deny('Nemáte oprávnenie na editovanie ticketu.');
     }
 
     /**

@@ -34,11 +34,22 @@ class TicketResponse extends Model
         'ticket_id',
         'response_by',
         'response',
+        'updated_on',
         'is_seen',
         'status'
     ];
 
     public function responseBy() :BelongsTo
+    {
+        return $this->belongsTo(User::class, 'response_by');
+    }
+
+    public function ticket() :BelongsTo
+    {
+        return $this->belongsTo(Ticket::class, 'ticket_id');
+    }
+
+    public function user() :BelongsTo
     {
         return $this->belongsTo(User::class, 'response_by');
     }

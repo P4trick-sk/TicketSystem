@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTicketResponseRequest;
-use App\Http\Requests\UpdateTicketResponseRequest;
+use Illuminate\Http\Request;
 use App\Models\Ticket;
 use App\Models\TicketResponse;
 
@@ -28,17 +28,17 @@ class TicketResponseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTicketResponseRequest $request, $ticketId)
+    public function store(StoreTicketResponseRequest $request, Ticket $ticket)
     {
-        $this->authorize('canRespond', Ticket::find($ticketId));
+        $this->authorize('canRespond', $ticket);
 
         TicketResponse::create([
             'response_by' => $request->user()->id,
-            'ticket_id' => $ticketId,
+            'ticket_id' => $ticket->id,
             'response' => $request->response,
         ]);
 
-        return to_route('tickets.show', $ticketId);
+        return to_route('tickets.show', $ticket->id);
     }
 
     /**
@@ -54,15 +54,31 @@ class TicketResponseController extends Controller
      */
     public function edit(TicketResponse $ticketResponse)
     {
-        //
+        $this->authorize('update', $ticketResponse);
+
+        return view('response.edit')->with('response', $ticketResponse);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTicketResponseRequest $request, TicketResponse $ticketResponse)
+    public function update(Request $request, TicketResponse $ticketResponse)
     {
-        //
+        $request->validate([
+            'response' => ['required', 'string', 'max:2000'],
+        ]);
+
+        $this->authorize('update', $ticketResponse);
+
+        $ticketResponse->fill($request->only('response'));
+
+        $ticketResponse->fill([
+            'updated_on' => now()
+        ]);
+
+        $ticketResponse->save();
+
+        return to_route('tickets.show', $ticketResponse->ticket->id);
     }
 
     /**

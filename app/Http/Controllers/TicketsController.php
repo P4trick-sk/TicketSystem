@@ -60,10 +60,8 @@ class TicketsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id): View
+    public function show(Ticket $ticket): View
     {
-        $ticket = $this->ticketRepository->getTicketById($id);
-
         $this->authorize('view', $ticket);
 
         return view('tickets.show')->with('ticket', $ticket);
@@ -72,17 +70,30 @@ class TicketsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Ticket $ticket)
     {
-        //
+        $this->authorize('update', $ticket);
+
+        return view('tickets.edit')->with('ticket', $ticket);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Ticket $ticket)
     {
-        //
+        $request->validate([
+            'subject' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'max:2000']
+        ]);
+
+        $this->authorize('update', $ticket);
+
+        $ticket->fill($request->only('subject', 'description'));
+
+        $ticket->save();
+
+        return to_route('tickets.show', $ticket->id);
     }
 
     /**

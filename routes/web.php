@@ -24,8 +24,12 @@ Route::middleware(['auth', 'verified', 'block.banned'])->group(function () {
     Route::get('/tickets', [TicketsController::class, 'index'])->name('dashboard');
     Route::get('/tickets/create', [TicketsController::class, 'create'])->name('tickets.create');
     Route::post('/tickets', [TicketsController::class, 'store'])->name('tickets.store');
-    Route::get('/tickets/{id}', [TicketsController::class, 'show'])->name('tickets.show');
-    Route::post('/tickets/{id}/comment', [TicketResponseController::class, 'store'])->name('tickets.comment');
+    Route::get('/tickets/{ticket}', [TicketsController::class, 'show'])->name('tickets.show');
+    Route::get('/tickets/{ticket}/edit', [TicketsController::class, 'edit'])->name('tickets.edit');
+    Route::patch('/tickets/{ticket}', [TicketsController::class, 'update'])->name('tickets.update');
+    Route::post('/tickets/{ticket}/response', [TicketResponseController::class, 'store'])->name('tickets.response.store');
+    Route::get('/response/{ticketResponse}/edit', [TicketResponseController::class, 'edit'])->name('response.edit');
+    Route::patch('/response/{ticketResponse}', [TicketResponseController::class, 'update'])->name('response.update');
 });
 
 Route::middleware(['auth', 'block.banned'])->group(function () {
