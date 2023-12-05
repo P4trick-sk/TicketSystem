@@ -59,12 +59,18 @@
                         <div class="text-gray-900 dark:text-gray-100">
                             {{ $ticket->description }}
                         </div><dl class="divide-y divide-gray-100">
-                            <div class="sm:grid sm:grid-cols-2">
+                            <div class="sm:grid sm:grid-cols-3">
                                 @if(isset($ticket->assignedTo))
                                 <div class="px-4 pt-6 sm:gap-4 sm:px-0">
                                     <dt class="text-gray-900 dark:text-gray-100 font-semibold text-sm font-medium leading-6 text-gray-900">Pridelený správca</dt>
                                     <dd class="text-gray-900 dark:text-gray-100 mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ $ticket->assignedTo->name }}</dd>
                                 </div>
+                                @endif
+                                @if(isset($ticket->classroom))
+                                    <div class="px-4 pt-6 sm:gap-4 sm:px-0">
+                                        <dt class="text-gray-900 dark:text-gray-100 font-semibold text-sm font-medium leading-6 text-gray-900">Trieda</dt>
+                                        <dd class="text-gray-900 dark:text-gray-100 mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ $ticket->classroom->name }}</dd>
+                                    </div>
                                 @endif
                                 <div class="px-4 pt-6 sm:gap-4 sm:px-0">
                                     <dt class="text-gray-900 dark:text-gray-100 font-semibold text-sm font-medium leading-6 text-gray-900">Status</dt>

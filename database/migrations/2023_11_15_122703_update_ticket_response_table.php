@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('ticket_response', function (Blueprint $table) {
             $table->timestamp('updated_on')
                 ->nullable()
-                ->after('send_on');;
+                ->after('send_on');
         });
     }
 

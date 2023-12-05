@@ -15,11 +15,17 @@
                     <x-nav-link :href="route('admin.index')" :active="request()->routeIs('admin.index')">
                         {{ __('Admin Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin.tickets.index')" :active="request()->routeIs('admin.tickets.index')">
+                    <x-nav-link :href="route('admin.tickets.index')" :active="request()->routeIs('admin.tickets.*')">
                         {{ __('All tickets') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.index')">
+                    <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
                         {{ __('Users') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.categories.index')" :active="request()->routeIs('admin.categories.*')">
+                        {{ __('Categories') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.classrooms.index')" :active="request()->routeIs('admin.classrooms.*')">
+                        {{ __('Classrooms') }}
                     </x-nav-link>
                 </div>
             </div>

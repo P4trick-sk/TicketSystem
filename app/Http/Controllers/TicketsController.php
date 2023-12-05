@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserRole;
 use App\Http\Requests\StoreTicketRequest;
+use App\Models\Category;
+use App\Models\CategoryType;
+use App\Models\Classroom;
 use App\Models\User;
 use App\Models\Ticket;
 use App\Repositories\TicketRepositoryInterface;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class TicketsController extends Controller
@@ -36,7 +41,10 @@ class TicketsController extends Controller
      */
     public function create(): View
     {
-        return view('tickets.create');
+        return view('tickets.create')->with([
+            'categoryTypes' => CategoryType::where('status', 'active')->get(),
+            'classrooms'=> Classroom::where('status', 'active')->get(),
+        ]);
     }
 
     /**
@@ -49,7 +57,9 @@ class TicketsController extends Controller
         $ticket = $this->ticketRepository->createTicket([
             'subject' => $request->subject,
             'description' => $request->description,
-            'created_by' => $request->user()->id
+            'created_by' => $request->user()->id,
+            'classroom_id' => $request->classroom,
+            'category_id' => $request->category
         ]);
 
         /*event(new Registered($user));*/
@@ -74,7 +84,11 @@ class TicketsController extends Controller
     {
         $this->authorize('update', $ticket);
 
-        return view('tickets.edit')->with('ticket', $ticket);
+        return view('tickets.edit')->with([
+            'ticket' => $ticket,
+            'teachers' => User::whereIn('role', [UserRole::Teacher, UserRole::Admin])->get(),
+            'priorities' => ['low', 'medium', 'high'],
+        ]);
     }
 
     /**
@@ -82,14 +96,18 @@ class TicketsController extends Controller
      */
     public function update(Request $request, Ticket $ticket)
     {
+        $teachers = User::whereIn('role', [UserRole::Teacher, UserRole::Admin])->pluck('id')->toArray();
+
         $request->validate([
             'subject' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string', 'max:2000']
+            'description' => ['required', 'string', 'max:2000'],
+            'assigned_to' => ['required', 'int', Rule::in($teachers)],
+            'priority' => ['required', Rule::in(['low', 'medium', 'high'])],
         ]);
 
         $this->authorize('update', $ticket);
 
-        $ticket->fill($request->only('subject', 'description'));
+        $ticket->fill($request->only('subject', 'description', 'assigned_to', 'priority'));
 
         $ticket->save();
 

@@ -28,6 +28,14 @@ class Ticket extends Model
         'subject',
         'description',
         'created_by',
+        'assigned_to',
+        'classroom_id',
+        'category_id',
+        'priority',
+        'summary',
+        'updated_on',
+        'closed_on',
+        'status',
     ];
 
     public function createdBy() :BelongsTo
@@ -38,6 +46,11 @@ class Ticket extends Model
     public function assignedTo() : BelongsTo
     {
         return $this->belongsTo(User::class, 'assigned_to');
+    }
+
+    public function classroom() : BelongsTo
+    {
+        return $this->belongsTo(Classroom::class, 'classroom_id');
     }
 
     /**

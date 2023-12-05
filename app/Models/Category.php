@@ -1,0 +1,42 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+class Category extends Model
+{
+    use HasFactory;
+
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'category_type',
+        'updated_on',
+        'status',
+    ];
+
+    public function assignedUsers() : HasMany
+    {
+        return $this->hasMany(UserCategory::class, 'category_id');
+    }
+
+    public function categoryType() : BelongsTo
+    {
+        return $this->belongsTo(CategoryType::class, 'category_type');
+    }
+}
