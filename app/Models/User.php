@@ -33,6 +33,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'reg_ip',
         'last_ip',
         'logged_at',
+        'approved_at',
     ];
 
     /**
@@ -101,5 +102,10 @@ class User extends Authenticatable implements MustVerifyEmail
             'logged_at' => $logged_at,
             'last_ip' => $last_ip,
         ]);
+    }
+
+    public function isApproved(): bool
+    {
+        return $this->approved_at ? true : false;
     }
 }

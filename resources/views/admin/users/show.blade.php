@@ -12,25 +12,37 @@
                    href="{{ route('admin.users.edit', $user->id) }}">
                     Upraviť
                 </a>
-                @if($user->isBanned())
-                    <form method="POST" action="{{ route('admin.users.unban', $user->id) }}">
-                        @csrf
-                        @method('patch')
+                <div class="flex">
+                    @if(!$user->isApproved())
+                        <form method="POST" action="{{ route('admin.users.approve', $user->id) }}">
+                            @csrf
+                            @method('patch')
 
-                        <x-primary-button class="ml-4">
-                            {{ __('Unban') }}
-                        </x-primary-button>
-                    </form>
-                @else
-                    <form method="POST" action="{{ route('admin.users.ban', $user->id) }}">
-                        @csrf
-                        @method('patch')
+                            <x-primary-button class="ml-4">
+                                {{ __('Potvrdiť') }}
+                            </x-primary-button>
+                        </form>
+                    @endif
+                    @if($user->isBanned())
+                        <form method="POST" action="{{ route('admin.users.unban', $user->id) }}">
+                            @csrf
+                            @method('patch')
 
-                        <x-primary-button class="ml-4">
-                            {{ __('Ban') }}
-                        </x-primary-button>
-                    </form>
-                @endif
+                            <x-primary-button class="ml-4">
+                                {{ __('Unban') }}
+                            </x-primary-button>
+                        </form>
+                    @else
+                        <form method="POST" action="{{ route('admin.users.ban', $user->id) }}">
+                            @csrf
+                            @method('patch')
+
+                            <x-primary-button class="ml-4">
+                                {{ __('Ban') }}
+                            </x-primary-button>
+                        </form>
+                    @endif
+                </div>
             </div>
             <x-input-error :messages="$errors->get('ban')" class="mt-2" />
             <dl class="divide-y divide-gray-100">

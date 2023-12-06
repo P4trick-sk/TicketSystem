@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminTicketsController;
+use App\Http\Controllers\Admin\ApproveUserController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ClassroomController;
 use App\Http\Controllers\Admin\ManageUsersController;
@@ -23,6 +24,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::patch('/admin/users/{user}', [ManageUsersController::class, 'update'])->name('admin.users.update');
     Route::patch('/admin/users/{user}/ban', [UserBanController::class, 'ban'])->name('admin.users.ban');
     Route::patch('/admin/users/{user}/unban', [UserBanController::class, 'unban'])->name('admin.users.unban');
+    Route::patch('/admin/users/{user}/approve', [ApproveUserController::class, 'update'])->name('admin.users.approve');
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
