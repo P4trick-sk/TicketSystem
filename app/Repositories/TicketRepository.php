@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 
+use App\Events\TicketAssigned;
+use App\Models\ClassroomManager;
 use App\Models\Ticket;
 
 class TicketRepository implements TicketRepositoryInterface
@@ -35,11 +37,30 @@ class TicketRepository implements TicketRepositoryInterface
 
     public function createTicket(array $ticketData)
     {
-        return Ticket::create($ticketData);
+        $ticket = Ticket::create($ticketData);
+        $this->reAssignTicket($ticket);
+        return $ticket;
     }
 
     public function updateTicket($ticketId, array $ticketData)
     {
         // TODO: Implement updateTicket() method.
+    }
+
+    public function reAssignTicket(Ticket $ticket)
+    {
+        $manager = ClassroomManager::where('classroom_id', $ticket->classroom?->id)->where('category_type_id', $ticket->category->categoryType->id)->first();
+        if ($manager)
+        {
+            $user = $manager->assignedTo;
+        } else {
+            $user = $ticket->category->categoryType->assignedTo;
+        }
+
+        $ticket->assigned_to = $user->id;
+        $ticket->updated_on = now();
+        $ticket->save();
+
+        event(new TicketAssigned($ticket));
     }
 }

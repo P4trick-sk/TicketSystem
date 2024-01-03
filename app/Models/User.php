@@ -6,13 +6,14 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\UserRole;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Scout\Searchable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
     /**
      * Indicates if the model should be timestamped.
@@ -71,7 +72,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function isTeacher(): bool
     {
-        if ($this->role == UserRole::Teacher) {
+        if ($this->role == UserRole::Teacher || $this->role == UserRole::Admin) {
             return true;
         }
         return false;

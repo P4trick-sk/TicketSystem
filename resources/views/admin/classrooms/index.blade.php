@@ -25,14 +25,6 @@
                         <dl class="divide-y divide-gray-100">
                             <div class="sm:grid sm:grid-cols-3">
                                 <div class="px-4 pt-6 sm:gap-4 sm:px-0">
-                                    <dt class="text-gray-900 dark:text-gray-100 font-semibold text-sm font-medium leading-6 text-gray-900">Správca Miestnosti</dt>
-                                    <dd class="text-gray-900 dark:text-gray-100 mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ $classroom->roomManager->name }}</dd>
-                                </div>
-                                <div class="px-4 pt-6 sm:gap-4 sm:px-0">
-                                    <dt class="text-gray-900 dark:text-gray-100 font-semibold text-sm font-medium leading-6 text-gray-900">Správca Techniky</dt>
-                                    <dd class="text-gray-900 dark:text-gray-100 mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ $classroom->technicalManager->name }}</dd>
-                                </div>
-                                <div class="px-4 pt-6 sm:gap-4 sm:px-0">
                                     <dt class="text-gray-900 dark:text-gray-100 font-semibold text-sm font-medium leading-6 text-gray-900">Vytvorené</dt>
                                     <dd class="text-gray-900 dark:text-gray-100 mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ $classroom->created_on }}</dd>
                                 </div>

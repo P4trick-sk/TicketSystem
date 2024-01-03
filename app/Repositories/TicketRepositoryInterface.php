@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 
+use App\Models\Ticket;
+
 interface TicketRepositoryInterface
 {
     public function getAllTickets();
@@ -9,4 +11,5 @@ interface TicketRepositoryInterface
     public function deleteTicket($ticketId);
     public function createTicket(array $ticketData);
     public function updateTicket($ticketId, array $ticketData);
+    public function reAssignTicket(Ticket $ticket);
 }

@@ -80,9 +80,7 @@ class CategoryController extends Controller
         ]);
 
         $category->fill($request->only('name', 'category_type'));
-
         $category->updated_on = now();
-
         $category->save();
 
         return to_route('admin.categories.edit', $category->id);
@@ -93,6 +91,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        // TODO: zmazanie kategórie
+        $category->delete();
+        return to_route('admin.categories.index');
     }
 }

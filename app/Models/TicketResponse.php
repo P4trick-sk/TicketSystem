@@ -36,6 +36,7 @@ class TicketResponse extends Model
         'response',
         'updated_on',
         'is_seen',
+        'attachments',
         'status'
     ];
 

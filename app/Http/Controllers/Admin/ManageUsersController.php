@@ -93,6 +93,8 @@ class ManageUsersController extends Controller
             $user->email_verified_at = null;
         }
 
+        $user->updated_on = now();
+
         $user->save();
 
         return to_route('admin.users.show', $user->id);
@@ -101,8 +103,9 @@ class ManageUsersController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        // TODO odstránenie užívateľa
+        $user->delete();
+        return to_route('admin.users.index');
     }
 }

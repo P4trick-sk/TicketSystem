@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\UserBanned;
+use App\Events\UserUnbanned;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -19,6 +21,8 @@ class UserBanController extends Controller
 
         $user->save();
 
+        event(new UserBanned($user));
+
         return to_route('admin.users.show', $user->id);
     }
 
@@ -27,6 +31,8 @@ class UserBanController extends Controller
         $user->status = 'active';
 
         $user->save();
+
+        event(new UserUnbanned($user));
 
         return to_route('admin.users.show', $user->id);
     }

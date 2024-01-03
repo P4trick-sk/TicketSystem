@@ -36,19 +36,9 @@ class TicketPolicy
      */
     public function view(User $user, Ticket $ticket): Response
     {
-        if ($user->isBanned()) {
-            return Response::deny('Ste zabanovaný.');
-        }//odstraniť
-
-        if (isset($ticket->assignedTo->id)){
-            return $user->id == $ticket->createdBy->id || $user->id == $ticket->assignedTo->id
-                ? Response::allow()
-                : Response::deny('Nemáte oprávnenie na prezeranie ticketu.');
-        } else {
-            return $user->id == $ticket->createdBy->id || $user->isTeacher()
-                ? Response::allow()
-                : Response::deny('Nemáte oprávnenie na prezeranie ticketu.');
-        }
+        return $user->id == $ticket->createdBy->id || $user->id == $ticket->assignedTo->id
+            ? Response::allow()
+            : Response::deny('Nemáte oprávnenie na prezeranie ticketu.');
     }
 
     /**
@@ -66,7 +56,17 @@ class TicketPolicy
      */
     public function update(User $user, Ticket $ticket): Response
     {
-        return $user->id == $ticket->createdBy->id
+        return $user->id == $ticket->createdBy->id || $user->id == $ticket->assignedTo->id
+            ? Response::allow()
+            : Response::deny('Nemáte oprávnenie na editovanie ticketu.');
+    }
+
+    /**
+     * Determine whether the user can update the model.
+     */
+    public function updateAdvanced(User $user, Ticket $ticket): Response
+    {
+        return $user->id == $ticket->assignedTo->id
             ? Response::allow()
             : Response::deny('Nemáte oprávnenie na editovanie ticketu.');
     }
@@ -74,9 +74,11 @@ class TicketPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Ticket $ticket): bool
+    public function delete(User $user, Ticket $ticket): Response
     {
-        //
+        return $user->id == $ticket->assignedTo->id
+            ? Response::allow()
+            : Response::deny('Nemáte oprávnenie na zmazanie ticketu.');
     }
 
     /**

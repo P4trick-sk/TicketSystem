@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Classroom extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     /**
      * Indicates if the model should be timestamped.
@@ -31,13 +33,8 @@ class Classroom extends Model
         'status',
     ];
 
-    public function roomManager() : BelongsTo
+    public function managers() : HasMany
     {
-        return $this->belongsTo(User::class, 'room_manager');
-    }
-
-    public function technicalManager() : BelongsTo
-    {
-        return $this->belongsTo(User::class, 'technical_manager');
+        return $this->hasMany(ClassroomManager::class, 'classroom_id');
     }
 }

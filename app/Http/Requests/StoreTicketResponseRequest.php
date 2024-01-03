@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\File;
 
 class StoreTicketResponseRequest extends FormRequest
 {
@@ -23,6 +24,7 @@ class StoreTicketResponseRequest extends FormRequest
     {
         return [
             'response' => ['required', 'string', 'max:2000'],
+            'attachment' => [File::image()->max('10mb')],
         ];
     }
 }

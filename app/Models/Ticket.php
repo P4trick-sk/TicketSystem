@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Ticket extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     /**
      * Indicates if the model should be timestamped.
@@ -35,6 +36,7 @@ class Ticket extends Model
         'summary',
         'updated_on',
         'closed_on',
+        'attachments',
         'status',
     ];
 
@@ -59,5 +61,10 @@ class Ticket extends Model
     public function responses(): HasMany
     {
         return $this->hasMany(TicketResponse::class, 'ticket_id');
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class, 'category_id');
     }
 }

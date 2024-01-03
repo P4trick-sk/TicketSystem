@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\File;
 
 class StoreTicketRequest extends FormRequest
 {
@@ -24,7 +25,8 @@ class StoreTicketRequest extends FormRequest
         return [
             'subject' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:2000'],
-            'category' => ['required'],
+            'category_id' => ['required'], //TODO: overiť, či daná kategória existuje
+            'attachment' => [File::image()->max('10mb')],
         ];
     }
 }

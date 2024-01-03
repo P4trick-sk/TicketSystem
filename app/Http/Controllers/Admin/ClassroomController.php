@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
+use App\Models\CategoryType;
 use App\Models\Classroom;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -63,6 +64,7 @@ class ClassroomController extends Controller
     {
         return view('admin.classrooms.edit')->with([
             'classroom' => $classroom,
+            'managableTypes' => CategoryType::where('is_dynamic', true)->get(),
             'teachers' => User::whereIn('role', [UserRole::Teacher, UserRole::Admin])->get(),
             ]);
     }
@@ -72,17 +74,12 @@ class ClassroomController extends Controller
      */
     public function update(Request $request, Classroom $classroom)
     {
-        $teachers = User::whereIn('role', [UserRole::Teacher, UserRole::Admin])->pluck('id')->toArray();
         $request->validate([
             'name' => ['required', 'string', 'max:255', Rule::unique(Classroom::class)->ignore($classroom->id)],
-            'room_manager' => ['required', 'int', Rule::in($teachers)],
-            'technical_manager' => ['required', 'int', Rule::in($teachers)],
         ]);
 
-        $classroom->fill($request->only('name', 'room_manager', 'technical_manager'));
-
+        $classroom->fill($request->only('name'));
         $classroom->updated_on = now();
-
         $classroom->save();
 
         return to_route('admin.classrooms.edit', $classroom->id);
@@ -91,8 +88,9 @@ class ClassroomController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Classroom $classroom)
     {
-        // TODO: zmazanie triedy
+        $classroom->delete();
+        return to_route('admin.classrooms.index');
     }
 }

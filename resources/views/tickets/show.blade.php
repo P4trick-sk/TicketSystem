@@ -15,38 +15,85 @@
 
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="p-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="sm:grid sm:grid-cols-3 gap-4">
+                <div class="">
+                    <x-input-label  :value="__('Vytvoril')" />
+                    <div class="mt-2">
+                        <x-text-input class="block mt-1 w-full"
+                                      type="text"
+                                      value="{{ $ticket->createdBy->name }} ({{ $ticket->createdBy->id }})"
+                                      disabled />
+                    </div>
+                </div>
+                <div class="">
+                    <x-input-label  :value="__('Pridelené')" />
+                    <div class="mt-2">
+                        <x-text-input class="block mt-1 w-full"
+                                      type="text"
+                                      value="{{ $ticket->assignedTo->name }} ({{ $ticket->assignedTo->id }})"
+                                      disabled />
+                    </div>
+                </div>
+                <div class="">
+                    <x-input-label  :value="__('Vytvorené')" />
+                    <div class="mt-2">
+                        <x-text-input class="block mt-1 w-full"
+                                      type="text"
+                                      :value="$ticket->created_on"
+                                      disabled />
+                    </div>
+                </div>
+                <div class="">
+                    <x-input-label  :value="__('Kategória')" />
+                    <div class="mt-2">
+                        <x-text-input class="block mt-1 w-full"
+                                      type="text"
+                                      :value="$ticket->category->name"
+                                      disabled />
+                    </div>
+                </div>
+                <div class="">
+                    <x-input-label  :value="__('Trieda')" />
+                    <div class="mt-2">
+                        <x-text-input class="block mt-1 w-full"
+                                      type="text"
+                                      :value="$ticket->classroom->name"
+                                      disabled />
+                    </div>
+                </div>
+                <div class="">
+                    <x-input-label  :value="__('Priorita')" />
+                    <div class="mt-2">
+                        <x-text-input class="block mt-1 w-full"
+                                      type="text"
+                                      :value="$ticket->priority"
+                                      disabled />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="mt-6 max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="p-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <div class="text-gray-900 dark:text-gray-100">
                 {{ $ticket->description }}
-            </div><dl class="divide-y divide-gray-100">
-                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                    <dt class="text-gray-900 dark:text-gray-100 font-semibold text-sm font-medium leading-6 text-gray-900">Created by</dt>
-                    <dd class="text-gray-900 dark:text-gray-100 mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ $ticket->createdBy->name }}</dd>
+            </div>
+            @if($ticket->attachments)
+                <div class="sm:grid sm:grid-cols-3 gap-4">
+                    @foreach(json_decode($ticket->attachments) as $file)
+                        <div>
+                            <img src="/{{ $file }}" alt="test" style="max-height: 200px;object-fit: contain;overflow: hidden;">
+                        </div>
+                    @endforeach
                 </div>
-                @if(isset($ticket->assignedTo))
-                    <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                        <dt class="text-gray-900 dark:text-gray-100 font-semibold text-sm font-medium leading-6 text-gray-900">Assigned to</dt>
-                        <dd class="text-gray-900 dark:text-gray-100 mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ $ticket->assignedTo->name }}</dd>
-                    </div>
-                @endif
-                @if(isset($ticket->classroom))
-                    <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                        <dt class="text-gray-900 dark:text-gray-100 font-semibold text-sm font-medium leading-6 text-gray-900">Classroom</dt>
-                        <dd class="text-gray-900 dark:text-gray-100 mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ $ticket->classroom->name }}</dd>
-                    </div>
-                @endif
-                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                    <dt class="text-gray-900 dark:text-gray-100 font-semibold text-sm font-medium leading-6 text-gray-900">Priority</dt>
-                    <dd class="text-gray-900 dark:text-gray-100 mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ $ticket->priority }}</dd>
+            @endif
+            <div class="flex">
+                <div class="text-gray-900 dark:text-gray-100">
+                    <b>{{ $ticket->createdBy->name }}</b> - <i>{{ $ticket->created_on }}</i>
                 </div>
-                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                    <dt class="text-gray-900 dark:text-gray-100 font-semibold text-sm font-medium leading-6 text-gray-900">Created on</dt>
-                    <dd class="text-gray-900 dark:text-gray-100 mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ $ticket->created_on }}</dd>
-                </div>
-                <div class="px-4 pt-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                    <dt class="text-gray-900 dark:text-gray-100 font-semibold text-sm font-medium leading-6 text-gray-900">Status</dt>
-                    <dd class="text-gray-900 dark:text-gray-100 mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ $ticket->status }}</dd>
-                </div>
-            </dl>
+            </div>
         </div>
     </div>
 
@@ -56,6 +103,15 @@
                 <div class="text-gray-900 dark:text-gray-100">
                     {{ $response->response }}
                 </div>
+                @if($response->attachments)
+                    <div class="sm:grid sm:grid-cols-3 gap-4">
+                        @foreach(json_decode($response->attachments) as $file)
+                            <div>
+                                <img src="/{{ $file }}" alt="test" style="max-height: 200px;object-fit: contain;overflow: hidden;">
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
                 <div class="flex">
                     <div class="text-gray-900 dark:text-gray-100">
                         <b>{{ $response->responseBy->name }}</b> - <i>{{ $response->send_on }}</i> @if(isset($response->updated_on)) <i>({{ $response->updated_on }})</i>@endif
@@ -73,7 +129,7 @@
 
     <div class="mt-6 max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="p-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-            <form method="POST" action="{{ route('tickets.response.store', $ticket->id) }}">
+            <form method="POST" enctype="multipart/form-data" action="{{ route('tickets.response.store', $ticket->id) }}">
                 @csrf
 
                 <!-- Name -->
@@ -81,6 +137,11 @@
                     <x-input-label for="response" :value="__('Response')" />
                     <x-text-input id="response" class="block mt-1 w-full" type="text" name="response" :value="old('response')" required autofocus autocomplete="name" />
                     <x-input-error :messages="$errors->get('response')" class="mt-2" />
+                </div>
+
+                <div class="mt-4">
+                    <input class="text-gray-400" type="file" name="attachments[]" id="attachment" multiple>
+                    <x-input-error :messages="$errors->get('attachment')" class="mt-2" />
                 </div>
 
                 <div class="flex items-center justify-end mt-4">

@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Enums\UserRole;
+use App\Events\TicketAssigned;
+use App\Events\TicketClosed;
+use App\Events\TicketUpdated;
 use App\Http\Requests\StoreTicketRequest;
+use App\Http\Requests\UpdateAdvancedTicketInfoRequest;
+use App\Http\Requests\UpdateBasicTicketInfoRequest;
 use App\Models\Category;
 use App\Models\CategoryType;
 use App\Models\Classroom;
@@ -27,12 +32,17 @@ class TicketsController extends Controller
      * @param Request $request
      * @return View
      */
-    public function index(Request $request): View
+    public function indexCreated(Request $request): View
     {
-        return view('dashboard')->with([
-            'myTickets' => $this->ticketRepository->getAllTicketsCreatedByUser($request->user()->id),
-            'myAssignedTickets' => $this->ticketRepository->getAllTicketsAssignedToUser($request->user()->id),
-            'unassignedTickets' => $this->ticketRepository->getAllUnassignedTickets(),
+        return view('dashboard.created')->with([
+            'tickets' => $this->ticketRepository->getAllTicketsCreatedByUser($request->user()->id),
+        ]);
+    }
+
+    public function indexAssigned(Request $request): View
+    {
+        return view('dashboard.assigned')->with([
+            'tickets' => $this->ticketRepository->getAllTicketsAssignedToUser($request->user()->id),
         ]);
     }
 
@@ -53,16 +63,24 @@ class TicketsController extends Controller
     public function store(StoreTicketRequest $request): RedirectResponse
     {
         $this->authorize('create', Ticket::class);
+        $files = [];
+
+        foreach ($request->file('attachments') as $file)
+        {
+            $path = $file->store('attachments');
+            array_push($files, $path);
+        }
 
         $ticket = $this->ticketRepository->createTicket([
             'subject' => $request->subject,
             'description' => $request->description,
             'created_by' => $request->user()->id,
             'classroom_id' => $request->classroom,
-            'category_id' => $request->category
+            'category_id' => $request->category_id,
+            'attachments' => json_encode($files),
         ]);
 
-        /*event(new Registered($user));*/
+        event(new TicketClosed($ticket));
 
         return to_route('tickets.show', $ticket->id);
     }
@@ -84,32 +102,76 @@ class TicketsController extends Controller
     {
         $this->authorize('update', $ticket);
 
+
         return view('tickets.edit')->with([
             'ticket' => $ticket,
             'teachers' => User::whereIn('role', [UserRole::Teacher, UserRole::Admin])->get(),
             'priorities' => ['low', 'medium', 'high'],
+            'categoryTypes' => CategoryType::all(),
+            'classrooms' => Classroom::all(),
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Ticket $ticket)
+    public function updateBasicInfo(UpdateBasicTicketInfoRequest $request, Ticket $ticket)
+    {
+        $this->authorize('update', $ticket);
+        $files = json_decode($ticket->attachments);
+
+        foreach ($request->file('attachments') as $file)
+        {
+            $path = $file->store('attachments');
+            array_push($files, $path);
+        }
+
+        $ticket->fill($request->only('subject', 'description'));
+        $ticket->attachments = json_encode($files);
+        $ticket->updated_on = now();
+        $ticket->save();
+
+        event(new TicketUpdated($ticket));
+
+        return to_route('tickets.show', $ticket->id);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function updateAdvancedInfo(UpdateAdvancedTicketInfoRequest $request, Ticket $ticket)
+    {
+        $this->authorize('updateAdvanced', $ticket);
+
+        $ticket->fill($request->only('classroom_id', 'category_id', 'priority'));
+
+        if ($ticket->isDirty('classroom_id') || $ticket->isDirty('category_id'))
+        {
+            $this->ticketRepository->reAssignTicket($ticket);
+        }
+
+        $ticket->updated_on = now();
+        $ticket->save();
+
+        event(new TicketUpdated($ticket));
+
+        return to_route('tickets.show', $ticket->id);
+    }
+
+    public function assignTicketToUser(Request $request, Ticket $ticket)
     {
         $teachers = User::whereIn('role', [UserRole::Teacher, UserRole::Admin])->pluck('id')->toArray();
-
         $request->validate([
-            'subject' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string', 'max:2000'],
-            'assigned_to' => ['required', 'int', Rule::in($teachers)],
-            'priority' => ['required', Rule::in(['low', 'medium', 'high'])],
+            'assigned_to' => ['required', Rule::in($teachers)],
         ]);
 
-        $this->authorize('update', $ticket);
+        $this->authorize('updateAdvanced', $ticket);
 
-        $ticket->fill($request->only('subject', 'description', 'assigned_to', 'priority'));
-
+        $ticket->fill($request->only('assigned_to'));
+        $ticket->updated_on = now();
         $ticket->save();
+
+        event(new TicketAssigned($ticket));
 
         return to_route('tickets.show', $ticket->id);
     }
@@ -117,8 +179,10 @@ class TicketsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Ticket $ticket)
     {
-        //
+        $this->authorize('delete', $ticket);
+        $ticket->delete();
+        return to_route('admin.tickets.index');
     }
 }

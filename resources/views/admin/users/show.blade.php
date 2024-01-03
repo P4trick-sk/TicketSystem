@@ -33,14 +33,16 @@
                             </x-primary-button>
                         </form>
                     @else
-                        <form method="POST" action="{{ route('admin.users.ban', $user->id) }}">
-                            @csrf
-                            @method('patch')
+                        @if($user->id != Auth::user()->id)
+                            <form method="POST" action="{{ route('admin.users.ban', $user->id) }}">
+                                @csrf
+                                @method('patch')
 
-                            <x-primary-button class="ml-4">
-                                {{ __('Ban') }}
-                            </x-primary-button>
-                        </form>
+                                <x-primary-button class="ml-4">
+                                    {{ __('Ban') }}
+                                </x-primary-button>
+                            </form>
+                        @endif
                     @endif
                 </div>
             </div>

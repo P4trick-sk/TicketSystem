@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Http\Requests\StoreTicketRequest;
 use App\Models\Category;
 use App\Models\User;
 use Livewire\Component;
