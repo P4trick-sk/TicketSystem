@@ -30,6 +30,9 @@
                     <x-nav-link :href="route('admin.classrooms.index')" :active="request()->routeIs('admin.classrooms.*')">
                         {{ __('Classrooms') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('admin.settings.index')" :active="request()->routeIs('admin.settings.*')">
+                        {{ __('Settings') }}
+                    </x-nav-link>
                 </div>
             </div>
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CategoryTypeController;
 use App\Http\Controllers\Admin\ClassroomController;
 use App\Http\Controllers\Admin\ManageUsersController;
+use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Admin\UpdateClassroomManagersController;
 use App\Http\Controllers\Admin\UserBanController;
 use Illuminate\Support\Facades\Route;
@@ -56,4 +57,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/classrooms/{classroom}/edit', [ClassroomController::class, 'edit'])->name('admin.classrooms.edit');
     Route::patch('/admin/classrooms/{classroom}', [ClassroomController::class, 'update'])->name('admin.classrooms.update');
     Route::patch('/admin/classrooms/{classroom}/managers', UpdateClassroomManagersController::class)->name('admin.classrooms.update.managers');
+});
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/settings', [SiteSettingController::class, 'index'])->name('admin.settings.index');
+    Route::patch('/admin/settings/school-info', [SiteSettingController::class, 'updateSchoolInfo'])->name('admin.settings.update.school-info');
+    Route::patch('/admin/settings/google-oauth', [SiteSettingController::class, 'updateGoogleOauth'])->name('admin.settings.update.google-oauth');
+    Route::patch('/admin/settings/enable-register', [SiteSettingController::class, 'updateEnableRegister'])->name('admin.settings.update.enable-register');
+    Route::patch('/admin/settings/word-filter', [SiteSettingController::class, 'updateWordFilter'])->name('admin.settings.update.word-filter');
 });

@@ -68,5 +68,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class, //https://stackoverflow.com/questions/61315848/laravel-protecting-routes-with-verified-middleware-not-working
         'block.banned' => \App\Http\Middleware\BlockBannedUser::class,
         'approved' => \App\Http\Middleware\IsUserApproved::class,
+        'is.register.enabled' => \App\Http\Middleware\IsRegistrationEnabled::class,
     ];
 }
