@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
+use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
@@ -14,15 +15,9 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 
 Route::middleware('guest')->group(function () {
-    Route::get('/login/google/redirect', function () {
-        return Socialite::driver( 'google')->redirect();
-    })->name('auth-google');
+    Route::get('/login/google/redirect', [GoogleAuthController::class, 'redirect'])->name('auth-google');
 
-    Route::get('/login/google/callback', function () {
-        $user = Socialite::driver('google')->user();
-
-        dd($user);
-    });
+    Route::get('/login/google/callback', [GoogleAuthController::class, 'callback']);
 });
 
 Route::middleware('guest')->group(function () {
