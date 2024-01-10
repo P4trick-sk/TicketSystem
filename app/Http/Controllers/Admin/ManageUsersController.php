@@ -88,6 +88,7 @@ class ManageUsersController extends Controller
         ]);
 
         $user->fill($request->only('name', 'email', 'role'));
+        $user->role = UserRole::tryFrom($request->role);
 
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;

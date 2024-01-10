@@ -65,10 +65,12 @@ class TicketsController extends Controller
         $this->authorize('create', Ticket::class);
         $files = [];
 
-        foreach ($request->file('attachments') as $file)
-        {
-            $path = $file->store('attachments');
-            array_push($files, $path);
+        if ($request->file('attachments')) {
+            foreach ($request->file('attachments') as $file)
+            {
+                $path = $file->store('attachments');
+                array_push($files, $path);
+            }
         }
 
         $ticket = $this->ticketRepository->createTicket([
@@ -120,10 +122,12 @@ class TicketsController extends Controller
         $this->authorize('update', $ticket);
         $files = json_decode($ticket->attachments);
 
-        foreach ($request->file('attachments') as $file)
-        {
-            $path = $file->store('attachments');
-            array_push($files, $path);
+        if ($request->file('attachments')) {
+            foreach ($request->file('attachments') as $file)
+            {
+                $path = $file->store('attachments');
+                array_push($files, $path);
+            }
         }
 
         $ticket->fill($request->only('subject', 'description'));
@@ -173,7 +177,7 @@ class TicketsController extends Controller
 
         event(new TicketAssigned($ticket));
 
-        return to_route('tickets.show', $ticket->id);
+        return to_route('tickets.index.assigned');
     }
 
     /**

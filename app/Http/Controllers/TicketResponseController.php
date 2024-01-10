@@ -35,10 +35,12 @@ class TicketResponseController extends Controller
         $this->authorize('canRespond', $ticket);
         $files = [];
 
-        foreach ($request->file('attachments') as $file)
-        {
-            $path = $file->store('attachments');
-            array_push($files, $path);
+        if ($request->file('attachments')) {
+            foreach ($request->file('attachments') as $file)
+            {
+                $path = $file->store('attachments');
+                array_push($files, $path);
+            }
         }
 
         $response = TicketResponse::create([
@@ -82,10 +84,12 @@ class TicketResponseController extends Controller
         ]);
         $files = json_decode($ticketResponse->attachments);
 
-        foreach ($request->file('attachments') as $file)
-        {
-            $path = $file->store('attachments');
-            array_push($files, $path);
+        if ($request->file('attachments')) {
+            foreach ($request->file('attachments') as $file)
+            {
+                $path = $file->store('attachments');
+                array_push($files, $path);
+            }
         }
 
         $this->authorize('update', $ticketResponse);
