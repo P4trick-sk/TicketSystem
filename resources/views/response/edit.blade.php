@@ -18,7 +18,7 @@
                     <x-input-error :messages="$errors->get('response')" class="mt-2" />
                 </div>
 
-                @if($response->attachments)
+                {{--@if($response->attachments)
                     <div class="sm:grid sm:grid-cols-3 gap-4">
                         @foreach(json_decode($response->attachments) as $file)
                             <div>
@@ -31,7 +31,7 @@
                 <div class="mt-4">
                     <input class="text-gray-400" type="file" name="attachments[]" id="attachment" multiple>
                     <x-input-error :messages="$errors->get('attachment')" class="mt-2" />
-                </div>
+                </div>--}}
 
                 <div class="flex items-center justify-end mt-4">
                     <x-primary-button class="ml-4">
@@ -39,6 +39,8 @@
                     </x-primary-button>
                 </div>
             </form>
+
+            <livewire:image-gallery :response="$response" />
         </div>
     </div>
 </x-app-layout>
