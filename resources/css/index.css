@@ -191,7 +191,7 @@ body {
   color: #fff;
 }
 
-.drop_button_menu .icon:hover {
+.drop_button_menu:hover .icon {
   background: #00409A;
 }
 
