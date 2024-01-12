@@ -73,6 +73,8 @@ return [
         public_path('storage') => storage_path('app/public'),
         public_path('attachments') => storage_path('app/attachments'),
         public_path('logo') => storage_path('app/logo'),
+        public_path('img') => storage_path('app/public/img'),
+        public_path('icons') => storage_path('app/public/icons'),
     ],
 
 ];
