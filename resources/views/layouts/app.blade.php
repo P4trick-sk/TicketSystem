@@ -29,7 +29,7 @@
                     </svg>
                     <input class="input" type="search" placeholder="Hľadať..." />
                 </div>
-                <button>
+                <a href="{{ route('tickets.create') }}">
                   <span>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -45,7 +45,7 @@
                     </svg>
                     Vytvoriť
                   </span>
-                </button>
+                </a>
                 <img
                     id="top_icons"
                     class="change_color"

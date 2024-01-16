@@ -12,6 +12,12 @@
            @endcan
        </div>
     </x-slot>
+    @can('update', $ticket)
+    <a class="font-semibold ml-auto"
+       href="{{ route('tickets.edit', $ticket->id) }}">
+        Upraviť ticket
+    </a>
+    @endcan
 
     <div class="mx-auto">
         <div class="p-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
