@@ -3,9 +3,11 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+use App\Models\Group;
 use App\Models\Ticket;
 use App\Models\TicketResponse;
 use App\Models\User;
+use App\Policies\GroupsPolicy;
 use App\Policies\ProfilePolicy;
 use App\Policies\TicketPolicy;
 use App\Policies\TicketResponsePolicy;
@@ -22,6 +24,7 @@ class AuthServiceProvider extends ServiceProvider
         Ticket::class => TicketPolicy::class,
         TicketResponse::class => TicketResponsePolicy::class,
         User::class => ProfilePolicy::class,
+        Group::class => GroupsPolicy::class,
     ];
 
     /**

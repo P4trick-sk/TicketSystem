@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GroupsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TicketResponseController;
 use App\Http\Controllers\TicketsController;
@@ -39,6 +40,16 @@ Route::middleware(['auth', 'block.banned', 'approved'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::middleware(['auth', 'verified', 'block.banned', 'approved', 'teacher'])->group(function () {
+    Route::get('/groups', [GroupsController::class, 'index'])->name('groups.index');
+    Route::get('/groups/create', [GroupsController::class, 'create'])->name('groups.create');
+    Route::post('/groups', [GroupsController::class, 'store'])->name('groups.store');
+    Route::get('/groups/{group}', [GroupsController::class, 'show'])->name('groups.show');
+    Route::get('/groups/{group}/edit', [GroupsController::class, 'edit'])->name('groups.edit');
+    Route::patch('/groups/{group}', [GroupsController::class, 'update'])->name('groups.update');
+    Route::delete('/groups/{group}', [GroupsController::class, 'destroy'])->name('groups.delete');
 });
 
 
