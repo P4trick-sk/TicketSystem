@@ -20,11 +20,6 @@
                             {{ __('Mne pridelené tickety') }}
                         </x-nav-link>
                     @endif
-                    @if(Auth::user()->isTeacher())
-                        <x-nav-link :href="route('groups.index')" :active="request()->routeIs('groups.*')">
-                            {{ __('Skupiny ticketov') }}
-                        </x-nav-link>
-                    @endif
                 </div>
             </div>
 

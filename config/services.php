@@ -34,7 +34,7 @@ return [
     'google' => [
         'client_id' => 'test', //env('GOOGLE_CLIENT_ID'),
         'client_secret' => 'test', //env('GOOGLE_CLIENT_SECRET'),
-        'redirect' => env('GOOGLE_CALLBACK'),
+        'redirect' => 'https://ticket.noringhton.tech/login/google/callback',
     ],
 
 ];

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Enums\UserRole;
 use App\Events\TicketAssigned;
 use App\Events\TicketClosed;
-use App\Events\TicketCreated;
 use App\Events\TicketUpdated;
 use App\Http\Requests\StoreTicketRequest;
 use App\Http\Requests\UpdateAdvancedTicketInfoRequest;
@@ -13,7 +12,6 @@ use App\Http\Requests\UpdateBasicTicketInfoRequest;
 use App\Models\Category;
 use App\Models\CategoryType;
 use App\Models\Classroom;
-use App\Models\Group;
 use App\Models\User;
 use App\Models\Ticket;
 use App\Repositories\TicketRepositoryInterface;
@@ -82,10 +80,9 @@ class TicketsController extends Controller
             'classroom_id' => $request->classroom,
             'category_id' => $request->category_id,
             'attachments' => json_encode($files),
-            'status' => 'waiting_for_teacher'
         ]);
 
-        event(new TicketCreated($ticket));
+        //event(new TicketClosed($ticket));
 
         return to_route('tickets.show', $ticket->id);
     }
@@ -114,7 +111,6 @@ class TicketsController extends Controller
             'priorities' => ['low', 'medium', 'high'],
             'categoryTypes' => CategoryType::all(),
             'classrooms' => Classroom::all(),
-            'groups' => Group::all(),
         ]);
     }
 
@@ -168,12 +164,12 @@ class TicketsController extends Controller
 
     public function assignTicketToUser(Request $request, Ticket $ticket)
     {
-        $this->authorize('updateAdvanced', $ticket);
-
         $teachers = User::whereIn('role', [UserRole::Teacher, UserRole::Admin])->pluck('id')->toArray();
         $request->validate([
             'assigned_to' => ['required', Rule::in($teachers)],
         ]);
+
+        $this->authorize('updateAdvanced', $ticket);
 
         $ticket->fill($request->only('assigned_to'));
         $ticket->updated_on = now();
@@ -187,16 +183,9 @@ class TicketsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request, Ticket $ticket)
+    public function destroy(Ticket $ticket)
     {
         $this->authorize('delete', $ticket);
-
-        $request->validate([
-            'summary' => ['string', 'nullable']
-        ]);
-
-        $ticket->summary = $request->summary;
-        $ticket->save();
         $ticket->delete();
         return to_route('admin.tickets.index');
     }
