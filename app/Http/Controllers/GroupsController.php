@@ -83,6 +83,10 @@ class GroupsController extends Controller
     {
         $group->delete();
 
+        foreach ($group->groupTickets as $groupTicket) {
+            $groupTicket->forceDelete();
+        }
+
         return to_route('groups.index');
     }
 }

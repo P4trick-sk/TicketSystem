@@ -13,6 +13,7 @@ use App\Http\Requests\UpdateBasicTicketInfoRequest;
 use App\Models\Category;
 use App\Models\CategoryType;
 use App\Models\Classroom;
+use App\Models\Group;
 use App\Models\User;
 use App\Models\Ticket;
 use App\Repositories\TicketRepositoryInterface;
@@ -113,6 +114,7 @@ class TicketsController extends Controller
             'priorities' => ['low', 'medium', 'high'],
             'categoryTypes' => CategoryType::all(),
             'classrooms' => Classroom::all(),
+            'groups' => Group::all(),
         ]);
     }
 

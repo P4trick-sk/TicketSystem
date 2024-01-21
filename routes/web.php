@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\GroupsController;
+use App\Http\Controllers\GroupTicketsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TicketResponseController;
 use App\Http\Controllers\TicketsController;
@@ -35,9 +36,10 @@ Route::middleware(['auth', 'verified', 'block.banned', 'approved'])->group(funct
     Route::post('/tickets/{ticket}/response', [TicketResponseController::class, 'store'])->name('tickets.response.store');
     Route::get('/response/{ticketResponse}/edit', [TicketResponseController::class, 'edit'])->name('response.edit');
     Route::patch('/response/{ticketResponse}', [TicketResponseController::class, 'update'])->name('response.update');
+    Route::post('/tickets/{ticket}/group', [GroupTicketsController::class, 'store'])->name('ticket.group.store');
 });
 
-Route::middleware(['auth', 'block.banned', 'approved'])->group(function () {
+Route::middleware(['auth', 'verified', 'block.banned', 'approved'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -51,6 +53,12 @@ Route::middleware(['auth', 'verified', 'block.banned', 'approved', 'teacher'])->
     Route::get('/groups/{group}/edit', [GroupsController::class, 'edit'])->name('groups.edit');
     Route::patch('/groups/{group}', [GroupsController::class, 'update'])->name('groups.update');
     Route::delete('/groups/{group}', [GroupsController::class, 'destroy'])->name('groups.delete');
+});
+
+Route::middleware(['auth', 'verified', 'block.banned', 'approved', 'teacher'])->group(function () {
+    Route::post('/groups/{group}/response', [GroupTicketsController::class, 'sendResponse'])->name('groups.send.response');
+    Route::delete('/groups/{group}/close', [GroupTicketsController::class, 'closeTickets'])->name('groups.close.tickets');
+    Route::delete('/groups/{group}/ticket/{ticket}/remove', [GroupTicketsController::class, 'destroy'])->name('groups.remove.ticket');
 });
 
 

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class GroupTicket extends Model
@@ -36,4 +37,14 @@ class GroupTicket extends Model
         'created_on',
         'updated_on',
     ];
+
+    public function ticket() :BelongsTo
+    {
+        return $this->belongsTo(Ticket::class, 'ticket_id');
+    }
+
+    public function group() :BelongsTo
+    {
+        return $this->belongsTo(Group::class, 'group_id');
+    }
 }

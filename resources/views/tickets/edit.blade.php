@@ -146,6 +146,30 @@
                         Vymazať
                     </x-primary-button>
                 </form>
+                <div class="max-w-7xl mx-auto flex pt-8">
+                    <h3 class="text-xl text-gray-800 dark:text-gray-200 leading-tight">Pridanie do skupiny:</h3>
+                </div>
+                <form class="pt-8" method="POST" action="{{ route('ticket.group.store', $ticket->id) }}">
+                    @csrf
+                    <div class="sm:grid sm:grid-cols-3">
+                        <div class="">
+                            <x-input-label for="group_id" :value="__('Skupina')" />
+                            <div class="mt-2">
+                                <select id="group_id" name="group_id" autocomplete="off" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                                    <option disabled="disabled" selected>Vyberte</option>
+                                    @foreach($groups as $group)
+                                        <option value="{{$group->id}}">{{ $group->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <x-input-error :messages="$errors->get('group_id')" class="mt-2" />
+                        </div>
+                    </div>
+
+                    <x-primary-button class="mt-4">
+                        Pridať do skupiny
+                    </x-primary-button>
+                </form>
             @endcan
         </div>
     </div>
