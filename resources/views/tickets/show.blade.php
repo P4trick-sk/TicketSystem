@@ -12,8 +12,14 @@
            @endcan
        </div>
     </x-slot>
+    @can('update', $ticket)
+    <a class="font-semibold ml-auto"
+       href="{{ route('tickets.edit', $ticket->id) }}">
+        Upraviť ticket
+    </a>
+    @endcan
 
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="mx-auto">
         <div class="p-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <div class="sm:grid sm:grid-cols-3 gap-4">
                 <div class="">
@@ -75,7 +81,7 @@
     </div>
 
 
-    <div class="mt-6 max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="mt-6 mx-auto">
         <div class="p-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <div class="text-gray-900 dark:text-gray-100">
                 {{ $ticket->description }}
@@ -98,7 +104,7 @@
     </div>
 
     @foreach ($ticket->responses as $response)
-        <div class="mt-6 max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="mt-6 mx-auto">
             <div class="p-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="text-gray-900 dark:text-gray-100">
                     {{ $response->response }}
@@ -127,7 +133,7 @@
         </div>
     @endforeach
 
-    <div class="mt-6 max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="mt-6 mx-auto">
         <div class="p-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <form method="POST" enctype="multipart/form-data" action="{{ route('tickets.response.store', $ticket->id) }}">
                 @csrf

@@ -1,9 +1,3 @@
-AuthType Basic
-AuthName "Restricted access"
-AuthUserFile /var/www/TicketingSystem/.htpasswd
-Require valid-user
-
-
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes

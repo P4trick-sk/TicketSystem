@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-slot name="header">
+ {{--   <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Dashboard') }}
         </h2>
@@ -69,7 +69,35 @@
                 </div>
             </div>
         </div>
-    @endif
+    @endif--}}
+
+    <ul class="message-list">
+        @if($tickets->first())
+            @foreach($tickets as $ticket)
+            <li class="unread">
+                <a href="{{ route('tickets.show', $ticket->id) }}">
+                    <div class="col col-1"><span class="dot"></span>
+                        {{--<div class="checkbox-wrapper">
+                            <input type="checkbox" id="chk1">
+                            <label for="chk1" class="toggle"></label>
+                        </div>--}}
+                        <p class="title">{{ $ticket->subject }} ({{ $ticket->id }})</p><span class="star-toggle glyphicon glyphicon-star-empty"></span>
+                    </div>
+                    <div class="col col-2">
+                        <div class="subject">{{ $ticket->assignedTo->name }} - {{ $ticket->description }}</div>
+                        <div class="date">{{ $ticket->send_on }}</div>
+                    </div>
+                </a>
+            </li>
+            @endforeach
+        @else
+            <li class="unread">
+                <div class="col"><span class="dot"></span>
+                    <p class="title">Žiaden ticket</p>
+                </div>
+            </li>
+        @endif
+    </ul>
 
 
 </x-app-layout>
