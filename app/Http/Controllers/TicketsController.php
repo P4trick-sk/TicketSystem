@@ -82,7 +82,7 @@ class TicketsController extends Controller
             'attachments' => json_encode($files),
         ]);
 
-        event(new TicketClosed($ticket));
+        //event(new TicketClosed($ticket));
 
         return to_route('tickets.show', $ticket->id);
     }

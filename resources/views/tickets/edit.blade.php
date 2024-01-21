@@ -61,7 +61,7 @@
                 </x-primary-button>
             </form>
 
-            @if(Auth::user()->isTeacher())
+            @can('updateAdvanced', $ticket)
                 <div class="max-w-7xl mx-auto flex pt-8">
                     <h3 class="text-xl text-gray-800 dark:text-gray-200 leading-tight">Úprava kategorizácie:</h3>
                 </div>
@@ -125,7 +125,7 @@
                         Preradiť
                     </x-primary-button>
                 </form>
-            @endif
+            @endcan
         </div>
     </div>
 </x-app-layout>
