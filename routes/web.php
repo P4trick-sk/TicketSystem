@@ -31,6 +31,7 @@ Route::middleware(['auth', 'verified', 'block.banned', 'approved'])->group(funct
     Route::patch('/tickets/{ticket}', [TicketsController::class, 'updateBasicInfo'])->name('tickets.update');
     Route::patch('/tickets/{ticket}/advanced', [TicketsController::class, 'updateAdvancedInfo'])->name('tickets.update.advanced');
     Route::patch('/tickets/{ticket}/assign', [TicketsController::class, 'assignTicketToUser'])->name('tickets.update.assign');
+    Route::delete('/tickets/{ticket}', [TicketsController::class, 'destroy'])->name('tickets.delete');
     Route::post('/tickets/{ticket}/response', [TicketResponseController::class, 'store'])->name('tickets.response.store');
     Route::get('/response/{ticketResponse}/edit', [TicketResponseController::class, 'edit'])->name('response.edit');
     Route::patch('/response/{ticketResponse}', [TicketResponseController::class, 'update'])->name('response.update');
