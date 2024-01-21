@@ -52,6 +52,14 @@ class TicketResponseController extends Controller
 
         event(new TicketResponseSent($response));
 
+        if ($request->user()->id == $response->ticket->assignedTo->id) {
+            $response->ticket->status = 'waiting_for_student';
+            $response->ticket->save();
+        } else {
+            $response->ticket->status = 'waiting_for_teacher';
+            $response->ticket->save();
+        }
+
         return to_route('tickets.show', $ticket->id);
     }
 
