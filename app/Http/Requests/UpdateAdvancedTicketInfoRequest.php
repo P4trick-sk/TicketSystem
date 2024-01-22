@@ -29,10 +29,12 @@ class UpdateAdvancedTicketInfoRequest extends FormRequest
         $classrooms = Classroom::all()->pluck('id')->toArray();
         $categories = Category::all()->pluck('id')->toArray();
 
+        array_push($classrooms, null);
+
         return [
             'priority' => ['required', Rule::in(['low', 'medium', 'high'])],
             'category_id' => ['required', Rule::in($categories)],
-            'classroom_id' => ['required', Rule::in($classrooms)],
+            'classroom_id' => ['nullable', Rule::in($classrooms)],
         ];
     }
 }

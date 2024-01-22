@@ -4,10 +4,12 @@
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ $group->name }}
             </h2>
+            @can('update', $group)
             <a class="font-semibold text-gray-900 dark:text-gray-100 ml-auto"
                href="{{ route('groups.edit', $group->id) }}">
                 Upraviť skupinu
             </a>
+            @endcan
         </div>
     </x-slot>
 
@@ -25,6 +27,7 @@
         </div>
     </div>
 
+    @can('update', $group)
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="max-w-7xl mx-auto flex pt-8">
             <h3 class="text-xl text-gray-800 dark:text-gray-200 leading-tight">Odošlite správu do každého ticketu:</h3>
@@ -72,6 +75,7 @@
             </x-primary-button>
         </form>
     </div>
+    @endcan
 
     <div class="pt-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex">
@@ -110,11 +114,13 @@
                                 </div>
                             </div>
                         </dl>
-                        <form class="pt-8" method="POST" action="{{ route('groups.delete.ticket', [$group->id, $ticket->id]) }}">
+                        @can('update', $group)
+                        <form class="pt-8" method="POST" action="{{ route('groups.remove.ticket', [$group->id, $ticket->id]) }}">
                             @method('delete')
                             @csrf
                             <button type="submit" class="font-semibold text-gray-900 dark:text-gray-100">Odstrániť zo skupiny</button>
                         </form>
+                        @endcan
                     </div>
                 </div>
             </div>

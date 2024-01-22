@@ -65,6 +65,13 @@ class TicketsController extends Controller
     public function store(StoreTicketRequest $request): RedirectResponse
     {
         $this->authorize('create', Ticket::class);
+
+        if (Category::find($request->category_id)->categoryType->is_dynamic) {
+            $request->validate([
+                'classroom_id' => ['required'],
+            ]);
+        }
+
         $files = [];
 
         if ($request->file('attachments')) {
@@ -79,7 +86,7 @@ class TicketsController extends Controller
             'subject' => $request->subject,
             'description' => $request->description,
             'created_by' => $request->user()->id,
-            'classroom_id' => $request->classroom,
+            'classroom_id' => $request->classroom_id,
             'category_id' => $request->category_id,
             'attachments' => json_encode($files),
             'status' => 'waiting_for_teacher'
@@ -106,7 +113,6 @@ class TicketsController extends Controller
     public function edit(Ticket $ticket)
     {
         $this->authorize('update', $ticket);
-
 
         return view('tickets.edit')->with([
             'ticket' => $ticket,
@@ -150,6 +156,12 @@ class TicketsController extends Controller
     public function updateAdvancedInfo(UpdateAdvancedTicketInfoRequest $request, Ticket $ticket)
     {
         $this->authorize('updateAdvanced', $ticket);
+
+        if (Category::find($request->category_id)->categoryType->is_dynamic) {
+            $request->validate([
+                'classroom_id' => ['required'],
+            ]);
+        }
 
         $ticket->fill($request->only('classroom_id', 'category_id', 'priority'));
 

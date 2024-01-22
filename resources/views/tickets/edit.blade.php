@@ -74,11 +74,12 @@
                             <x-input-label for="classroom_id" :value="__('Trieda')" />
                             <div class="mt-2">
                                 <select id="classroom_id" name="classroom_id" autocomplete="off" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
-                                    <option disabled="disabled">Vyberte</option>
+                                    <option value="">Vyberte</option>
                                     @foreach($classrooms as $classroom)
                                         <option {{$classroom->id == $ticket->classroom->id ? 'selected' : null}} value="{{$classroom->id}}">{{ $classroom->name }}</option>
                                     @endforeach
                                 </select>
+                                <x-input-error :messages="$errors->get('classroom_id')" class="mt-2" />
                             </div>
                         </div>
                         <div class="">
@@ -90,6 +91,7 @@
                                         <option {{$priority == $ticket->priority ? 'selected' : null}} value="{{$priority}}">{{ $priority }}</option>
                                     @endforeach
                                 </select>
+                                <x-input-error :messages="$errors->get('priority')" class="mt-2" />
                             </div>
                         </div>
                     </div>
@@ -122,7 +124,7 @@
                     </div>
 
                     <x-primary-button class="mt-4">
-                        Preradiť
+                        Preradiť ticket
                     </x-primary-button>
                 </form>
                 <div class="max-w-7xl mx-auto flex pt-8">
@@ -136,14 +138,14 @@
                     @csrf
                     <div class="sm:grid sm:grid-cols-3">
                         <div class="">
-                            <x-input-label for="summary" :value="__('Sumár')" />
+                            <x-input-label for="summary" :value="__('Krátky popis vyriešenia ticketu')" />
                             <x-text-input id="summary" class="block mt-1 w-full" type="text" name="summary" :value="old('summary')" autofocus />
                             <x-input-error :messages="$errors->get('summary')" class="mt-2" />
                         </div>
                     </div>
 
                     <x-primary-button class="mt-4">
-                        Vymazať
+                        Uzatvoriť ticket
                     </x-primary-button>
                 </form>
                 <div class="max-w-7xl mx-auto flex pt-8">

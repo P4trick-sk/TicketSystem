@@ -56,6 +56,8 @@ class GroupsController extends Controller
      */
     public function edit(Group $group)
     {
+        $this->authorize('update', $group);
+
         return view('groups.edit')->with('group', $group);
     }
 
@@ -64,6 +66,8 @@ class GroupsController extends Controller
      */
     public function update(Request $request, Group $group)
     {
+        $this->authorize('update', $group);
+
         $request->validate([
             'name' => ['required', 'string', 'max:256'],
             'description' => ['string', 'max:256'],
@@ -81,6 +85,8 @@ class GroupsController extends Controller
      */
     public function destroy(Group $group)
     {
+        $this->authorize('delete', $group);
+
         $group->delete();
 
         foreach ($group->groupTickets as $groupTicket) {

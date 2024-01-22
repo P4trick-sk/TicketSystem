@@ -55,10 +55,17 @@
                 <div class="">
                     <x-input-label  :value="__('Trieda')" />
                     <div class="mt-2">
-                        <x-text-input class="block mt-1 w-full"
-                                      type="text"
-                                      :value="$ticket->classroom->name"
-                                      disabled />
+                        @if($ticket->classroom)
+                            <x-text-input class="block mt-1 w-full"
+                                          type="text"
+                                          :value="$ticket->classroom->name"
+                                          disabled />
+                        @else
+                            <x-text-input class="block mt-1 w-full"
+                                          type="text"
+                                          value="Žiadna trieda"
+                                          disabled />
+                        @endif
                     </div>
                 </div>
                 <div class="">

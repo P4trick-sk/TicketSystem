@@ -40,7 +40,7 @@ class GroupTicketsController extends Controller
 
     public function sendResponse(StoreTicketResponseRequest $request, Group $group)
     {
-        //TODO: validate
+        $this->authorize('update', $group);
 
         $files = [];
 
@@ -74,6 +74,8 @@ class GroupTicketsController extends Controller
      */
     public function destroy(Group $group, Ticket $ticket)
     {
+        $this->authorize('update', $group);
+
         $groupTicket = GroupTicket::where('group_id', $group->id)->where('ticket_id', $ticket->id)->first();
         $groupTicket->forceDelete();
 
@@ -85,7 +87,7 @@ class GroupTicketsController extends Controller
      */
     public function closeTickets(Request $request, Group $group)
     {
-        //TODO: validate
+        $this->authorize('update', $group);
 
         $request->validate([
             'summary' => ['string', 'nullable']
