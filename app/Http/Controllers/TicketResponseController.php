@@ -46,7 +46,7 @@ class TicketResponseController extends Controller
         $response = TicketResponse::create([
             'response_by' => $request->user()->id,
             'ticket_id' => $ticket->id,
-            'response' => $request->response,
+            'response' => $request->response, //str_replace(['badword1', 'badword2'], '***', $request->response),
             'attachments' => json_encode($files),
         ]);
 

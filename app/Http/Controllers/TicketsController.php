@@ -48,6 +48,20 @@ class TicketsController extends Controller
         ]);
     }
 
+    public function indexCreatedClosed(Request $request)
+    {
+        return view('dashboard.createdClosed')->with([
+            'tickets' => Ticket::where('status', 'closed')->where('created_by', $request->user()->id)->get(),
+        ]);
+    }
+
+    public function indexAssignedClosed(Request $request)
+    {
+        return view('dashboard.assignedClosed')->with([
+            'tickets' => Ticket::where('status', 'closed')->where('assigned_to', $request->user()->id)->get(),
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -122,6 +136,20 @@ class TicketsController extends Controller
             'classrooms' => Classroom::all(),
             'groups' => Group::all(),
         ]);
+    }
+
+    public function updateSummary(Request $request, Ticket $ticket)
+    {
+        $this->authorize('delete', $ticket);
+
+        $request->validate([
+            'summary' => ['string', 'nullable']
+        ]);
+
+        $ticket->summary = $request->summary;
+        $ticket->save();
+
+        return to_route('tickets.show', $ticket->id);
     }
 
     /**
@@ -208,8 +236,12 @@ class TicketsController extends Controller
         ]);
 
         $ticket->summary = $request->summary;
+        $ticket->status = 'closed';
+        $ticket->deleted_at = now();
         $ticket->save();
-        $ticket->delete();
-        return to_route('admin.tickets.index');
+
+        event(new TicketClosed($ticket));
+
+        return to_route('tickets.index.assigned');
     }
 }

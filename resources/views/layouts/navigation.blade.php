@@ -15,9 +15,15 @@
                     <x-nav-link :href="route('tickets.index.created')" :active="request()->routeIs('tickets.index.created')">
                         {{ __('Moje tickety') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('tickets.index.created.closed')" :active="request()->routeIs('tickets.index.created.closed')">
+                        {{ __('Moje zatvorené tickety') }}
+                    </x-nav-link>
                     @if(Auth::user()->isTeacher())
                         <x-nav-link :href="route('tickets.index.assigned')" :active="request()->routeIs('tickets.index.assigned')">
                             {{ __('Mne pridelené tickety') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('tickets.index.assigned.closed')" :active="request()->routeIs('tickets.index.assigned.closed')">
+                            {{ __('Mne pridelené zatvorené tickety') }}
                         </x-nav-link>
                     @endif
                     @if(Auth::user()->isTeacher())
