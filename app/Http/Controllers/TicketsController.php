@@ -157,7 +157,7 @@ class TicketsController extends Controller
      */
     public function updateBasicInfo(UpdateBasicTicketInfoRequest $request, Ticket $ticket)
     {
-        $this->authorize('update', $ticket);
+        $this->authorize('updateBasic', $ticket);
         $files = json_decode($ticket->attachments);
 
         if ($request->file('attachments')) {

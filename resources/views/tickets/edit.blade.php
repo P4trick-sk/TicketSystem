@@ -16,6 +16,7 @@
             <!-- Session Status -->
             <x-auth-session-status class="mb-4" :status="session('status')" />
 
+            @can('updateBasic', $ticket)
             <div class="max-w-7xl mx-auto flex">
                 <h3 class="text-xl text-gray-800 dark:text-gray-200 leading-tight">Úprava údajov:</h3>
             </div>
@@ -60,6 +61,7 @@
                     Uložiť ticket
                 </x-primary-button>
             </form>
+            @endcan
 
             @can('updateAdvanced', $ticket)
                 <div class="max-w-7xl mx-auto flex pt-8">
@@ -76,7 +78,7 @@
                                 <select id="classroom_id" name="classroom_id" autocomplete="off" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
                                     <option value="">Vyberte</option>
                                     @foreach($classrooms as $classroom)
-                                        <option {{$classroom->id == $ticket->classroom->id ? 'selected' : null}} value="{{$classroom->id}}">{{ $classroom->name }}</option>
+                                        <option {{$classroom->id == $ticket->classroom?->id ? 'selected' : null}} value="{{$classroom->id}}">{{ $classroom->name }}</option>
                                     @endforeach
                                 </select>
                                 <x-input-error :messages="$errors->get('classroom_id')" class="mt-2" />

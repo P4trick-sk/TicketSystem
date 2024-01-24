@@ -64,6 +64,16 @@ class TicketPolicy
     /**
      * Determine whether the user can update the model.
      */
+    public function updateBasic(User $user, Ticket $ticket): Response
+    {
+        return $user->id == $ticket->createdBy->id && $ticket->status != 'closed'
+            ? Response::allow()
+            : Response::deny('Nemáte oprávnenie na editovanie ticketu.');
+    }
+
+    /**
+     * Determine whether the user can update the model.
+     */
     public function updateAdvanced(User $user, Ticket $ticket): Response
     {
         return $user->id == $ticket->assignedTo->id && $ticket->status != 'closed'

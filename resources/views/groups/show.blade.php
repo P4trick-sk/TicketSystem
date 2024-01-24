@@ -64,14 +64,14 @@
 
             <div class="">
                 <div class="">
-                    <x-input-label for="summary" :value="__('Sumár')" />
+                    <x-input-label for="summary" :value="__('Krátky popis vyriešenia ticketu')" />
                     <x-text-input id="summary" class="block mt-1 w-full" type="text" name="summary" :value="old('summary')" autofocus />
                     <x-input-error :messages="$errors->get('summary')" class="mt-2" />
                 </div>
             </div>
 
             <x-primary-button class="mt-4">
-                Vymazať
+                Uzatvoriť ticket
             </x-primary-button>
         </form>
     </div>
