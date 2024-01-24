@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex">
-        <h3 class="text-xl text-gray-800 dark:text-gray-200 leading-tight">Všetky Tickety:</h3>
+        <h3 class="text-xl text-gray-800 dark:text-gray-200 leading-tight">Všetky Otvorené Tickety:</h3>
         <a class="font-semibold text-gray-900 dark:text-gray-100 ml-auto"
            href="{{ route('tickets.create') }}">
             Pridať ticket

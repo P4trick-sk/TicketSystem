@@ -15,8 +15,11 @@
                     <x-nav-link :href="route('admin.index')" :active="request()->routeIs('admin.index')">
                         {{ __('Admin Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin.tickets.index')" :active="request()->routeIs('admin.tickets.*')">
-                        {{ __('All tickets') }}
+                    <x-nav-link :href="route('admin.tickets.index')" :active="request()->routeIs('admin.tickets.index')">
+                        {{ __('All open tickets') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.tickets.index.closed')" :active="request()->routeIs('admin.tickets.index.closed')">
+                        {{ __('All closed tickets') }}
                     </x-nav-link>
                     <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
                         {{ __('Users') }}
