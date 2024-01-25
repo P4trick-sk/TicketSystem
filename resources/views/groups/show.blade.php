@@ -1,4 +1,15 @@
 <x-app-layout>
+@can('update', $group)
+    <div class="filter">
+        <a href="{{ route('groups.edit', $group->id) }}">
+            <img
+                id="filter_icons"
+                src="{{ asset('icons/filter/pencil.svg') }}"
+                alt="pencil"
+            />
+        </a>
+    </div>
+    @endcan
     <x-slot name="header">
         <div class="flex">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
