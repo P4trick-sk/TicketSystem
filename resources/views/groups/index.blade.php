@@ -4,7 +4,7 @@
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ __('Skupiny') }}
             </h2>
-            <a class="font-semibold text-gray-900 dark:text-gray-100 ml-auto"
+            <a class="font-semibold ml-auto"
                href="{{ route('groups.create') }}">
                 Pridať skupinu
             </a>
