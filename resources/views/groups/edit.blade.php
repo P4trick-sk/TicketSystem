@@ -8,7 +8,7 @@
                 @csrf
                 @method('delete')
 
-                <x-primary-button class="font-semibold text-gray-900 dark:text-gray-100">
+                <x-primary-button class="font-semibold">
                     Zmazať skupinu
                 </x-primary-button>
             </form>

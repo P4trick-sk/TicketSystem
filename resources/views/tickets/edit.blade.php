@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="filter">
-        <a class="font-semibold text-gray-100 ml-auto"
+        <a class="font-semibold ml-auto"
            href="{{ route('tickets.show', $ticket->id) }}">
             Naspäť
         </a>
@@ -13,7 +13,7 @@
 
             @can('updateBasic', $ticket)
             <div class="mx-auto flex">
-                <h3 class="text-xl text-gray-100 leading-tight">Úprava údajov:</h3>
+                <h3 class="text-xl  leading-tight">Úprava údajov:</h3>
             </div>
             <form class="pt-8" method="POST" enctype="multipart/form-data" action="{{ route('tickets.update', $ticket->id) }}">
                 @method('patch')
@@ -60,7 +60,7 @@
 
             @can('updateAdvanced', $ticket)
                 <div class="mx-auto flex pt-8">
-                    <h3 class="text-xl text-gray-100  leading-tight">Úprava kategorizácie:</h3>
+                    <h3 class="text-xl leading-tight">Úprava kategorizácie:</h3>
                 </div>
                 <form class="pt-8" method="POST" action="{{ route('tickets.update.advanced', $ticket->id) }}">
                     @method('patch')
@@ -98,7 +98,7 @@
                     </x-primary-button>
                 </form>
                 <div class="mx-auto flex pt-8">
-                    <h3 class="text-xl text-gray-100 leading-tight">Preradenie ticketu:</h3>
+                    <h3 class="text-xl leading-tight">Preradenie ticketu:</h3>
                 </div>
                 <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
                     POZOR! Týmto úkonom môžete prísť o prístup do ticketu!
@@ -125,7 +125,7 @@
                     </x-primary-button>
                 </form>
                 <div class="mx-auto flex pt-8">
-                    <h3 class="text-xl text-gray-100 leading-tight">Uzatvorenie ticketu:</h3>
+                    <h3 class="text-xl leading-tight">Uzatvorenie ticketu:</h3>
                 </div>
                 <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
                     Môžete v skratke popísať, ako ste tento problém vyriešili.
@@ -146,7 +146,7 @@
                     </x-primary-button>
                 </form>
                 <div class="mx-auto flex pt-8">
-                    <h3 class="text-xl text-gray-100 leading-tight">Pridanie do skupiny:</h3>
+                    <h3 class="text-xl leading-tight">Pridanie do skupiny:</h3>
                 </div>
                 <form class="pt-8" method="POST" action="{{ route('ticket.group.store', $ticket->id) }}">
                     @csrf

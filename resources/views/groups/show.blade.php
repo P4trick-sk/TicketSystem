@@ -5,7 +5,7 @@
                 {{ $group->name }}
             </h2>
             @can('update', $group)
-            <a class="font-semibold text-gray-900 dark:text-gray-100 ml-auto"
+            <a class="font-semibold ml-auto"
                href="{{ route('groups.edit', $group->id) }}">
                 Upraviť skupinu
             </a>
@@ -30,7 +30,7 @@
     @can('update', $group)
     <div class="mx-auto sm:px-6 lg:px-8">
         <div class="mx-auto flex pt-8">
-            <h3 class="text-xl text-gray-100 leading-tight">Odošlite správu do každého ticketu:</h3>
+            <h3 class="text-xl leading-tight">Odošlite správu do každého ticketu:</h3>
         </div>
         <form class="pt-8" method="POST" enctype="multipart/form-data" action="{{ route('groups.send.response', $group->id) }}">
             @csrf
@@ -56,7 +56,7 @@
 
     <div class="mx-auto sm:px-6 lg:px-8">
         <div class="mx-auto flex pt-8">
-            <h3 class="text-xl text-gray-100 leading-tight">Uzatvorenie ticketov v skupine:</h3>
+            <h3 class="text-xl leading-tight">Uzatvorenie ticketov v skupine:</h3>
         </div>
         <form class="pt-8" method="POST" action="{{ route('groups.close.tickets', $group->id) }}">
             @method('delete')
@@ -79,7 +79,7 @@
 
     <div class="pt-8">
         <div class="mx-auto sm:px-6 lg:px-8 flex">
-            <h3 class="text-xl text-gray-100 leading-tight">Tickety v skupine:</h3>
+            <h3 class="text-xl leading-tight">Tickety v skupine:</h3>
         </div>
     </div>
 
@@ -88,29 +88,29 @@
             <div class="pt-8">
                 <div class="mx-auto sm:px-6 lg:px-8">
                     <div class="p-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                        <a style="text-decoration: underline" class="font-semibold text-gray-900 dark:text-gray-100"
+                        <a style="text-decoration: underline" class="font-semibold"
                            href="{{ route('tickets.show', $ticket->id) }}">
                             {{ $ticket->subject }}
                         </a>
-                        <div class="text-gray-900 dark:text-gray-100">
+                        <div class="text-gray-900">
                             {{ $ticket->description }}
                         </div><dl class="divide-y divide-gray-100">
                             <div class="sm:grid sm:grid-cols-3">
                                 @if(isset($ticket->assignedTo))
                                     <div class="px-4 pt-6 sm:gap-4 sm:px-0">
-                                        <dt class="text-gray-900 dark:text-gray-100 font-semibold text-sm font-medium leading-6 text-gray-900">Pridelený správca</dt>
-                                        <dd class="text-gray-900 dark:text-gray-100 mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ $ticket->assignedTo->name }}</dd>
+                                        <dt class="text-gray-900 font-semibold text-sm font-medium leading-6 text-gray-900">Pridelený správca</dt>
+                                        <dd class="text-gray-900 mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ $ticket->assignedTo->name }}</dd>
                                     </div>
                                 @endif
                                 @if(isset($ticket->classroom))
                                     <div class="px-4 pt-6 sm:gap-4 sm:px-0">
-                                        <dt class="text-gray-900 dark:text-gray-100 font-semibold text-sm font-medium leading-6 text-gray-900">Trieda</dt>
-                                        <dd class="text-gray-900 dark:text-gray-100 mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ $ticket->classroom->name }}</dd>
+                                        <dt class="text-gray-900 font-semibold text-sm font-medium leading-6 text-gray-900">Trieda</dt>
+                                        <dd class="text-gray-900 mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ $ticket->classroom->name }}</dd>
                                     </div>
                                 @endif
                                 <div class="px-4 pt-6 sm:gap-4 sm:px-0">
-                                    <dt class="text-gray-900 dark:text-gray-100 font-semibold text-sm font-medium leading-6 text-gray-900">Status</dt>
-                                    <dd class="text-gray-900 dark:text-gray-100 mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ $ticket->status }}</dd>
+                                    <dt class="text-gray-900 font-semibold text-sm font-medium leading-6 text-gray-900">Status</dt>
+                                    <dd class="text-gray-900 mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ $ticket->status }}</dd>
                                 </div>
                             </div>
                         </dl>
@@ -118,7 +118,7 @@
                         <form class="pt-8" method="POST" action="{{ route('groups.remove.ticket', [$group->id, $ticket->id]) }}">
                             @method('delete')
                             @csrf
-                            <button type="submit" class="font-semibold text-gray-900 dark:text-gray-100">Odstrániť zo skupiny</button>
+                            <button type="submit" class="font-semibold text-gray-900">Odstrániť zo skupiny</button>
                         </form>
                         @endcan
                     </div>
@@ -129,7 +129,7 @@
         <div class="pt-8">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <div class="p-6 text-gray-900">
                         Žiaden ticket!
                     </div>
                 </div>
