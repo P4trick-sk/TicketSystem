@@ -13,7 +13,7 @@
         </thead>
         <tbody>
             @foreach($tickets as $ticket)
-                <tr>
+                <tr class="{{ $ticket->status == 'waiting_for_teacher' ? 'unread' : null }}">
                     <td><a href="{{ route('tickets.show', $ticket->id) }}">{{ $ticket->subject }}</a></td>
                     <td><a href="{{ route('tickets.show', $ticket->id) }}">{{ $ticket->createdBy->name }}</a></td>
                     <td><a href="{{ route('tickets.show', $ticket->id) }}">{{ $ticket->created_on }}</a></td>

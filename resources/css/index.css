@@ -1134,6 +1134,11 @@ img:hover {
   text-align: left;
   }
 
+  .tickets tr.unread{
+      font-weight: 700;
+      background: #d6d6d6;
+  }
+
   .tickets tbody {
     width: 100%;
     }

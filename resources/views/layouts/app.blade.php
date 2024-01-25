@@ -162,7 +162,7 @@
                     <a href="{{ route('tickets.index.created') }}" class="drop_button_menu {{ request()->routeIs('tickets.index.created') ? 'active' : null }}">
                         <p>Moje tickety</p>
                         <div class="icon">
-                            {{ \App\Models\Ticket::where('created_by', Auth::user()->id)->count() }}
+                            {{ \App\Models\Ticket::where('created_by', Auth::user()->id)->where('deleted_at', null)->count() }}
                         </div>
                     </a>
                     <a href="{{ route('tickets.index.created.closed') }}" class="drop_button_menu {{ request()->routeIs('tickets.index.created.closed') ? 'active' : null }}">
@@ -175,7 +175,7 @@
                         <a href="{{ route('tickets.index.assigned') }}" class="drop_button_menu {{ request()->routeIs('tickets.index.assigned') ? 'active' : null }}">
                             <p>Mne pridelené tickety</p>
                             <div class="icon">
-                                {{ \App\Models\Ticket::where('assigned_to', Auth::user()->id)->count() }}
+                                {{ \App\Models\Ticket::where('assigned_to', Auth::user()->id)->where('deleted_at', null)->count() }}
                             </div>
                         </a>
                     @endif
