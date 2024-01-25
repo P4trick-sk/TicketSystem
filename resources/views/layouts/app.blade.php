@@ -29,9 +29,12 @@
                     </svg>
                     <input class="input" type="search" placeholder="Hľadať..." />
                 </div>
-                <a href="{{ route('tickets.create') }}">
-                  <span>
-                    <svg
+                <div class="hidden sm:flex sm:items-center sm:ml-6">
+                    <x-dropdown class="jankohrasko" align="right" width="48">
+                        <x-slot name="trigger">
+                            <button class="dropdown-button inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md focus:outline-none transition ease-in-out duration-150">
+                                <div class="d-flex">
+                                <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
                         width="24"
@@ -43,9 +46,32 @@
                           d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"
                       ></path>
                     </svg>
+                    <span>
                     Vytvoriť
                   </span>
-                </a>
+                </div>
+
+                                <div class="ml-1">
+                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                            </button>
+                        </x-slot>
+
+                        <x-slot name="content">
+                            <x-dropdown-link class="dropdown-link" :href="route('tickets.create')">
+                                {{ __('Ticket') }}
+                            </x-dropdown-link>
+
+                            @if(Auth::user()->isTeacher())
+                            <x-dropdown-link class="dropdown-link" :href="route('groups.create')">
+                                {{ __('Skupinu') }}
+                            </x-dropdown-link>
+                            @endif
+                        </x-slot>
+                    </x-dropdown>
+                </div>
                 <img
                     id="top_icons"
                     class="change_color"
@@ -55,7 +81,7 @@
                 <div class="hidden sm:flex sm:items-center sm:ml-6">
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
-                            <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                            <button class="dropdown-button inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md focus:outline-none transition ease-in-out duration-150">
                                 <div>{{ Auth::user()->name }}</div>
 
                                 <div class="ml-1">
@@ -67,12 +93,12 @@
                         </x-slot>
 
                         <x-slot name="content">
-                            <x-dropdown-link style="background: rgb(31 41 55 / var(--tw-bg-opacity))" :href="route('profile.edit')">
+                            <x-dropdown-link class="dropdown-link" :href="route('profile.edit')">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
 
                             @if(Auth::user()->isAdmin())
-                                <x-dropdown-link style="background: rgb(31 41 55 / var(--tw-bg-opacity))" :href="route('admin.index')">
+                                <x-dropdown-link class="dropdown-link" :href="route('admin.index')">
                                     {{ __('Administracia') }}
                                 </x-dropdown-link>
                             @endif
@@ -81,7 +107,7 @@
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
 
-                                <x-dropdown-link style="background: rgb(31 41 55 / var(--tw-bg-opacity))" :href="route('logout')"
+                                <x-dropdown-link class="dropdown-link" :href="route('logout')"
                                                  onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                     {{ __('Odhlásiť') }}
@@ -95,36 +121,22 @@
         <div class="content">
             <nav id="vertical">
                 <div class="upper_icons">
+                    <a href="{{ route('tickets.index.created') }}">
                     <img
                         id="upper_icons"
                         class="change_color"
-                        src="{{ asset('icons/sidebar/home.svg') }}"
-                        alt="home"
+                        src="{{ asset('icons/sidebar/ticket.svg') }}"
+                        alt="ticket"
                     />
+                    </a>
+                    <a href="{{ route('groups.index') }}">
                     <img
                         id="upper_icons"
                         class="change_color"
-                        src="{{ asset('icons/sidebar/envelope.svg') }}"
-                        alt="envelope"
+                        src="{{ asset('icons/sidebar/folder.svg') }}"
+                        alt="folder"
                     />
-                    <img
-                        id="upper_icons"
-                        class="change_color"
-                        src="{{ asset('icons/sidebar/bar-chart.svg') }}"
-                        alt="bar-chart"
-                    />
-                    <img
-                        id="upper_icons"
-                        class="change_color"
-                        src="{{ asset('icons/sidebar/calendar.svg') }}"
-                        alt="calendar"
-                    />
-                    <img
-                        id="upper_icons"
-                        class="change_color"
-                        src="{{ asset('icons/sidebar/star-fill.svg') }}"
-                        alt="star-fill"
-                    />
+                    </a>
                 </div>
                 <div class="lower_icons">
                     <label class="switch">
@@ -136,33 +148,24 @@
                     <button onclick="myFunction()" class="showhide">
                         <span> Hide </span>
                     </button>
+                    <a href="{{ route('profile.edit') }}">
                     <img
                         class="change_color"
                         src="{{ asset('icons/sidebar/cog.svg') }}"
                         alt="cog"
                     />
+                    </a>
                 </div>
             </nav>
             <div id="mySIDEBAR" class="sidebar">
-                <button class="drop_button">
-                    <p>Zobrazenie ticketov</p>
-                    <div class="icon">
-                        <svg
-                            height="24"
-                            width="24"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path d="M0 0h24v24H0z" fill="none"></path>
-                            <path
-                                d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
-                                fill="currentColor"
-                            ></path>
-                        </svg>
-                    </div>
-                </button>
                 <a href="{{ route('tickets.index.created') }}" class="drop_button_menu">
                     <p>Moje tickety</p>
+                    <div class="icon">
+                        {{ \App\Models\Ticket::where('created_by', Auth::user()->id)->count() }}
+                    </div>
+                </a>
+                <a href="{{ route('tickets.index.created') }}" class="drop_button_menu">
+                    <p>Moje zatvorené tickety</p>
                     <div class="icon">
                         {{ \App\Models\Ticket::where('created_by', Auth::user()->id)->count() }}
                     </div>
@@ -175,30 +178,21 @@
                     </div>
                 </a>
                 @endif
-                {{--<button class="drop_button_menu">
-                    <p>S vysokou prioritou</p>
+                @if(Auth::user()->isTeacher())
+                <a href="{{ route('tickets.index.assigned') }}" class="drop_button_menu">
+                    <p>Mne pridelené zatvorené tickety</p>
                     <div class="icon">
-                        13
+                        {{ \App\Models\Ticket::where('assigned_to', Auth::user()->id)->count() }}
                     </div>
-                </button>
-                <button class="drop_button_menu">
-                    <p>Všetky tickety</p>
-                    <div class="icon">
-                        1439
-                    </div>
-                </button>--}}
+                </a>
+                @endif
             </div>
             <div class="main">
                 <div class="filter">
-                    <img
+                <img
                         id="filter_icons"
-                        src="{{ asset('icons/filter/check-box.svg') }}"
-                        alt="check-box"
-                    />
-                    <img
-                        id="filter_icons"
-                        src="{{ asset('icons/filter/reply.svg') }}"
-                        alt="reply"
+                        src="{{ asset('icons/filter/pencil.svg') }}"
+                        alt="pencil"
                     />
                     <img
                         id="filter_icons"

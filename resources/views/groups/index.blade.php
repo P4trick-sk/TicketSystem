@@ -11,45 +11,31 @@
         </div>
     </x-slot>
 
-
+    <table class="tickets">
+    <thead>
+    <tr>
+        <th>Názov</th>
+        <th>Popis</th>
+        <th>Vytvoril</th>
+        <th>Dátum vytvorenia</th>
+        <th>Počet ticketov</th>
+    </tr>
+    </thead>
+    <tbody>
     @if($groups->first())
-        @foreach($groups as $group)
-            <div class="pt-8">
-                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div class="p-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                        <a style="text-decoration: underline" class="font-semibold text-gray-900 dark:text-gray-100"
-                           href="{{ route('groups.show', $group->id) }}">
-                            {{ $group->name }}
-                        </a>
-                        <div class="text-gray-900 dark:text-gray-100">
-                            {{ $group->description }}
-                        </div>
-                        <dl class="divide-y divide-gray-100">
-                            <div class="sm:grid sm:grid-cols-2">
-                                <div class="px-4 pt-6 sm:gap-4 sm:px-0">
-                                    <dt class="text-gray-900 dark:text-gray-100 font-semibold text-sm font-medium leading-6 text-gray-900">Vytvoril</dt>
-                                    <dd class="text-gray-900 dark:text-gray-100 mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ $group->createdBy->name }}</dd>
-                                </div>
-                                <div class="px-4 pt-6 sm:gap-4 sm:px-0">
-                                    <dt class="text-gray-900 dark:text-gray-100 font-semibold text-sm font-medium leading-6 text-gray-900">Počet tickov</dt>
-                                    <dd class="text-gray-900 dark:text-gray-100 mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ $group->tickets->count() }}</dd>
-                                </div>
-                            </div>
-                        </dl>
-                    </div>
-                </div>
-            </div>
-        @endforeach
+            @foreach($groups as $group)
+    <tr>
+        <td><a href="{{ route('groups.show', $group->id) }}">{{ $group->name }}</a></td>
+        <td><a href="{{ route('groups.show', $group->id) }}">{{ $group->description }}</a></td>
+        <td><a href="{{ route('groups.show', $group->id) }}">{{ $group->createdBy->name }}</a></td>
+        <td><a href="{{ route('groups.show', $group->id) }}">{{ $group->created_on }}</a></td>
+        <td><a href="{{ route('groups.show', $group->id) }}">{{ $group->tickets->count() }}</a></td>
+    </tr>
+    @endforeach
     @else
-        <div class="pt-8">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900 dark:text-gray-100">
-                        Žiadna skupina!
-                    </div>
-                </div>
-            </div>
-        </div>
+    <p class="title">Žiadna skupina!</p>
     @endif
+    </tbody>
+</table>
 
 </x-app-layout>
