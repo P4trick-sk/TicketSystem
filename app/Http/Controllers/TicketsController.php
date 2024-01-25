@@ -48,6 +48,20 @@ class TicketsController extends Controller
         ]);
     }
 
+    public function indexCreatedClosed(Request $request)
+    {
+        return view('dashboard.createdClosed')->with([
+            'tickets' => Ticket::where('status', 'closed')->where('created_by', $request->user()->id)->get(),
+        ]);
+    }
+
+    public function indexAssignedClosed(Request $request)
+    {
+        return view('dashboard.assignedClosed')->with([
+            'tickets' => Ticket::where('status', 'closed')->where('assigned_to', $request->user()->id)->get(),
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -65,6 +79,13 @@ class TicketsController extends Controller
     public function store(StoreTicketRequest $request): RedirectResponse
     {
         $this->authorize('create', Ticket::class);
+
+        if (Category::find($request->category_id)->categoryType->is_dynamic) {
+            $request->validate([
+                'classroom_id' => ['required'],
+            ]);
+        }
+
         $files = [];
 
         if ($request->file('attachments')) {
@@ -79,7 +100,7 @@ class TicketsController extends Controller
             'subject' => $request->subject,
             'description' => $request->description,
             'created_by' => $request->user()->id,
-            'classroom_id' => $request->classroom,
+            'classroom_id' => $request->classroom_id,
             'category_id' => $request->category_id,
             'attachments' => json_encode($files),
             'status' => 'waiting_for_teacher'
@@ -107,7 +128,6 @@ class TicketsController extends Controller
     {
         $this->authorize('update', $ticket);
 
-
         return view('tickets.edit')->with([
             'ticket' => $ticket,
             'teachers' => User::whereIn('role', [UserRole::Teacher, UserRole::Admin])->get(),
@@ -118,12 +138,26 @@ class TicketsController extends Controller
         ]);
     }
 
+    public function updateSummary(Request $request, Ticket $ticket)
+    {
+        $this->authorize('delete', $ticket);
+
+        $request->validate([
+            'summary' => ['string', 'nullable']
+        ]);
+
+        $ticket->summary = $request->summary;
+        $ticket->save();
+
+        return to_route('tickets.show', $ticket->id);
+    }
+
     /**
      * Update the specified resource in storage.
      */
     public function updateBasicInfo(UpdateBasicTicketInfoRequest $request, Ticket $ticket)
     {
-        $this->authorize('update', $ticket);
+        $this->authorize('updateBasic', $ticket);
         $files = json_decode($ticket->attachments);
 
         if ($request->file('attachments')) {
@@ -150,6 +184,12 @@ class TicketsController extends Controller
     public function updateAdvancedInfo(UpdateAdvancedTicketInfoRequest $request, Ticket $ticket)
     {
         $this->authorize('updateAdvanced', $ticket);
+
+        if (Category::find($request->category_id)->categoryType->is_dynamic) {
+            $request->validate([
+                'classroom_id' => ['required'],
+            ]);
+        }
 
         $ticket->fill($request->only('classroom_id', 'category_id', 'priority'));
 
@@ -196,8 +236,12 @@ class TicketsController extends Controller
         ]);
 
         $ticket->summary = $request->summary;
+        $ticket->status = 'closed';
+        $ticket->deleted_at = now();
         $ticket->save();
-        $ticket->delete();
-        return to_route('admin.tickets.index');
+
+        event(new TicketClosed($ticket));
+
+        return to_route('tickets.index.assigned');
     }
 }

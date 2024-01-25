@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Category;
+use App\Models\Classroom;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\File;
 
 class StoreTicketRequest extends FormRequest
@@ -22,10 +25,16 @@ class StoreTicketRequest extends FormRequest
      */
     public function rules(): array
     {
+        $classrooms = Classroom::all()->pluck('id')->toArray();
+        $categories = Category::all()->pluck('id')->toArray();
+
+        array_push($classrooms, null);
+
         return [
             'subject' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:2000'],
-            'category_id' => ['required'], //TODO: overiť, či daná kategória existuje
+            'category_id' => ['required', Rule::in($categories)],
+            'classroom_id' => ['nullable', Rule::in($classrooms)],
             'attachment' => [File::image()->max('10mb')],
         ];
     }

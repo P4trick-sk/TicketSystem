@@ -4,14 +4,16 @@
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ $group->name }}
             </h2>
+            @can('update', $group)
             <a class="font-semibold text-gray-900 dark:text-gray-100 ml-auto"
                href="{{ route('groups.edit', $group->id) }}">
                 Upraviť skupinu
             </a>
+            @endcan
         </div>
     </x-slot>
 
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="mt-6 mx-auto sm:px-6 lg:px-8">
         <div>
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="$group->name" required autofocus disabled autocomplete="name" />
@@ -25,9 +27,10 @@
         </div>
     </div>
 
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="max-w-7xl mx-auto flex pt-8">
-            <h3 class="text-xl text-gray-800 dark:text-gray-200 leading-tight">Odošlite správu do každého ticketu:</h3>
+    @can('update', $group)
+    <div class="mx-auto sm:px-6 lg:px-8">
+        <div class="mx-auto flex pt-8">
+            <h3 class="text-xl text-gray-100 leading-tight">Odošlite správu do každého ticketu:</h3>
         </div>
         <form class="pt-8" method="POST" enctype="multipart/form-data" action="{{ route('groups.send.response', $group->id) }}">
             @csrf
@@ -51,9 +54,9 @@
         </form>
     </div>
 
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="max-w-7xl mx-auto flex pt-8">
-            <h3 class="text-xl text-gray-800 dark:text-gray-200 leading-tight">Uzatvorenie ticketov v skupine:</h3>
+    <div class="mx-auto sm:px-6 lg:px-8">
+        <div class="mx-auto flex pt-8">
+            <h3 class="text-xl text-gray-100 leading-tight">Uzatvorenie ticketov v skupine:</h3>
         </div>
         <form class="pt-8" method="POST" action="{{ route('groups.close.tickets', $group->id) }}">
             @method('delete')
@@ -61,28 +64,29 @@
 
             <div class="">
                 <div class="">
-                    <x-input-label for="summary" :value="__('Sumár')" />
+                    <x-input-label for="summary" :value="__('Krátky popis vyriešenia ticketu')" />
                     <x-text-input id="summary" class="block mt-1 w-full" type="text" name="summary" :value="old('summary')" autofocus />
                     <x-input-error :messages="$errors->get('summary')" class="mt-2" />
                 </div>
             </div>
 
             <x-primary-button class="mt-4">
-                Vymazať
+                Uzatvoriť ticket
             </x-primary-button>
         </form>
     </div>
+    @endcan
 
     <div class="pt-8">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex">
-            <h3 class="text-xl text-gray-800 dark:text-gray-200 leading-tight">Tickety v skupine:</h3>
+        <div class="mx-auto sm:px-6 lg:px-8 flex">
+            <h3 class="text-xl text-gray-100 leading-tight">Tickety v skupine:</h3>
         </div>
     </div>
 
     @if($group->tickets->first())
         @foreach($group->tickets as $ticket)
             <div class="pt-8">
-                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="mx-auto sm:px-6 lg:px-8">
                     <div class="p-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <a style="text-decoration: underline" class="font-semibold text-gray-900 dark:text-gray-100"
                            href="{{ route('tickets.show', $ticket->id) }}">
@@ -110,11 +114,13 @@
                                 </div>
                             </div>
                         </dl>
-                        <form class="pt-8" method="POST" action="{{ route('groups.delete.ticket', [$group->id, $ticket->id]) }}">
+                        @can('update', $group)
+                        <form class="pt-8" method="POST" action="{{ route('groups.remove.ticket', [$group->id, $ticket->id]) }}">
                             @method('delete')
                             @csrf
                             <button type="submit" class="font-semibold text-gray-900 dark:text-gray-100">Odstrániť zo skupiny</button>
                         </form>
+                        @endcan
                     </div>
                 </div>
             </div>

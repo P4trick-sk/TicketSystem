@@ -37,7 +37,7 @@ class TicketResponsePolicy
      */
     public function update(User $user, TicketResponse $ticketResponse): Response
     {
-        return $user->id == $ticketResponse->user->id
+        return $user->id == $ticketResponse->user->id && $ticketResponse->ticket->status != 'closed'
             ? Response::allow()
             : Response::deny('Nemáte oprávnenie na editovanie tejto odpovede.');
     }

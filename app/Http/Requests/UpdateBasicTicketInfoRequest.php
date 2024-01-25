@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\File;
 
 class UpdateBasicTicketInfoRequest extends FormRequest
 {
@@ -24,6 +25,7 @@ class UpdateBasicTicketInfoRequest extends FormRequest
         return [
             'subject' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:2000'],
+            'attachment' => [File::image()->max('10mb')],
         ];
     }
 }

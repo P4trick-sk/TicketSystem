@@ -1,23 +1,19 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                {{ __('Úprava ticketu') }}
-            </h2>
-            <a class="font-semibold text-gray-900 dark:text-gray-100 ml-auto"
-               href="{{ route('tickets.show', $ticket->id) }}">
-                Naspäť
-            </a>
-        </div>
-    </x-slot>
+    <div class="filter">
+        <a class="font-semibold text-gray-100 ml-auto"
+           href="{{ route('tickets.show', $ticket->id) }}">
+            Naspäť
+        </a>
+    </div>
 
     <div class="">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="mt-6 mx-auto sm:px-6 lg:px-8">
             <!-- Session Status -->
             <x-auth-session-status class="mb-4" :status="session('status')" />
 
-            <div class="max-w-7xl mx-auto flex">
-                <h3 class="text-xl text-gray-800 dark:text-gray-200 leading-tight">Úprava údajov:</h3>
+            @can('updateBasic', $ticket)
+            <div class="mx-auto flex">
+                <h3 class="text-xl text-gray-100 leading-tight">Úprava údajov:</h3>
             </div>
             <form class="pt-8" method="POST" enctype="multipart/form-data" action="{{ route('tickets.update', $ticket->id) }}">
                 @method('patch')
@@ -60,10 +56,11 @@
                     Uložiť ticket
                 </x-primary-button>
             </form>
+            @endcan
 
             @can('updateAdvanced', $ticket)
-                <div class="max-w-7xl mx-auto flex pt-8">
-                    <h3 class="text-xl text-gray-800 dark:text-gray-200 leading-tight">Úprava kategorizácie:</h3>
+                <div class="mx-auto flex pt-8">
+                    <h3 class="text-xl text-gray-100  leading-tight">Úprava kategorizácie:</h3>
                 </div>
                 <form class="pt-8" method="POST" action="{{ route('tickets.update.advanced', $ticket->id) }}">
                     @method('patch')
@@ -74,11 +71,12 @@
                             <x-input-label for="classroom_id" :value="__('Trieda')" />
                             <div class="mt-2">
                                 <select id="classroom_id" name="classroom_id" autocomplete="off" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
-                                    <option disabled="disabled">Vyberte</option>
+                                    <option value="">Vyberte</option>
                                     @foreach($classrooms as $classroom)
-                                        <option {{$classroom->id == $ticket->classroom->id ? 'selected' : null}} value="{{$classroom->id}}">{{ $classroom->name }}</option>
+                                        <option {{$classroom->id == $ticket->classroom?->id ? 'selected' : null}} value="{{$classroom->id}}">{{ $classroom->name }}</option>
                                     @endforeach
                                 </select>
+                                <x-input-error :messages="$errors->get('classroom_id')" class="mt-2" />
                             </div>
                         </div>
                         <div class="">
@@ -90,6 +88,7 @@
                                         <option {{$priority == $ticket->priority ? 'selected' : null}} value="{{$priority}}">{{ $priority }}</option>
                                     @endforeach
                                 </select>
+                                <x-input-error :messages="$errors->get('priority')" class="mt-2" />
                             </div>
                         </div>
                     </div>
@@ -98,8 +97,8 @@
                         Uložiť ticket
                     </x-primary-button>
                 </form>
-                <div class="max-w-7xl mx-auto flex pt-8">
-                    <h3 class="text-xl text-gray-800 dark:text-gray-200 leading-tight">Preradenie ticketu:</h3>
+                <div class="mx-auto flex pt-8">
+                    <h3 class="text-xl text-gray-100 leading-tight">Preradenie ticketu:</h3>
                 </div>
                 <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
                     POZOR! Týmto úkonom môžete prísť o prístup do ticketu!
@@ -122,11 +121,11 @@
                     </div>
 
                     <x-primary-button class="mt-4">
-                        Preradiť
+                        Preradiť ticket
                     </x-primary-button>
                 </form>
-                <div class="max-w-7xl mx-auto flex pt-8">
-                    <h3 class="text-xl text-gray-800 dark:text-gray-200 leading-tight">Uzatvorenie ticketu:</h3>
+                <div class="mx-auto flex pt-8">
+                    <h3 class="text-xl text-gray-100 leading-tight">Uzatvorenie ticketu:</h3>
                 </div>
                 <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
                     Môžete v skratke popísať, ako ste tento problém vyriešili.
@@ -136,18 +135,18 @@
                     @csrf
                     <div class="sm:grid sm:grid-cols-3">
                         <div class="">
-                            <x-input-label for="summary" :value="__('Sumár')" />
+                            <x-input-label for="summary" :value="__('Krátky popis vyriešenia ticketu')" />
                             <x-text-input id="summary" class="block mt-1 w-full" type="text" name="summary" :value="old('summary')" autofocus />
                             <x-input-error :messages="$errors->get('summary')" class="mt-2" />
                         </div>
                     </div>
 
                     <x-primary-button class="mt-4">
-                        Vymazať
+                        Uzatvoriť ticket
                     </x-primary-button>
                 </form>
-                <div class="max-w-7xl mx-auto flex pt-8">
-                    <h3 class="text-xl text-gray-800 dark:text-gray-200 leading-tight">Pridanie do skupiny:</h3>
+                <div class="mx-auto flex pt-8">
+                    <h3 class="text-xl text-gray-100 leading-tight">Pridanie do skupiny:</h3>
                 </div>
                 <form class="pt-8" method="POST" action="{{ route('ticket.group.store', $ticket->id) }}">
                     @csrf

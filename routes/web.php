@@ -25,11 +25,14 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified', 'block.banned', 'approved'])->group(function () {
     Route::get('/tickets', [TicketsController::class, 'indexCreated'])->name('tickets.index.created');
     Route::get('/tickets/assigned', [TicketsController::class, 'indexAssigned'])->middleware(['teacher'])->name('tickets.index.assigned');
+    Route::get('/tickets/closed', [TicketsController::class, 'indexCreatedClosed'])->name('tickets.index.created.closed');
+    Route::get('/tickets/assigned/closed', [TicketsController::class, 'indexAssignedClosed'])->middleware(['teacher'])->name('tickets.index.assigned.closed');
     Route::get('/tickets/create', [TicketsController::class, 'create'])->name('tickets.create');
     Route::post('/tickets', [TicketsController::class, 'store'])->name('tickets.store');
     Route::get('/tickets/{ticket}', [TicketsController::class, 'show'])->name('tickets.show');
     Route::get('/tickets/{ticket}/edit', [TicketsController::class, 'edit'])->name('tickets.edit');
     Route::patch('/tickets/{ticket}', [TicketsController::class, 'updateBasicInfo'])->name('tickets.update');
+    Route::patch('/tickets/{ticket}/summary', [TicketsController::class, 'updateSummary'])->name('tickets.update.summary');
     Route::patch('/tickets/{ticket}/advanced', [TicketsController::class, 'updateAdvancedInfo'])->name('tickets.update.advanced');
     Route::patch('/tickets/{ticket}/assign', [TicketsController::class, 'assignTicketToUser'])->name('tickets.update.assign');
     Route::delete('/tickets/{ticket}', [TicketsController::class, 'destroy'])->name('tickets.delete');

@@ -4,8 +4,6 @@
             <!-- Session Status -->
             <x-auth-session-status class="mb-4" :status="session('status')" />
 
-            {{$errors}}
-
             <form method="POST" enctype="multipart/form-data" action="{{ route('tickets.store') }}">
                 @csrf
 
@@ -18,14 +16,15 @@
 
                 <div class="sm:grid sm:grid-cols-3">
                     <div class="mt-4">
-                        <x-input-label for="classroom" :value="__('Trieda')" />
+                        <x-input-label for="classroom_id" :value="__('Učebňa')" />
                         <div class="mt-2">
-                            <select id="classroom" name="classroom" autocomplete="off" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
-                                <option selected="true" disabled="disabled">Vyberte</option>
+                            <select id="classroom_id" name="classroom_id" autocomplete="off" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                                <option selected="selected" value="">Vyberte</option>
                                 @foreach($classrooms as $classroom)
                                     <option value="{{$classroom->id}}" >{{ $classroom->name }}</option>
                                 @endforeach
                             </select>
+                            <x-input-error :messages="$errors->get('classroom_id')" class="mt-2" />
                         </div>
                     </div>
 

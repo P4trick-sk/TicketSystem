@@ -1,24 +1,15 @@
 <x-app-layout>
-    <x-slot name="header">
-       <div class="flex">
-           <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-               {{ $ticket->subject }}
-           </h2>
-           @can('update', $ticket)
-           <a class="font-semibold text-gray-900 dark:text-gray-100 ml-auto"
-              href="{{ route('tickets.edit', $ticket->id) }}">
-               Upraviť ticket
-           </a>
-           @endcan
-       </div>
-    </x-slot>
     @can('update', $ticket)
-    <a class="font-semibold ml-auto"
-       href="{{ route('tickets.edit', $ticket->id) }}">
-        Upraviť ticket
-    </a>
+    <div class="filter">
+        <a href="{{ route('tickets.edit', $ticket->id) }}">
+            <img
+                id="filter_icons"
+                src="{{ asset('icons/filter/pencil.svg') }}"
+                alt="pencil"
+            />
+        </a>
+    </div>
     @endcan
-
     <div class="mx-auto">
         <div class="p-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <div class="sm:grid sm:grid-cols-3 gap-4">
@@ -54,7 +45,7 @@
                     <div class="mt-2">
                         <x-text-input class="block mt-1 w-full"
                                       type="text"
-                                      :value="$ticket->category->name"
+                                      :value="$ticket->category?->name"
                                       disabled />
                     </div>
                 </div>
@@ -63,7 +54,7 @@
                     <div class="mt-2">
                         <x-text-input class="block mt-1 w-full"
                                       type="text"
-                                      :value="$ticket->classroom->name"
+                                      :value="$ticket->classroom?->name"
                                       disabled />
                     </div>
                 </div>
@@ -133,6 +124,7 @@
         </div>
     @endforeach
 
+    @can('update', $ticket)
     <div class="mt-6 mx-auto">
         <div class="p-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <form method="POST" enctype="multipart/form-data" action="{{ route('tickets.response.store', $ticket->id) }}">
@@ -158,4 +150,30 @@
             </form>
         </div>
     </div>
+    @endcan
+    @if($ticket->status == 'closed')
+        @can('delete', $ticket)
+            <div class="mt-6 max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="p-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <form method="POST" action="{{ route('tickets.update.summary', $ticket->id) }}">
+                        @method('patch')
+                        @csrf
+
+                        <!-- Name -->
+                        <div>
+                            <x-input-label for="summary" :value="__('Krátky popis vyriešenia ticketu')" />
+                            <x-text-input id="summary" class="block mt-1 w-full" type="text" name="summary" :value="old('summary', $ticket->summary)" required autofocus autocomplete="name" />
+                            <x-input-error :messages="$errors->get('summary')" class="mt-2" />
+                        </div>
+
+                        <div class="flex items-center justify-end mt-4">
+                            <x-primary-button class="ml-4">
+                                {{ __('Uložiť') }}
+                            </x-primary-button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        @endcan
+    @endif
 </x-app-layout>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Ticket;
 use App\Repositories\TicketRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -18,6 +19,15 @@ class AdminTicketsController extends Controller
     public function index()
     {
         $tickets = $this->ticketRepository->getAllTickets();
+        return view('admin.tickets.index')->with('tickets', $tickets);
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function indexClosed()
+    {
+        $tickets = Ticket::where('status', 'closed')->get();
         return view('admin.tickets.index')->with('tickets', $tickets);
     }
 

@@ -50,17 +50,21 @@ class GroupsPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Group $group): bool
+    public function update(User $user, Group $group): Response
     {
-        //
+        return $user->id == $group->createdBy->id
+            ? Response::allow()
+            : Response::deny('Nemáte oprávnenie na upravenie skupiny.');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Group $group): bool
+    public function delete(User $user, Group $group): Response
     {
-        //
+        return $user->id == $group->createdBy->id
+            ? Response::allow()
+            : Response::deny('Nemáte oprávnenie na zmazanie skupiny.');
     }
 
     /**

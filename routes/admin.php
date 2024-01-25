@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin.index');
     Route::get('/admin/tickets', [AdminTicketsController::class, 'index'])->name('admin.tickets.index');
+    Route::get('/admin/tickets/closed', [AdminTicketsController::class, 'indexClosed'])->name('admin.tickets.index.closed');
     Route::get('/admin/tickets/{id}', [AdminTicketsController::class, 'show'])->name('admin.tickets.show');
 });
 

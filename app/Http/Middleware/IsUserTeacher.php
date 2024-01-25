@@ -16,7 +16,7 @@ class IsUserTeacher
     public function handle(Request $request, Closure $next): Response
     {
         if(!$request->user()->isTeacher()){
-            return to_route('dashboard');
+            return to_route('tickets.index.created');
         }
 
         return $next($request);

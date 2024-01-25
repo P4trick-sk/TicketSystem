@@ -56,7 +56,17 @@ class TicketPolicy
      */
     public function update(User $user, Ticket $ticket): Response
     {
-        return $user->id == $ticket->createdBy->id || $user->id == $ticket->assignedTo->id
+        return ($user->id == $ticket->createdBy->id || $user->id == $ticket->assignedTo->id) && $ticket->status != 'closed'
+            ? Response::allow()
+            : Response::deny('Nemáte oprávnenie na editovanie ticketu.');
+    }
+
+    /**
+     * Determine whether the user can update the model.
+     */
+    public function updateBasic(User $user, Ticket $ticket): Response
+    {
+        return $user->id == $ticket->createdBy->id && $ticket->status != 'closed'
             ? Response::allow()
             : Response::deny('Nemáte oprávnenie na editovanie ticketu.');
     }
@@ -66,7 +76,7 @@ class TicketPolicy
      */
     public function updateAdvanced(User $user, Ticket $ticket): Response
     {
-        return $user->id == $ticket->assignedTo->id
+        return $user->id == $ticket->assignedTo->id && $ticket->status != 'closed'
             ? Response::allow()
             : Response::deny('Nemáte oprávnenie na editovanie ticketu.');
     }
@@ -102,11 +112,7 @@ class TicketPolicy
      */
     public function canRespond(User $user, Ticket $ticket): Response
     {
-        if ($user->isBanned()) {
-            return Response::deny('Ste zabanovaný.');
-        }
-
-        return $user->id == $ticket->createdBy->id || $user->id == $ticket->assignedTo?->id
+        return ($user->id == $ticket->createdBy->id || $user->id == $ticket->assignedTo?->id) && $ticket->status != 'closed'
             ? Response::allow()
             : Response::deny('Nemáte oprávnenie na tento ticket odpovedať.');
     }

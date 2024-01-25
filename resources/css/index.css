@@ -190,13 +190,18 @@ nav {
   margin-bottom: 0.2em;
 }
 
-.drop_button_menu:hover {
+.title{
+    text-align: center;
+    padding: 30px;
+}
+
+.drop_button_menu:hover, .drop_button_menu.active {
   cursor: pointer;
   background-color: #016bff;
   color: #fff;
 }
 
-.drop_button_menu:hover .icon {
+.drop_button_menu:hover .icon,  .drop_button_menu.active .icon{
   background: #00409A;
 }
 
