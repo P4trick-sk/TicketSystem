@@ -153,7 +153,7 @@
     @endcan
     @if($ticket->status == 'closed')
         @can('delete', $ticket)
-            <div class="mt-6 max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="mt-6 mx-auto sm:px-6 lg:px-8">
                 <div class="p-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                     <form method="POST" action="{{ route('tickets.update.summary', $ticket->id) }}">
                         @method('patch')
