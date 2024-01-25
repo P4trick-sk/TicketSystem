@@ -162,20 +162,20 @@
                     <a href="{{ route('tickets.index.created') }}" class="drop_button_menu {{ request()->routeIs('tickets.index.created') ? 'active' : null }}">
                         <p>Moje tickety</p>
                         <div class="icon">
-                            {{ \App\Models\Ticket::where('created_by', Auth::user()->id)->count() }}
+                            {{ \App\Models\Ticket::where('created_by', Auth::user()->id)->whereNot('status', 'closed')->count() }}
                         </div>
                     </a>
                     <a href="{{ route('tickets.index.created.closed') }}" class="drop_button_menu {{ request()->routeIs('tickets.index.created.closed') ? 'active' : null }}">
                         <p>Moje zatvorené tickety</p>
                         <div class="icon">
-                            {{ \App\Models\Ticket::where('created_by', Auth::user()->id)->whereNot('deleted_at', null)->count() }}
+                            {{ \App\Models\Ticket::where('created_by', Auth::user()->id)->where('status', 'closed')->count() }}
                         </div>
                     </a>
                     @if(Auth::user()->isTeacher())
                         <a href="{{ route('tickets.index.assigned') }}" class="drop_button_menu {{ request()->routeIs('tickets.index.assigned') ? 'active' : null }}">
                             <p>Mne pridelené tickety</p>
                             <div class="icon">
-                                {{ \App\Models\Ticket::where('assigned_to', Auth::user()->id)->count() }}
+                                {{ \App\Models\Ticket::where('assigned_to', Auth::user()->id)->where('status', 'closed')->count() }}
                             </div>
                         </a>
                     @endif
@@ -183,7 +183,7 @@
                         <a href="{{ route('tickets.index.assigned.closed') }}" class="drop_button_menu {{ request()->routeIs('tickets.index.assigned.closed') ? 'active' : null }}">
                             <p>Mne pridelené zatvorené tickety</p>
                             <div class="icon">
-                                {{ \App\Models\Ticket::where('assigned_to', Auth::user()->id)->whereNot('deleted_at', null)->count() }}
+                                {{ \App\Models\Ticket::where('assigned_to', Auth::user()->id)->whereNot('status', 'closed')->count() }}
                             </div>
                         </a>
                     @endif
