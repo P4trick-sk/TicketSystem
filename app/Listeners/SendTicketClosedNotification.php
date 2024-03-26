@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\TicketClosed;
+use App\Notifications\TicketClosedNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
@@ -22,9 +23,7 @@ class SendTicketClosedNotification
      */
     public function handle(TicketClosed $event): void
     {
-        $userAssigned = $event->ticket->assignedTo;
-        $userCreated = $event->ticket->createdBy;
-        Mail::to($userAssigned)->send(new \App\Mail\TicketClosed($event->ticket));
-        Mail::to($userCreated)->send(new \App\Mail\TicketClosed($event->ticket));
+        $user = $event->ticket->createdBy;
+        $user->notify(new TicketClosedNotification($event->ticket));
     }
 }

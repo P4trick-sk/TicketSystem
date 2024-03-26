@@ -67,7 +67,7 @@
 
                                 @if(Auth::user()->isTeacher())
                                 <x-dropdown-link class="dropdown-link" :href="route('groups.create')">
-                                    {{ __('Skupinu') }}
+                                    {{ __('Skupinu ticketov') }}
                                 </x-dropdown-link>
                                 @endif
                             </x-slot>
@@ -110,6 +110,12 @@
                                         {{ __('Odhlásiť') }}
                                     </x-dropdown-link>
                                 </form>
+                                <p class="notif-title">Notifikácie</p>
+                                @foreach(Auth::user()->notifications()->take(4)->get() as $notification)
+                                        <x-dropdown-link class="dropdown-notif" :href="$notification->data['url']">
+                                            {{ $notification->data['message'] }}
+                                        </x-dropdown-link>
+                                @endforeach
                             </x-slot>
                         </x-dropdown>
                     </div>
