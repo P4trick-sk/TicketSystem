@@ -28,7 +28,7 @@ Route::middleware(['auth', 'verified', 'block.banned', 'approved'])->group(funct
     Route::get('/tickets/closed', [TicketsController::class, 'indexCreatedClosed'])->name('tickets.index.created.closed');
     Route::get('/tickets/assigned/closed', [TicketsController::class, 'indexAssignedClosed'])->middleware(['teacher'])->name('tickets.index.assigned.closed');
     Route::get('/tickets/create', [TicketsController::class, 'create'])->name('tickets.create');
-    Route::post('/tickets', [TicketsController::class, 'store'])->name('tickets.store');
+    Route::post('/tickets', [TicketsController::class, 'store'])->middleware(['throttle:tickets'])->name('tickets.store');
     Route::get('/tickets/{ticket}', [TicketsController::class, 'show'])->name('tickets.show');
     Route::get('/tickets/{ticket}/edit', [TicketsController::class, 'edit'])->name('tickets.edit');
     Route::patch('/tickets/{ticket}', [TicketsController::class, 'updateBasicInfo'])->name('tickets.update');
