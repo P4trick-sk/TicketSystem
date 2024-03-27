@@ -39,7 +39,7 @@ class TicketClosedNotification extends Notification implements ShouldQueue
     {
         return (new MailMessage)
             ->greeting('Váš ticket bol zatvorený!')
-            ->line("Ticket {$this->ticket->name}, vytvorený dňa {$this->ticket->created_on} bol zatvorený.")
+            ->line("Ticket {$this->ticket->subject}, vytvorený dňa {$this->ticket->created_on} bol zatvorený.")
             ->action('Otvoriť', route('tickets.show', $this->ticket->id));
     }
 

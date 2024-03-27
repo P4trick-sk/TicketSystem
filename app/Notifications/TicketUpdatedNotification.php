@@ -39,7 +39,7 @@ class TicketUpdatedNotification extends Notification implements ShouldQueue
     {
         return (new MailMessage)
             ->greeting('Váš ticket bol upravený!')
-            ->line("Ticket {$this->ticket->name}, vytvorený dňa {$this->ticket->created_on} bol urpavený.")
+            ->line("Ticket {$this->ticket->subject}, vytvorený dňa {$this->ticket->created_on} bol upravený.")
             ->action('Otvoriť', route('tickets.show', $this->ticket->id));
     }
 

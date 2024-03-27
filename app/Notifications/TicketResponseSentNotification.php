@@ -39,7 +39,7 @@ class TicketResponseSentNotification extends Notification implements ShouldQueue
     {
         return (new MailMessage)
             ->greeting('Nová odpoveď na ticket!')
-            ->line("Užívateľ {$this->response->createdBy->name} odpovedal na ticket {$this->response->ticket->name}")
+            ->line("Užívateľ {$this->response->responseBy->name} odpovedal na ticket {$this->response->ticket->subject}")
             ->action('Otvoriť', route('tickets.show', $this->response->ticket->id));
     }
 

@@ -39,7 +39,7 @@ class TicketAssignedNotification extends Notification implements ShouldQueue
     {
         return (new MailMessage)
             ->greeting('Bol Vám pridelený ticket!')
-            ->line("Ticket {$this->ticket->name}, vytvorený užívateľom {$this->ticket->assignedTo->name} Vám bol pridelený. Kliknutím nižšie ho otvoríte.")
+            ->line("Ticket {$this->ticket->subject}, vytvorený užívateľom {$this->ticket->assignedTo->name} Vám bol pridelený. Kliknutím nižšie ho otvoríte.")
             ->action('Otvoriť', route('tickets.show', $this->ticket->id));
     }
 

@@ -44,6 +44,14 @@
                             </form>
                         @endif
                     @endif
+                        <form method="POST" action="{{ route('admin.users.delete', $user->id) }}">
+                            @csrf
+                            @method('delete')
+
+                            <x-danger-button class="ml-4">
+                                {{ __('Vymazať') }}
+                            </x-danger-button>
+                        </form>
                 </div>
             </div>
             <x-input-error :messages="$errors->get('ban')" class="mt-2" />
