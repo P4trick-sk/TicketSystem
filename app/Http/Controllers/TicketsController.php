@@ -17,6 +17,7 @@ use App\Models\Group;
 use App\Models\User;
 use App\Models\Ticket;
 use App\Repositories\TicketRepositoryInterface;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,6 +26,8 @@ use Illuminate\View\View;
 
 class TicketsController extends Controller
 {
+    use SoftDeletes;
+
     public function __construct(TicketRepositoryInterface $ticketRepository) {
         $this->ticketRepository = $ticketRepository;
     }

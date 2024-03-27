@@ -23,9 +23,9 @@ class SendTicketResponseSentNotification
      */
     public function handle(TicketResponseSent $event): void
     {
-        if ($event->response->createdBy->id == $event->response->ticket->assignedTo->id) {
+        if ($event->response->responseBy->id == $event->response->ticket->assignedTo->id) {
             $event->response->ticket->createdBy->notify(new TicketResponseSentNotification($event->response));
-        } elseif ($event->response->createdBy->id == $event->response->ticket->createdBy->id) {
+        } elseif ($event->response->responseBy->id == $event->response->ticket->createdBy->id) {
             $event->response->ticket->assignedTo->notify(new TicketResponseSentNotification($event->response));
         } else {
             $event->response->ticket->assignedTo->notify(new TicketResponseSentNotification($event->response));
