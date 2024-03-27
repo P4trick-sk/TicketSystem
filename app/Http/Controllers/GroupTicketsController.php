@@ -95,8 +95,9 @@ class GroupTicketsController extends Controller
 
         foreach ($group->tickets as $ticket) {
             $ticket->summary = $request->summary;
+            $ticket->status = 'closed';
+            $ticket->deleted_at = now();
             $ticket->save();
-            $ticket->delete();
         }
 
         return to_route('groups.show', $group->id);
