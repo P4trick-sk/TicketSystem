@@ -29,6 +29,7 @@ class ImageGallery extends Component
         }
 
         $this->response->attachments = $this->attachments;
+        $this->uploadedAttachments = null;
         $this->response->save();
     }
 

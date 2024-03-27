@@ -11,7 +11,12 @@
     </div>
 
     <form wire:submit="save">
-        <input class="text-gray-400" type="file" wire:model="uploadedAttachments" multiple>
+        <div class="mb-3">
+            <label for="formFile" class="form-label">Prilohy</label>
+            <input class="form-control" type="file" id="formFile" wire:model="uploadedAttachments" multiple>
+        </div>
+
+        {{--<input class="text-gray-400" type="file" wire:model="uploadedAttachments" multiple>--}}
         <div><div class="text-gray-400" wire:loading wire:target="uploadedAttachments">Uploading...</div></div>
         @error('uploaded') <span class="error">{{ $message }}</span> @enderror
 
