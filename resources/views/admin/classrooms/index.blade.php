@@ -34,6 +34,11 @@
                 </div>
             </div>
         @endforeach
+            <div class="pt-8">
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    {{ $classrooms->links() }}
+                </div>
+            </div>
     @else
         <div class="pt-8">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">

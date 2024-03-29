@@ -13,6 +13,11 @@ class TicketRepository implements TicketRepositoryInterface
         return Ticket::all();
     }
 
+    public function getPaginatedTickets(int $perPage)
+    {
+        return Ticket::paginate($perPage);
+    }
+
     public function getTicketById($ticketId)
     {
         return Ticket::findOrFail($ticketId);

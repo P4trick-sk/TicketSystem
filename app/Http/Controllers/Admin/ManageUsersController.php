@@ -18,7 +18,7 @@ class ManageUsersController extends Controller
      */
     public function index(): View
     {
-        $users = User::all();
+        $users = User::paginate(5);
         return view('admin.users.index')->with('users', $users);
     }
 

@@ -16,7 +16,7 @@ class CategoryTypeController extends Controller
      */
     public function index()
     {
-        $categorytypes = CategoryType::all();
+        $categorytypes = CategoryType::paginate(5);
         return view('admin.categoryTypes.index')->with('categoryTypes', $categorytypes);
     }
 
