@@ -18,7 +18,7 @@ class AdminTicketsController extends Controller
      */
     public function index()
     {
-        $tickets = $this->ticketRepository->getAllTickets();
+        $tickets = $this->ticketRepository->getPaginatedTickets(5);
         return view('admin.tickets.index')->with('tickets', $tickets);
     }
 
@@ -27,7 +27,7 @@ class AdminTicketsController extends Controller
      */
     public function indexClosed()
     {
-        $tickets = Ticket::where('status', 'closed')->get();
+        $tickets = Ticket::where('status', 'closed')->paginate(5);
         return view('admin.tickets.index')->with('tickets', $tickets);
     }
 
