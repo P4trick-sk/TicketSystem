@@ -78,11 +78,12 @@
                 {{ $ticket->description }}
             </div>
             @if($ticket->attachments)
-                <div class="sm:grid sm:grid-cols-3 gap-4">
+                <div class="gallery sm:grid sm:grid-cols-3 gap-4">
                     @foreach(json_decode($ticket->attachments) as $file)
-                        <div>
-                            <img src="/{{ $file }}" alt="test" style="max-height: 200px;object-fit: contain;overflow: hidden;">
-                        </div>
+                        <a href="/{{ $file }}" style="display: block">
+                            <img data-pswp-width="400"
+                                 data-pswp-height="500" src="/{{ $file }}" alt="test" style="max-height: 200px;object-fit: contain;overflow: hidden;">
+                        </a>
                     @endforeach
                 </div>
             @endif
@@ -101,11 +102,11 @@
                     {{ $response->response }}
                 </div>
                 @if($response->attachments)
-                    <div class="sm:grid sm:grid-cols-3 gap-4">
+                    <div class="gallery sm:grid sm:grid-cols-3 gap-4">
                         @foreach(json_decode($response->attachments) as $file)
-                            <div>
+                            <a href="#" style="display: block">
                                 <img src="/{{ $file }}" alt="test" style="max-height: 200px;object-fit: contain;overflow: hidden;">
-                            </div>
+                            </a>
                         @endforeach
                     </div>
                 @endif
