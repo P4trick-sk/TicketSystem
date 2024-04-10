@@ -74,12 +74,12 @@
                             </x-slot>
                         </x-dropdown>
                     </div>
-                    {{--<img
+                    <img
                         id="top_icons"
                         class="change_color"
                         src="{{ asset('icons/nav/question-circle.svg') }}"
                         alt="question-circle"
-                    />--}}
+                    />
                     <div class="hidden sm:flex sm:items-center sm:ml-6">
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
