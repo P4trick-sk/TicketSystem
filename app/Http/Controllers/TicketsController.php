@@ -54,14 +54,14 @@ class TicketsController extends Controller
     public function indexCreatedClosed(Request $request)
     {
         return view('dashboard.createdClosed')->with([
-            'tickets' => Ticket::where('status', 'closed')->where('created_by', $request->user()->id)->get(),
+            'tickets' => Ticket::where('status', 'closed')->where('created_by', $request->user()->id)->orderBy('created_on', 'desc')->get(),
         ]);
     }
 
     public function indexAssignedClosed(Request $request)
     {
         return view('dashboard.assignedClosed')->with([
-            'tickets' => Ticket::where('status', 'closed')->where('assigned_to', $request->user()->id)->get(),
+            'tickets' => Ticket::where('status', 'closed')->where('assigned_to', $request->user()->id)->orderBy('created_on', 'desc')->get(),
         ]);
     }
 
@@ -239,8 +239,6 @@ class TicketsController extends Controller
         ]);
 
         $ticket->summary = $request->summary;
-        $ticket->status = 'closed';
-        $ticket->deleted_at = now();
         $ticket->save();
 
         event(new TicketClosed($ticket));
