@@ -1,19 +1,10 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                {{ $group->name }}
-            </h2>
-            <form method="POST" action="{{ route('groups.delete', $group->id) }}" class="ml-auto">
-                @csrf
-                @method('delete')
-
-                <x-primary-button class="font-semibold">
-                    Zmazať skupinu
-                </x-primary-button>
-            </form>
-        </div>
-    </x-slot>
+    <div class="filter">
+        <a class="font-semibold ml-auto"
+           href="{{ route('groups.show', $group->id) }}">
+            Naspäť
+        </a>
+    </div>
 
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <form method="POST" action="{{ route('groups.update', $group->id) }}">
@@ -38,6 +29,15 @@
                     {{ __('Uložiť') }}
                 </x-primary-button>
             </div>
+        </form>
+
+        <form method="POST" action="{{ route('groups.delete', $group->id) }}" class="ml-auto">
+            @csrf
+            @method('delete')
+
+            <x-primary-button class="font-semibold">
+                Zmazať skupinu
+            </x-primary-button>
         </form>
     </div>
 </x-app-layout>

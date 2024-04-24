@@ -36,7 +36,7 @@
                     <div class="mt-2">
                         <x-text-input class="block mt-1 w-full"
                                       type="text"
-                                      :value="$ticket->created_on"
+                                      :value="date('d.m.Y, H:i', strtotime($ticket->created_on))"
                                       disabled />
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                     </div>
                 </div>
                 <div class="">
-                    <x-input-label  :value="__('Trieda')" />
+                    <x-input-label  :value="__('Učebňa')" />
                     <div class="mt-2">
                         <x-text-input class="block mt-1 w-full"
                                       type="text"
