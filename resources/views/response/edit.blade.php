@@ -40,7 +40,7 @@
                 </div>
             </form>
 
-            <livewire:image-gallery :response="$response" />
+            <livewire:image-gallery :resource="$response" />
         </div>
     </div>
 </x-app-layout>

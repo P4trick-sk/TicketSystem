@@ -15,7 +15,7 @@
             <div class="mx-auto flex">
                 <h3 class="text-xl  leading-tight">Úprava údajov:</h3>
             </div>
-            <form class="pt-8" method="POST" enctype="multipart/form-data" action="{{ route('tickets.update', $ticket->id) }}">
+            <form class="pt-8 mb-4" method="POST" enctype="multipart/form-data" action="{{ route('tickets.update', $ticket->id) }}">
                 @method('patch')
                 @csrf
 
@@ -37,25 +37,12 @@
                     <x-input-error :messages="$errors->get('description')" class="mt-2" />
                 </div>
 
-                @if($ticket->attachments)
-                    <div class="sm:grid sm:grid-cols-3 gap-4">
-                        @foreach(json_decode($ticket->attachments) as $file)
-                            <div>
-                                <img src="/{{ $file }}" alt="test" style="max-height: 200px;object-fit: contain;overflow: hidden;">
-                            </div>
-                        @endforeach
-                    </div>
-                @endif
-
-                <div class="mt-4">
-                    <input class="text-gray-400" type="file" name="attachments[]" id="attachment" multiple>
-                    <x-input-error :messages="$errors->get('attachment')" class="mt-2" />
-                </div>
-
                 <x-primary-button class="mt-4">
                     Uložiť ticket
                 </x-primary-button>
             </form>
+
+                <livewire:image-gallery :resource="$ticket" />
             @endcan
 
             @can('updateAdvanced', $ticket)

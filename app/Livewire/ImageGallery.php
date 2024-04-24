@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Models\TicketResponse;
+use App\AttachmentsEnabledInterface;
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
 use Livewire\Component;
@@ -14,7 +14,7 @@ class ImageGallery extends Component
     public $attachments = [];
     public $uploadedAttachments;
 
-    public TicketResponse $response;
+    public AttachmentsEnabledInterface $resource;
 
     public function save()
     {
@@ -28,9 +28,9 @@ class ImageGallery extends Component
             }
         }
 
-        $this->response->attachments = $this->attachments;
+        $this->resource->attachments = $this->attachments;
         $this->uploadedAttachments = null;
-        $this->response->save();
+        $this->resource->save();
     }
 
     public function render()
@@ -38,10 +38,10 @@ class ImageGallery extends Component
         return view('livewire.image-gallery');
     }
 
-    public function mount(TicketResponse $response)
+    public function mount(AttachmentsEnabledInterface $resource)
     {
-        $this->response = $response;
-        $this->attachments = (array) json_decode($response->attachments);
+        $this->resource = $resource;
+        $this->attachments = (array) json_decode($resource->attachments);
     }
 
     public function deleteImage($index)
