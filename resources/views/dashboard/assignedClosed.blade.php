@@ -26,6 +26,11 @@
             @endforeach
         </tbody>
     </table>
+        <div class="pt-8">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                {{ $tickets->links() }}
+            </div>
+        </div>
     @else
         <p class="title">Žiaden ticket</p>
     @endif
