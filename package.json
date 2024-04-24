@@ -16,6 +16,9 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
-        "photoswipe": "^5.4.3"
+        "@popperjs/core": "^2.11.8",
+        "apexcharts": "^3.48.0",
+        "photoswipe": "^5.4.3",
+        "simplebar": "^6.2.5"
     }
 }

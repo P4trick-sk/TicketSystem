@@ -1,60 +1,68 @@
 <x-app-layout>
-    <div class="pt-8">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <!-- Session Status -->
-            <x-auth-session-status class="mb-4" :status="session('status')" />
-
-            <form method="POST" enctype="multipart/form-data" action="{{ route('tickets.store') }}">
-                @csrf
-
-                <!-- Email Address -->
-                <div>
-                    <x-input-label for="subject" value="Predmet" />
-                    <x-text-input id="subject" class="block mt-1 w-full" type="text" name="subject" :value="old('subject')" required autofocus />
-                    <x-input-error :messages="$errors->get('subject')" class="mt-2" />
+    <!-- [ breadcrumb ] start -->
+    <div class="page-header">
+        <div class="page-block">
+            <div class="row align-items-center">
+                <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('tickets.index.created') }}">{{ __('Tickety') }}</a></li>
+                        <li class="breadcrumb-item" aria-current="page">{{ __('Vytvoriť ticket') }}</li>
+                    </ul>
                 </div>
-
-                <div class="sm:grid sm:grid-cols-3">
-                    <div class="mt-4">
-                        <x-input-label for="classroom_id" :value="__('Učebňa')" />
-                        <div class="mt-2">
-                            <select id="classroom_id" name="classroom_id" autocomplete="off" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
-                                <option selected="selected" value="">Vyberte</option>
-                                @foreach($classrooms as $classroom)
-                                    <option value="{{$classroom->id}}" >{{ $classroom->name }}</option>
-                                @endforeach
-                            </select>
-                            <x-input-error :messages="$errors->get('classroom_id')" class="mt-2" />
+                <div class="col-md-12">
+                    <div class="page-header-title">
+                        <h2 class="mb-0">{{ __('Vytvorenie ticketu') }}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [ breadcrumb ] end -->
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data" action="{{ route('tickets.store') }}">
+                        @csrf
+                        <div class="form-group">
+                            <label class="form-label">{{ __('Predmet') }}:</label>
+                            <input type="text" class="form-control" name="subject" id="subject" placeholder="{{ __('Zadefinujte problém') }}" value="{{ old('subject') }}" required autofocus>
+                            <small class="form-text text-muted">{{ __('Napíšte krátkú a trefnú definíciu problému') }}</small>
                         </div>
-                    </div>
-
-                    <div class="mt-4">
-                        <x-category-select :categoryTypes="$categoryTypes"></x-category-select>
-                    </div>
+                        <div class="form-group">
+                            <label class="form-label">{{ __('Popis') }}:</label>
+                            <textarea class="form-control" name="description" id="description" rows="3" placeholder="{{ __('Popíšte problém') }}" value="{{ old('description') }}" required></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-label">{{ __('Miestnosť') }}:</label>
+                                    <select class="form-select" id="classroom_id" name="classroom_id" autocomplete="off" required aria-label="select example">
+                                        <option selected="selected" disabled="disabled">{{ __('Vyberte') }}</option>
+                                        @foreach($classrooms as $classroom)
+                                            <option value="{{$classroom->id}}" >{{ $classroom->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <x-category-select :categoryTypes="$categoryTypes"></x-category-select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">{{ __('Popis') }}:</label>
+                            <textarea class="form-control" name="description" id="description" rows="3" placeholder="{{ __('Popíšte problém') }}" value="{{ old('description') }}" required></textarea>
+                        </div>
+                        <div class="form-file mb-3">
+                            <label class="form-label">{{ __('Prílohy') }}:</label>
+                            <input type="file" class="form-control" aria-label="attachment" name="attachments[]" id="attachment" multiple required>
+                            {{--<div class="invalid-feedback">Example invalid form file feedback</div>--}}
+                        </div>
+                        <button class="btn btn-primary" type="submit">{{ __('Odoslať') }}</button>
+                    </form>
                 </div>
-
-                <!-- Password -->
-                <div class="mt-4">
-                    <x-input-label for="description" value="Popis problému" />
-
-                    <x-text-input id="description" class="block mt-1 w-full"
-                                  type="text"
-                                  name="description"
-                                  :value="old('description')"
-                                  required />
-
-                    <x-input-error :messages="$errors->get('description')" class="mt-2" />
-                </div>
-
-                <div class="mt-4">
-                    <input class="text-gray-400" type="file" name="attachments[]" id="attachment" multiple>
-                    <x-input-error :messages="$errors->get('attachment')" class="mt-2" />
-                </div>
-
-                <x-primary-button class="mt-4">
-                    Pridať ticket
-                </x-primary-button>
-            </form>
+            </div>
         </div>
     </div>
 </x-app-layout>
