@@ -18,7 +18,7 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased body-container">
+    <body class="font-sans antialiased body-container" data-title="Welcome!" data-intro="Hello World! 👋">
 
         <header>
             <div id="horizontal" class="topnav">
@@ -167,7 +167,7 @@
                     </a>
                 </div>
             </nav>
-            <div id="mySIDEBAR" class="sidebar" data-title="Welcome!" data-intro="Hello World! 👋">
+            <div id="mySIDEBAR" class="sidebar">
                 @if(request()->routeIs('tickets.*'))
                     <a href="{{ route('tickets.index.created') }}" class="drop_button_menu {{ request()->routeIs('tickets.index.created') ? 'active' : null }}">
                         <p>Moje tickety</p>
