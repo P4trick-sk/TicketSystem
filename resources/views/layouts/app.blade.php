@@ -18,9 +18,10 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
+    <div>
     <body class="font-sans antialiased body-container">
 
-        <header data-title="Welcome!" data-intro="Hello World! 👋">
+        <header>
             <div id="horizontal" class="topnav">
                 <img src="{{ asset('img/logo.png') }}" alt="logo" id="logo" />
                 {{--<div class="searchbar">
@@ -244,4 +245,5 @@
             });
         </script>
     </body>
+    </div>
 </html>
