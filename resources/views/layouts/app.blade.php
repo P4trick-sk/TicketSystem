@@ -20,7 +20,7 @@
     </head>
     <body class="font-sans antialiased body-container">
 
-        <header data-intro="Toto je vrchný navigačný panel. Nájdete tu logo našej aplikácie, prihláseného používateľa a možnosť vytvoriť ticket.">
+        <header data-intro="Toto je vrchný navigačný panel. Nájdete tu logo našej aplikácie, prihláseného používateľa a možnosť vytvoriť ticket." data-step="2">
             <div id="horizontal" class="topnav">
                 <img src="{{ asset('img/logo.png') }}" alt="logo" id="logo" />
                 {{--<div class="searchbar">
@@ -126,8 +126,8 @@
                 </div>
             </div>
         </header>
-        <div class="content" data-title="Vitajte!" data-intro="Práve sa nachádzate v používateľskom rozhraní!">
-            <nav id="vertical" data-intro="Toto je bočný navigačný panel. Nájdete tu výber ticketov spolu s nastaveniami a tlačítkom pre skrytie bočného panelu.">
+        <div class="content" data-title="Vitajte!" data-intro="Práve sa nachádzate v používateľskom rozhraní!" data-step="1">
+            <nav id="vertical" data-intro="Toto je bočný navigačný panel. Nájdete tu výber ticketov spolu s nastaveniami a tlačítkom pre skrytie bočného panelu." data-step="3">
                 <div class="upper_icons">
                     <a href="{{ route('tickets.index.created') }}">
                     <img
@@ -167,7 +167,7 @@
                     </a>
                 </div>
             </nav>
-            <div id="mySIDEBAR" class="sidebar" data-intro="Toto je bočný panel. Nachádzajú sa tu tickety roztriedené do jednotlivých skupín.">
+            <div id="mySIDEBAR" class="sidebar" data-intro="Toto je bočný panel. Nachádzajú sa tu tickety roztriedené do jednotlivých skupín." data-step="4">
                 @if(request()->routeIs('tickets.*'))
                     <a href="{{ route('tickets.index.created') }}" class="drop_button_menu {{ request()->routeIs('tickets.index.created') ? 'active' : null }}">
                         <p>Moje tickety</p>
@@ -206,7 +206,7 @@
                     </a>
                 @endif
             </div>
-            <div class="main" data-intro="Tu môžete vidieť zoznam všetkých ticketov z danej skupiny, ktorú máte vybratú.">
+            <div class="main" data-intro="Tu môžete vidieť zoznam všetkých ticketov z danej skupiny, ktorú máte vybratú." data-step="5">
                 <main id="main">
                     <div id="main-nano-wrapper" class="nano">
                         <div class="nano-content">
