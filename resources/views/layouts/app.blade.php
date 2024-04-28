@@ -127,7 +127,7 @@
             </div>
         </header>
         <div class="content" data-title="Vitajte!" data-intro="Práve sa nachádzate v používateľskom rozhraní!">
-            <nav id="vertical" data-intro="Toto je bočný panel. Nájdete tu výber ticketov a skupín ticketov spolu s nastaveniami.">
+            <nav id="vertical" data-intro="Toto je bočný navigačný panel. Nájdete tu výber ticketov spolu s nastaveniami a tlačítkom pre skrytie bočného panelu.">
                 <div class="upper_icons">
                     <a href="{{ route('tickets.index.created') }}">
                     <img
