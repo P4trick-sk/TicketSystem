@@ -221,7 +221,9 @@
         <script src="https://unpkg.com/intro.js/intro.js">           
         </script>
         <script>
-            introJs().start();
+            top_icons.addEventListener("click", function() {
+                introJs().start()
+            });
         </script>
         <script>
             function myFunction() {
