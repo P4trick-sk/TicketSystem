@@ -167,7 +167,7 @@
                     </a>
                 </div>
             </nav>
-            <div id="mySIDEBAR" class="sidebar">
+            <div id="mySIDEBAR" class="sidebar" data-intro="Toto je bočný panel. Nachádzajú sa tu tickety roztriedené do jednotlivých skupín.">
                 @if(request()->routeIs('tickets.*'))
                     <a href="{{ route('tickets.index.created') }}" class="drop_button_menu {{ request()->routeIs('tickets.index.created') ? 'active' : null }}">
                         <p>Moje tickety</p>
@@ -206,7 +206,7 @@
                     </a>
                 @endif
             </div>
-            <div class="main">
+            <div class="main" data-intro="Tu môžete vidieť zoznam všetkých ticketov z danej skupiny, ktorú máte vybratú.">
                 <main id="main">
                     <div id="main-nano-wrapper" class="nano">
                         <div class="nano-content">
