@@ -20,7 +20,7 @@
     </head>
     <body class="font-sans antialiased body-container">
 
-        <header>
+        <header data-intro="Toto je vrchný navigačný panel. Nájdete tu logo našej aplikácie, prihláseného používateľa a možnosť vytvoriť ticket.">
             <div id="horizontal" class="topnav">
                 <img src="{{ asset('img/logo.png') }}" alt="logo" id="logo" />
                 {{--<div class="searchbar">
@@ -126,7 +126,7 @@
                 </div>
             </div>
         </header>
-        <div class="content" data-title="Welcome!" data-intro="Hello World! 👋">
+        <div class="content" data-title="Vitajte!" data-intro="Práve sa nachádzate v používateľskom rozhraní!">
             <nav id="vertical">
                 <div class="upper_icons">
                     <a href="{{ route('tickets.index.created') }}">
