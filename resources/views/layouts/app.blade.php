@@ -18,7 +18,7 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased body-container">
+    <body class="font-sans antialiased body-container" data-title="Welcome!" data-intro="Hello World! 👋">
 
         <header>
             <div id="horizontal" class="topnav">
@@ -219,6 +219,9 @@
         </div>
 
         <script src="https://unpkg.com/intro.js/intro.js">           
+        </script>
+        <script>
+            introJs().start();
         </script>
         <script>
             function myFunction() {
