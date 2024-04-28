@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use App\AttachmentsEnabledInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class TicketResponse extends Model
+class TicketResponse extends Model implements AttachmentsEnabledInterface
 {
     use HasFactory;
 

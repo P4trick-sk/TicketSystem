@@ -24,11 +24,11 @@ class TicketRepository implements TicketRepositoryInterface
     }
 
     public function getAllTicketsCreatedByUser($userId) {
-        return Ticket::where('created_by', $userId)->whereNot('status', 'closed')->get();
+        return Ticket::where('created_by', $userId)->whereNot('status', 'closed')->orderBy('created_on', 'desc')->paginate(10);
     }
 
     public function getAllTicketsAssignedToUser($userId) {
-        return Ticket::where('assigned_to', $userId)->whereNot('status', 'closed')->get();
+        return Ticket::where('assigned_to', $userId)->whereNot('status', 'closed')->orderBy('created_on', 'desc')->paginate(10);
     }
 
     public function deleteTicket($ticketId)

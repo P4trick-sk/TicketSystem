@@ -23,6 +23,15 @@ class ManageUsersController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     */
+    public function indexDeleted(): View
+    {
+        $users = User::onlyTrashed()->paginate(5);
+        return view('admin.users.indexDeleted')->with('users', $users);
+    }
+
+    /**
      * Show the form for creating a new resource.
      */
     public function create(): View
@@ -68,6 +77,15 @@ class ManageUsersController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     */
+    public function showDeleted(int $id): View
+    {
+        $user = User::withTrashed()->find($id);
+        return view('admin.users.showDeleted')->with('user', $user);
+    }
+
+    /**
      * Show the form for editing the specified resource.
      */
     public function edit(User $user)
@@ -108,5 +126,15 @@ class ManageUsersController extends Controller
     {
         $user->delete();
         return to_route('admin.users.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function undelete(int $id)
+    {
+        $user = User::withTrashed()->find($id);
+        $user->restore();
+        return to_route('admin.users.show', $user->id);
     }
 }

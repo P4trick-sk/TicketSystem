@@ -24,12 +24,15 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/users', [ManageUsersController::class, 'index'])->name('admin.users.index');
+    Route::get('/admin/users/deleted', [ManageUsersController::class, 'indexDeleted'])->name('admin.users.deleted.index');
     Route::get('/admin/users/create', [ManageUsersController::class, 'create'])->name('admin.users.create');
     Route::get('/admin/users/{user}', [ManageUsersController::class, 'show'])->name('admin.users.show');
+    Route::get('/admin/users/deleted/{id}', [ManageUsersController::class, 'showDeleted'])->name('admin.users.deleted.show');
     Route::post('/admin/users', [ManageUsersController::class, 'store'])->name('admin.users.store');
     Route::delete('/admin/users/{user}', [ManageUsersController::class, 'destroy'])->name('admin.users.delete');
     Route::get('/admin/users/{user}/edit', [ManageUsersController::class, 'edit'])->name('admin.users.edit');
     Route::patch('/admin/users/{user}', [ManageUsersController::class, 'update'])->name('admin.users.update');
+    Route::patch('/admin/users/{id}/undelete', [ManageUsersController::class, 'undelete'])->name('admin.users.undelete');
     Route::patch('/admin/users/{user}/ban', [UserBanController::class, 'ban'])->name('admin.users.ban');
     Route::patch('/admin/users/{user}/unban', [UserBanController::class, 'unban'])->name('admin.users.unban');
     Route::patch('/admin/users/{user}/approve', [ApproveUserController::class, 'update'])->name('admin.users.approve');
