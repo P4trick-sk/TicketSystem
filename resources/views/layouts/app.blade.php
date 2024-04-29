@@ -218,23 +218,11 @@
                 <button id="last7DaysBtn">Last 7 Days</button>
                 <button id="last30DaysBtn">Last 30 Days</button>
 
-                <!-- Ticket tables -->
-                <div id="last24HoursTickets" class="hide">
-                    <!-- Include the ticket table for last 24 hours here -->
-                </div>
-
-                <div id="last7DaysTickets" class="hide">
-                    <!-- Include the ticket table for last 7 days here -->
-                </div>
-
-                <div id="last30DaysTickets" class="hide">
-                    <!-- Include the ticket table for last 30 days here -->
-                </div>
-
                 @php
                     $last24HoursTickets = \App\Models\Ticket::where('created_on', '>=', now()->subHours(24))->get();
                 @endphp
 
+            <div id="last24HoursTickets" class="hide">
                 @if($last24HoursTickets->isNotEmpty())
                     <table>
                         <thead>
@@ -261,7 +249,9 @@
                 @else
                     <p>No tickets created in the last 24 hours.</p>
                 @endif
+            </div>
 
+            <div id="last7DaysTickets" class="hide">
                                 <!-- Tickets for the last 7 days -->
                 @php
                     $last7DaysTickets = \App\Models\Ticket::where('created_on', '>=', now()->subDays(7))->get();
@@ -296,7 +286,9 @@
                 @else
                     <p>No tickets created in the last 7 days.</p>
                 @endif
+            </div>
 
+            <div id="last30DaysTickets" class="hide">
                 <!-- Tickets for the last 30 days -->
                 @php
                     $last30DaysTickets = \App\Models\Ticket::where('created_on', '>=', now()->subDays(30))->get();
@@ -331,7 +323,7 @@
                 @else
                     <p>No tickets created in the last 30 days.</p>
                 @endif
-
+            </div>
             </div>
             <div class="main" data-intro="Tu môžete vidieť zoznam všetkých ticketov z danej skupiny, ktorú máte vybratú." data-step="5">
                 <main id="main">
