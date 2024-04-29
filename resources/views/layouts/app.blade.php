@@ -206,7 +206,7 @@
                     </a>
                 @endif
                 @php
-                    echo \App\Models\Ticket::all();
+                    echo \App\Models\Ticket::where('created_on', '>=', now()->subHours(24))->get();
                 @endphp
             </div>
             <div class="main" data-intro="Tu môžete vidieť zoznam všetkých ticketov z danej skupiny, ktorú máte vybratú." data-step="5">
