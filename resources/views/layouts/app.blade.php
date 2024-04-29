@@ -376,14 +376,17 @@
         // Event listeners for time range buttons
         document.getElementById('last24HoursBtn').addEventListener('click', function() {
             toggleTicketTables('last24Hours');
+            console.log("test1");
         });
 
         document.getElementById('last7DaysBtn').addEventListener('click', function() {
             toggleTicketTables('last7Days');
+            console.log("test2");
         });
 
         document.getElementById('last30DaysBtn').addEventListener('click', function() {
             toggleTicketTables('last30Days');
+            console.log("test3");
         });
     </script>
     </body>
