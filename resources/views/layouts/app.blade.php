@@ -234,7 +234,77 @@
                     </table>
                 @else
                     <p>No tickets created in the last 24 hours.</p>
-                @endif 
+                @endif
+
+                                <!-- Tickets for the last 7 days -->
+                @php
+                    $last7DaysTickets = \App\Models\Ticket::where('created_on', '>=', now()->subDays(7))->get();
+                @endphp
+
+                @if($last7DaysTickets->isNotEmpty())
+                    <h2>Tickets for the last 7 days</h2>
+                    <table>
+                        <!-- Table headers -->
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Created By</th>
+                                <th>Subject</th>
+                                <th>Description</th>
+                                <!-- Add more table headers as needed -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Table rows -->
+                            @foreach($last7DaysTickets as $ticket)
+                                <tr>
+                                    <td>{{ $ticket->id }}</td>
+                                    <td>{{ $ticket->created_by }}</td>
+                                    <td>{{ $ticket->subject }}</td>
+                                    <td>{{ $ticket->description }}</td>
+                                    <!-- Add more table cells for other ticket attributes -->
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @else
+                    <p>No tickets created in the last 7 days.</p>
+                @endif
+
+                <!-- Tickets for the last 30 days -->
+                @php
+                    $last30DaysTickets = \App\Models\Ticket::where('created_on', '>=', now()->subDays(30))->get();
+                @endphp
+
+                @if($last30DaysTickets->isNotEmpty())
+                    <h2>Tickets for the last 30 days</h2>
+                    <table>
+                        <!-- Table headers -->
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Created By</th>
+                                <th>Subject</th>
+                                <th>Description</th>
+                                <!-- Add more table headers as needed -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Table rows -->
+                            @foreach($last30DaysTickets as $ticket)
+                                <tr>
+                                    <td>{{ $ticket->id }}</td>
+                                    <td>{{ $ticket->created_by }}</td>
+                                    <td>{{ $ticket->subject }}</td>
+                                    <td>{{ $ticket->description }}</td>
+                                    <!-- Add more table cells for other ticket attributes -->
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @else
+                    <p>No tickets created in the last 30 days.</p>
+                @endif
             </div>
             <div class="main" data-intro="Tu môžete vidieť zoznam všetkých ticketov z danej skupiny, ktorú máte vybratú." data-step="5">
                 <main id="main">
