@@ -365,8 +365,10 @@
             document.querySelectorAll('.ticket-table').forEach(table => {
                 if (table.id === timeRange + 'Tickets') {
                     table.classList.remove('hide');
+                    console.log("test1");
                 } else {
                     table.classList.add('hide');
+                    console.log("test2");
                 }
             });
         }
