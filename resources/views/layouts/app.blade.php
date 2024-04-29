@@ -205,11 +205,9 @@
                         </div>
                     </a>
                 @endif
-  @php
-        $tickets = \App\Models\Ticket::all()
-var_dump($tickets);
-
-    @endphp
+                @php
+                    echo ‘test’
+                @endphp
             </div>
             <div class="main" data-intro="Tu môžete vidieť zoznam všetkých ticketov z danej skupiny, ktorú máte vybratú." data-step="5">
                 <main id="main">
