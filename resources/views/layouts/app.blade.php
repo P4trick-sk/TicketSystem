@@ -206,8 +206,35 @@
                     </a>
                 @endif
                 @php
-                    echo \App\Models\Ticket::where('created_on', '>=', now()->subHours(24))->get();
+                    $last24HoursTickets = \App\Models\Ticket::where('created_on', '>=', now()->subHours(24))->get();
                 @endphp
+
+                @if($last24HoursTickets->isNotEmpty())
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Created By</th>
+                                <th>Subject</th>
+                                <th>Description</th>
+                                <!-- Add more table headers as needed -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($last24HoursTickets as $ticket)
+                                <tr>
+                                    <td>{{ $ticket->id }}</td>
+                                    <td>{{ $ticket->created_by }}</td>
+                                    <td>{{ $ticket->subject }}</td>
+                                    <td>{{ $ticket->description }}</td>
+                                    <!-- Add more table cells for other ticket attributes -->
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @else
+                    <p>No tickets created in the last 24 hours.</p>
+                @endif 
             </div>
             <div class="main" data-intro="Tu môžete vidieť zoznam všetkých ticketov z danej skupiny, ktorú máte vybratú." data-step="5">
                 <main id="main">
