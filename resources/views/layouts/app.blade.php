@@ -345,5 +345,30 @@
                 $('select').select2();
             });
         </script>
+        <script>
+        // Function to toggle visibility of ticket tables based on selected time range
+        function toggleTicketTables(timeRange) {
+            document.querySelectorAll('.ticket-table').forEach(table => {
+                if (table.id === timeRange + 'Tickets') {
+                    table.classList.remove('hide');
+                } else {
+                    table.classList.add('hide');
+                }
+            });
+        }
+
+        // Event listeners for time range buttons
+        document.getElementById('last24HoursBtn').addEventListener('click', function() {
+            toggleTicketTables('last24Hours');
+        });
+
+        document.getElementById('last7DaysBtn').addEventListener('click', function() {
+            toggleTicketTables('last7Days');
+        });
+
+        document.getElementById('last30DaysBtn').addEventListener('click', function() {
+            toggleTicketTables('last30Days');
+        });
+    </script>
     </body>
 </html>
