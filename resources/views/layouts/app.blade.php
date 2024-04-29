@@ -222,7 +222,7 @@
                     $last24HoursTickets = \App\Models\Ticket::where('created_on', '>=', now()->subHours(24))->get();
                 @endphp
 
-                <div id="last24HoursTickets" class="hide">
+                <div id="last24HoursTickets" class="hide ticket-table">
                     @if($last24HoursTickets->isNotEmpty())
                         <table>
                             <thead>
@@ -256,7 +256,7 @@
                     $last7DaysTickets = \App\Models\Ticket::where('created_on', '>=', now()->subDays(7))->get();
                 @endphp
 
-                <div id="last7DaysTickets" class="hide">
+                <div id="last7DaysTickets" class="hide ticket-table">
                     @if($last7DaysTickets->isNotEmpty())
                         <table>
                             <thead>
@@ -290,7 +290,7 @@
                     $last30DaysTickets = \App\Models\Ticket::where('created_on', '>=', now()->subDays(30))->get();
                 @endphp
 
-                <div id="last30DaysTickets" class="hide">
+                <div id="last30DaysTickets" class="hide ticket-table">
                     @if($last30DaysTickets->isNotEmpty())
                         <table>
                             <thead>
