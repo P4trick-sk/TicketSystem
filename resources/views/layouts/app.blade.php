@@ -18,6 +18,13 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
+
+    <style>
+        .hide {
+            display: none;
+        }
+    </style>
+
     <body class="font-sans antialiased body-container">
 
         <header data-intro="Toto je vrchný navigačný panel. Nájdete tu logo našej aplikácie, prihláseného používateľa a možnosť vytvoriť ticket." data-step="2">
@@ -305,6 +312,25 @@
                 @else
                     <p>No tickets created in the last 30 days.</p>
                 @endif
+
+                            <!-- Buttons for time ranges -->
+                <button id="last24HoursBtn">Last 24 Hours</button>
+                <button id="last7DaysBtn">Last 7 Days</button>
+                <button id="last30DaysBtn">Last 30 Days</button>
+
+                <!-- Ticket tables -->
+                <div id="last24HoursTickets" class="hide">
+                    <!-- Include the ticket table for last 24 hours here -->
+                </div>
+
+                <div id="last7DaysTickets" class="hide">
+                    <!-- Include the ticket table for last 7 days here -->
+                </div>
+
+                <div id="last30DaysTickets" class="hide">
+                    <!-- Include the ticket table for last 30 days here -->
+                </div>
+
             </div>
             <div class="main" data-intro="Tu môžete vidieť zoznam všetkých ticketov z danej skupiny, ktorú máte vybratú." data-step="5">
                 <main id="main">
@@ -335,7 +361,7 @@
                 }
             }
         </script>
-        
+
         <script
             src="https://code.jquery.com/jquery-3.7.1.slim.js"
             integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc="
