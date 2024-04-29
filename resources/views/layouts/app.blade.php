@@ -206,7 +206,7 @@
                     </a>
                 @endif
                 @php
-                    echo ‘test’
+                    echo "test"
                 @endphp
             </div>
             <div class="main" data-intro="Tu môžete vidieť zoznam všetkých ticketov z danej skupiny, ktorú máte vybratú." data-step="5">
