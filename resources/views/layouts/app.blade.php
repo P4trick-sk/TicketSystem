@@ -362,7 +362,9 @@
         <script>
         // Function to toggle visibility of ticket tables based on selected time range
         function toggleTicketTables(timeRange) {
+            console.log(timeRange);
             document.querySelectorAll('.ticket-table').forEach(table => {
+            console.log(table);
                 if (table.id === timeRange + 'Tickets') {
                     table.classList.remove('hide');
                     console.log("test1");
