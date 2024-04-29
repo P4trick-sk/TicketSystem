@@ -206,7 +206,40 @@
                     </a>
                 @endif
                 @php
-                    echo "test"
+                <h2>Tickets for the last 24 hours</h2>
+    $last24HoursTickets = \App\Models\Ticket::where("created_at", ">=", \Carbon\Carbon::now()->subHours(24))->get();
+@endphp
+<ul>
+    @foreach($last24HoursTickets as $ticket)
+        <li>{{ $ticket->subject }}</li>
+        <!-- Display other ticket details as needed -->
+    @endforeach
+</ul>
+
+<!-- Retrieve and display tickets for the last 7 days -->
+<h2>Tickets for the last 7 days</h2>
+@php
+    $last7DaysTickets = \App\Models\Ticket::where("created_at", ">=", \Carbon\Carbon::now()->subDays(7))->get();
+@endphp
+<ul>
+    @foreach($last7DaysTickets as $ticket)
+        <li>{{ $ticket->subject }}</li>
+        <!-- Display other ticket details as needed -->
+    @endforeach
+</ul>
+
+<!-- Retrieve and display tickets for the last 30 days -->
+<h2>Tickets for the last 30 days</h2>
+@php
+    $last30DaysTickets = \App\Models\Ticket::where("created_at", ">=", \Carbon\Carbon::now()->subDays(30))->get();
+@endphp
+<ul>
+    @foreach($last30DaysTickets as $ticket)
+        <li>{{ $ticket->subject }}</li>
+        <!-- Display other ticket details as needed -->
+    @endforeach
+</ul>
+
                 @endphp
             </div>
             <div class="main" data-intro="Tu môžete vidieť zoznam všetkých ticketov z danej skupiny, ktorú máte vybratú." data-step="5">
