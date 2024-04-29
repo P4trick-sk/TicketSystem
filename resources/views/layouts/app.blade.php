@@ -206,11 +206,8 @@
                     </a>
                 @endif
                 @php
-        $last7DaysTickets = \App\Models\Ticket::where('created_at', '>=', \Carbon\Carbon::now()->subDays(7))->get();
-echo ‘test’;
-var_dump( $last7DaysTickets);
-
-    @endphp
+                    echo isset($last7DaysTickets);
+                @endphp
             </div>
             <div class="main" data-intro="Tu môžete vidieť zoznam všetkých ticketov z danej skupiny, ktorú máte vybratú." data-step="5">
                 <main id="main">
