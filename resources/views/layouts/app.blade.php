@@ -205,62 +205,12 @@
                         </div>
                     </a>
                 @endif
-                        <table>
-            <thead>
-                <tr>
-                    <th>Subject</th>
-                    <!-- Add other table headers for additional ticket details -->
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Tickets for the last 24 hours -->
-                @foreach($last24HoursTickets as $ticket)
-                <tr>
-                    <td>{{ $ticket->subject }}</td>
-                    <!-- Add other table cells for additional ticket details -->
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+                @php
+        $last7DaysTickets = \App\Models\Ticket::where('created_at', '>=', \Carbon\Carbon::now()->subDays(7))->get();
+echo ‘test’;
+var_dump( $last7DaysTickets);
 
-        <h2>Tickets for the last 7 days</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Subject</th>
-                    <!-- Add other table headers for additional ticket details -->
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Tickets for the last 7 days -->
-                @foreach($last7DaysTickets as $ticket)
-                <tr>
-                    <td>{{ $ticket->subject }}</td>
-                    <!-- Add other table cells for additional ticket details -->
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-
-        <h2>Tickets for the last 30 days</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Subject</th>
-                    <!-- Add other table headers for additional ticket details -->
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Tickets for the last 30 days -->
-                @foreach($last30DaysTickets as $ticket)
-                <tr>
-                    <td>{{ $ticket->subject }}</td>
-                    <!-- Add other table cells for additional ticket details -->
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-
+    @endphp
             </div>
             <div class="main" data-intro="Tu môžete vidieť zoznam všetkých ticketov z danej skupiny, ktorú máte vybratú." data-step="5">
                 <main id="main">
