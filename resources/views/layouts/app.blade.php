@@ -15,15 +15,14 @@
         <!-- Intro.js -->
         <link rel="stylesheet" href="https://unpkg.com/intro.js/introjs.css">
 
+        <!-- Bootstrap CSS -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
 
-    <style>
-        .hide {
-            display: none;
-        }
-    </style>
+
 
     <body class="font-sans antialiased body-container">
 
@@ -255,37 +254,6 @@
                 $('select').select2();
             });
         </script>
-        <script>
-        // Function to toggle visibility of ticket tables based on selected time range
-        function toggleTicketTables(timeRange) {
-            console.log(timeRange);
-            document.querySelectorAll('.ticket-table').forEach(table => {
-            console.log(table);
-                if (table.id === timeRange + 'Tickets') {
-                    table.classList.remove('hide');
-                    console.log("test1");
-                } else {
-                    table.classList.add('hide');
-                    console.log("test2");
-                }
-            });
-        }
-
-        // Event listeners for time range buttons
-        document.getElementById('last24HoursBtn').addEventListener('click', function() {
-            toggleTicketTables('last24Hours');
-            console.log("test1");
-        });
-
-        document.getElementById('last7DaysBtn').addEventListener('click', function() {
-            toggleTicketTables('last7Days');
-            console.log("test2");
-        });
-
-        document.getElementById('last30DaysBtn').addEventListener('click', function() {
-            toggleTicketTables('last30Days');
-            console.log("test3");
-        });
-    </script>
+        
     </body>
 </html>
