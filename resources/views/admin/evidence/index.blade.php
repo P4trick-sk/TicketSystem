@@ -15,8 +15,8 @@
                         }
                     </style>
 
-                            <!-- Buttons for time ranges -->
-                            <button id="last24HoursBtn">Last 24 Hours</button>
+                <!-- Buttons for time ranges -->
+                <button id="last24HoursBtn">Last 24 Hours</button>
                 <button id="last7DaysBtn">Last 7 Days</button>
                 <button id="last30DaysBtn">Last 30 Days</button>
 
