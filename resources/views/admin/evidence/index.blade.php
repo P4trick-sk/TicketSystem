@@ -13,40 +13,40 @@
                         .hide {
                         display: none;
                         }
-                        
-                        /* Style for the entire table */
-table {
-    width: 100%; /* Full-width */
-    border-collapse: collapse; /* Collapses the border */
-    margin: 20px 0; /* Spacing above and below the table */
-    font-size: 16px; /* Font size for text in the table */
-    text-align: left; /* Aligns text to the left */
-}
 
-/* Style for table headers */
-th {
-    background-color: #f2f2f2; /* Light grey background */
-    color: #333; /* Dark grey text */
-    font-weight: bold; /* Bold font for headers */
-    padding: 12px 15px; /* Padding inside the header cells */
-    border: 1px solid #ddd; /* Light grey border */
-}
+                    /* Style for the entire table */
+                    table {
+                        width: 100%; /* Full-width */
+                        border-collapse: collapse; /* Collapses the border */
+                        margin: 20px 0; /* Spacing above and below the table */
+                        font-size: 16px; /* Font size for text in the table */
+                        text-align: left; /* Aligns text to the left */
+                    }
 
-/* Style for table rows */
-tr {
-    border: 1px solid #ddd; /* Light grey border */
-}
+                    /* Style for table headers */
+                    th {
+                        background-color: #f2f2f2; /* Light grey background */
+                        color: #333; /* Dark grey text */
+                        font-weight: bold; /* Bold font for headers */
+                        padding: 12px 15px; /* Padding inside the header cells */
+                        border: 1px solid #ddd; /* Light grey border */
+                    }
 
-/* Style for table cells */
-td {
-    padding: 8px 15px; /* Padding inside the cells */
-    border: 1px solid #ddd; /* Light grey border */
-}
+                    /* Style for table rows */
+                    tr {
+                        border: 1px solid #ddd; /* Light grey border */
+                    }
 
-/* Hover effect for rows */
-tr:hover {
-    background-color: #f5f5f5; /* Very light grey background on hover */
-}
+                    /* Style for table cells */
+                    td {
+                        padding: 8px 15px; /* Padding inside the cells */
+                        border: 1px solid #ddd; /* Light grey border */
+                    }
+
+                    /* Hover effect for rows */
+                    tr:hover {
+                        background-color: #f5f5f5; /* Very light grey background on hover */
+                    }
 
                     </style>
 
