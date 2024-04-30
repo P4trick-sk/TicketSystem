@@ -5,14 +5,6 @@
         </h2>
     </x-slot>
 
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex">
-        <h3 class="text-xl text-gray-800 dark:text-gray-200 leading-tight">Zoznam tried:</h3>
-        <a class="font-semibold text-gray-900 dark:text-gray-100 ml-auto"
-           href="{{ route('admin.classrooms.create') }}">
-            Pridať triedu
-        </a>
-    </div>
-
             <div class="pt-8">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div class="p-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
