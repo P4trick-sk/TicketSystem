@@ -16,6 +16,13 @@
             <div class="pt-8">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div class="p-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+
+                    <style>
+                        .hide {
+                        display: none;
+                        }
+                    </style>
+
                             <!-- Buttons for time ranges -->
                             <button id="last24HoursBtn">Last 24 Hours</button>
                 <button id="last7DaysBtn">Last 7 Days</button>
