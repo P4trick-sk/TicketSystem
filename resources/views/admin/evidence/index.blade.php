@@ -75,9 +75,7 @@
                     }
 
                     .dropdown-content button:hover {
-                        cursor: pointer;
-                        background-color: #016bff;
-                        color: #fff;
+                        background-color: #f1f1f1;
                     }
 
                     .dropdown:hover .dropdown-content {
