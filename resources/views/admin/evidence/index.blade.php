@@ -119,7 +119,7 @@
                                 @foreach($last24HoursTickets as $ticket)
                                     <tr>
                                         <td>{{ $ticket->id }}</td>
-                                        <td>{{ $ticket->created_b->name }}</td>
+                                        <td>{{ $ticket->created_by->name }}</td>
                                         <td>{{ $ticket->subject }}</td>
                                         <td>{{ $ticket->description }}</td>
                                         <!-- Add more table cells for other ticket attributes -->
@@ -187,7 +187,7 @@
                                 @foreach($last30DaysTickets as $ticket)
                                     <tr>
                                         <td>{{ $ticket->id }}</td>
-                                        <td>{{ $ticket->created_b->name }}</td>
+                                        <td>{{ $ticket->created_by->name }}</td>
                                         <td>{{ $ticket->subject }}</td>
                                         <td>{{ $ticket->description }}</td>
                                         <!-- Add more table cells for other ticket attributes -->
