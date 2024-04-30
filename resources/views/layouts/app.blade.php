@@ -36,12 +36,22 @@
                 </div>--}}
                 <div class="d-flex">
                     <div class="hidden sm:flex sm:items-center sm:ml-6">
-                    <img
-                        id="top_icons"
-                        class="change_color"
-                        src="{{ asset('icons/nav/question-circle.svg') }}"
-                        alt="question-circle"
-                    />
+                        @if (request()->routeIs('tickets.index.created'))
+                        <img
+                            id="top_icons"
+                            class="change_color"
+                            src="{{ asset('icons/nav/question-circle.svg') }}"
+                            alt="question-circle"
+                        />
+                        @else
+                        <a href="{{ route('tickets.index.created') }}">                        
+                            <img
+                            class="change_color"
+                            src="{{ asset('icons/nav/question-circle.svg') }}"
+                            alt="question-circle"
+                            />
+                        </a>
+                        @endif
                         <x-dropdown class="jankohrasko" align="right" width="48">
                             <x-slot name="trigger">
                                 <button class="dropdown-button inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md focus:outline-none transition ease-in-out duration-150">
