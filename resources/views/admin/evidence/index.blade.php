@@ -54,6 +54,10 @@
                         display: inline-block;
                     }
 
+                    .dropbtn {
+                        padding: 10px 20px;
+                    }
+
                     .dropdown-content {
                         display: none;
                         position: absolute;
