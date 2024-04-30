@@ -25,7 +25,9 @@
 
 
     <body class="font-sans antialiased body-container">
-
+        <div class="container">
+        <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-12">
         <header data-intro="Toto je vrchný navigačný panel. Nájdete tu logo našej aplikácie, prihláseného používateľa a možnosť vytvoriť ticket." data-step="2">
             <div id="horizontal" class="topnav">
                 <img src="{{ asset('img/logo.png') }}" alt="logo" id="logo" />
@@ -254,6 +256,39 @@
                 $('select').select2();
             });
         </script>
+            <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Desktop View</h5>
+                <p class="card-text">This is the content for desktop view.</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <!-- Content for tablet -->
+            <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Tablet View</h5>
+                <p class="card-text">This is the content for tablet view.</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <!-- Content for mobile -->
+            <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Mobile View</h5>
+                <p class="card-text">This is the content for mobile view.</p>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        
         
     </body>
 </html>
