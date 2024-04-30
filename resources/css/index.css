@@ -10,6 +10,11 @@ nav {
   display: block;
 }
 
+.py-0 {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
 .body-container {
   height: 100vh;
   display: flex;

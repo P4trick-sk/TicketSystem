@@ -44,7 +44,7 @@
                             alt="question-circle"
                         />
                         @else
-                        <a href="{{ route('tickets.index.created') }}">                        
+                        <a href="{{ route('tickets.index.created') }}" class="py-0">                        
                             <img
                             class="change_color"
                             src="{{ asset('icons/nav/question-circle.svg') }}"
