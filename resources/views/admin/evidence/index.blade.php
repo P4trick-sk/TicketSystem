@@ -21,10 +21,78 @@
                         .hide {
                         display: none;
                         }
+
+                        /* Table container */
+                    .table-container {
+                        max-width: 90%;
+                        margin: 20px auto;
+                        padding: 20px;
+                        background-color: #fff;
+                        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                        border-radius: 8px;
+                    }
+
+                    /* Table Styles */
+                    .table-evidence {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin: 20px 0;
+                    }
+
+                    .table-evidence th, .table-evidence td {
+                        border: 1px solid #ccc;
+                        padding: 10px;
+                        text-align: left;
+                    }
+
+                    .table-evidence th {
+                        background-color: #006699;
+                        color: #ffffff;
+                    }
+
+                    .table-evidence tr:nth-child(even) {
+                        background-color: #f2f2f2;
+                    }
+
+                    .table-evidence tr:hover {
+                        background-color: #e8f4f8;
+                    }
+
+                    /* Button Styles */
+                    .button {
+                        padding: 10px 20px;
+                        border: none;
+                        border-radius: 5px;
+                        background-color: #007BFF;
+                        color: white;
+                        text-transform: uppercase;
+                        cursor: pointer;
+                        margin-right: 10px;
+                    }
+
+                    .button:hover {
+                        background-color: #0056b3;
+                    }
+
+                    /* Responsive Design */
+                    @media (max-width: 768px) {
+                        .table-evidence, .table-evidence th, .table-evidence td {
+                            display: block;
+                            width: 100%;
+                        }
+
+                        .button {
+                            width: 100%;
+                            margin-top: 10px;
+                        }
+
+                        .table-container {
+                            padding: 10px;
+                        }
                     </style>
 
-                            <!-- Buttons for time ranges -->
-                            <button id="last24HoursBtn">Last 24 Hours</button>
+                <!-- Buttons for time ranges -->
+                <button id="last24HoursBtn">Last 24 Hours</button>
                 <button id="last7DaysBtn">Last 7 Days</button>
                 <button id="last30DaysBtn">Last 30 Days</button>
 
@@ -32,7 +100,7 @@
                     $last24HoursTickets = \App\Models\Ticket::where('created_on', '>=', now()->subHours(24))->get();
                 @endphp
 
-                <div id="last24HoursTickets" class="hide ticket-table">
+                <div id="last24HoursTickets table-evidence" class="hide ticket-table">
                     @if($last24HoursTickets->isNotEmpty())
                         <table>
                             <thead>
@@ -66,7 +134,7 @@
                     $last7DaysTickets = \App\Models\Ticket::where('created_on', '>=', now()->subDays(7))->get();
                 @endphp
 
-                <div id="last7DaysTickets" class="hide ticket-table">
+                <div id="last7DaysTickets table-evidence" class="hide ticket-table">
                     @if($last7DaysTickets->isNotEmpty())
                         <table>
                             <thead>
@@ -100,7 +168,7 @@
                     $last30DaysTickets = \App\Models\Ticket::where('created_on', '>=', now()->subDays(30))->get();
                 @endphp
 
-                <div id="last30DaysTickets" class="hide ticket-table">
+                <div id="last30DaysTickets table-evidence" class="hide ticket-table">
                     @if($last30DaysTickets->isNotEmpty())
                         <table>
                             <thead>
