@@ -18,4 +18,6 @@ export default {
     },
 
     plugins: [forms],
+
+    darkMode: 'false', // Disable dark mode
 };
