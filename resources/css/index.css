@@ -71,6 +71,12 @@ nav {
   z-index: 7;
 }
 
+#logo_alt {
+  height: 35px;
+  width: auto;
+  z-index: 7;
+}
+
 .searchbar {
   display: flex;
   line-height: 28px;
