@@ -48,6 +48,7 @@
                         background-color: #f5f5f5; /* Very light grey background on hover */
                     }
 
+                    <style>
                     .dropdown {
                         position: relative;
                         display: inline-block;
@@ -74,7 +75,9 @@
                     }
 
                     .dropdown-content button:hover {
-                        background-color: #f1f1f1;
+                        cursor: pointer;
+                        background-color: #016bff;
+                        color: #fff;
                     }
 
                     .dropdown:hover .dropdown-content {
@@ -82,9 +85,7 @@
                     }
 
                     .dropdown:hover .dropbtn {
-                        cursor: pointer;
-                        background-color: #016bff;
-                        color: #fff;
+                        background-color: #3e8e41;
                     }
 
                     </style>
