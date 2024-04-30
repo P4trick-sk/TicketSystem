@@ -21,6 +21,9 @@
                     <x-nav-link :href="route('admin.tickets.index.closed')" :active="request()->routeIs('admin.tickets.index.closed')">
                         {{ __('All closed tickets') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('admin.evidence.index')" :active="request()->routeIs('admin.evidence.index')">
+                        {{ __('Evidence') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*') && !request()->routeIs('admin.users.deleted.*')">
                         {{ __('Users') }}
                     </x-nav-link>

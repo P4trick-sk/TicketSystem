@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\CategoryTypeController;
 use App\Http\Controllers\Admin\ClassroomController;
 use App\Http\Controllers\Admin\ManageUsersController;
 use App\Http\Controllers\Admin\SiteSettingController;
+use App\Http\Controllers\Admin\EvidenceController;
 use App\Http\Controllers\Admin\UpdateClassroomManagersController;
 use App\Http\Controllers\Admin\UserBanController;
 use Illuminate\Support\Facades\Route;
@@ -72,4 +73,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::patch('/admin/settings/google-oauth', [SiteSettingController::class, 'updateGoogleOauth'])->name('admin.settings.update.google-oauth');
     Route::patch('/admin/settings/enable-register', [SiteSettingController::class, 'updateEnableRegister'])->name('admin.settings.update.enable-register');
     Route::patch('/admin/settings/word-filter', [SiteSettingController::class, 'updateWordFilter'])->name('admin.settings.update.word-filter');
+});
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/evidence', [EvidenceController::class, 'index'])->name('admin.evidence.index');
 });
