@@ -15,14 +15,9 @@
         <!-- Intro.js -->
         <link rel="stylesheet" href="https://unpkg.com/intro.js/introjs.css">
 
-        <!-- Bootstrap CSS -->
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-
-
 
     <body class="font-sans antialiased body-container">
 
