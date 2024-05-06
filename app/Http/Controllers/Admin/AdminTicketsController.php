@@ -27,7 +27,7 @@ class AdminTicketsController extends Controller
      */
     public function indexClosed()
     {
-        $tickets = Ticket::where('status', 'closed')->paginate(5);
+        $tickets = Ticket::where('status', 'LIKE', 'closed%')->paginate(5);
         return view('admin.tickets.index')->with('tickets', $tickets);
     }
 

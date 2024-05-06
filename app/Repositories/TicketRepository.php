@@ -15,7 +15,7 @@ class TicketRepository implements TicketRepositoryInterface
 
     public function getPaginatedTickets(int $perPage)
     {
-        return Ticket::paginate($perPage);
+        return Ticket::whereNot('status', 'LIKE', 'closed%')->paginate($perPage);
     }
 
     public function getTicketById($ticketId)
