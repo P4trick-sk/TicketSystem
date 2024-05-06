@@ -29,7 +29,8 @@ class CategoryType extends Model
         'updated_on',
         'status',
         'assigned_to',
-        'is_dynamic'
+        'is_dynamic',
+        'deleted_at',
     ];
 
     public function categories() : HasMany

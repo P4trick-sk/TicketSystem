@@ -56,7 +56,7 @@ class ManageUsersController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'role' => $request->role,
+            'role' => UserRole::tryFrom($request->role),
         ]);
 
         $status = Password::sendResetLink(

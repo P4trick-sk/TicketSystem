@@ -37,14 +37,14 @@ class CategoryController extends Controller
     {
         $categories = CategoryType::where('status', 'active')->pluck('id')->toArray();
         $request->validate([
-            'name' => ['required', 'string', 'max:255', Rule::unique(Category::class)],
+            'name' => ['required', 'string', 'max:255'],
             'category_type' => ['required', 'string', Rule::in($categories)],
         ]);
 
-        $category = Category::create([
-            'name' => $request->name,
-            'category_type' => $request->category_type,
-        ]);
+        $category = Category::withTrashed()->updateOrCreate(
+            ['name' => $request->name],
+            ['category_type' => $request->category_type, 'status' => 'active', 'deleted_at' => null]
+        );
 
         return to_route('admin.categories.edit', $category->id);
     }

@@ -23,29 +23,19 @@
             </div>
 
             <div class="sm:grid sm:grid-cols-3">
-                <div class="mt-4">
-                    <x-input-label for="technical_manager" :value="__('Technický správca')" />
-                    <div class="mt-2">
-                        <select id="technical_manager" name="technical_manager" autocomplete="off" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
-                            <option selected="true" disabled="disabled">Vyberte</option>
-                            @foreach($teachers as $teacher)
-                                <option value="{{$teacher->id}}">{{ $teacher->name }}</option>
-                            @endforeach
-                        </select>
+                @foreach($managableTypes as $type)
+                    <div class="mt-4">
+                        <x-input-label for="type-{{ $type->id }}" :value="$type->name" />
+                        <div class="mt-2">
+                            <select id="type-{{ $type->id }}" name="type-{{ $type->id }}" autocomplete="off" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                                <option selected="selected" value="" disabled>Vyberte</option>
+                                @foreach($teachers as $teacher)
+                                    <option value="{{$teacher->id}}">{{ $teacher->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
-                </div>
-
-                <div class="mt-4">
-                    <x-input-label for="room_manager" :value="__('Správca učebne správca')" />
-                    <div class="mt-2">
-                        <select id="room_manager" name="room_manager" autocomplete="off" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
-                            <option selected="true" disabled="disabled">Vyberte</option>
-                            @foreach($teachers as $teacher)
-                                <option value="{{$teacher->id}}" >{{ $teacher->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
+                @endforeach
             </div>
 
             <div class="flex items-center justify-end mt-4">

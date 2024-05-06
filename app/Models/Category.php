@@ -29,6 +29,7 @@ class Category extends Model
         'category_type',
         'updated_on',
         'status',
+        'deleted_at',
     ];
 
     public function assignedUsers() : HasMany
@@ -38,6 +39,6 @@ class Category extends Model
 
     public function categoryType() : BelongsTo
     {
-        return $this->belongsTo(CategoryType::class, 'category_type');
+        return $this->belongsTo(CategoryType::class, 'category_type')->withTrashed();
     }
 }

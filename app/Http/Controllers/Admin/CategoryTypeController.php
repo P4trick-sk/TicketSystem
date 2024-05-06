@@ -37,16 +37,15 @@ class CategoryTypeController extends Controller
     {
         $teachers = User::whereIn('role', [UserRole::Teacher, UserRole::Admin])->pluck('id')->toArray();
         $request->validate([
-            'name' => ['required', 'string', 'max:255', 'unique:'.CategoryType::class],
+            'name' => ['required', 'string', 'max:255'],
             'assigned_to' => ['required', 'int', Rule::in($teachers)],
             'is_dynamic' => ['required', 'int'],
         ]);
 
-        $categoryType = CategoryType::create([
-            'name' => $request->name,
-            'assigned_to' => $request->assigned_to,
-            'is_dynamic' => $request->is_dynamic,
-        ]);
+        $categoryType = CategoryType::withTrashed()->updateOrCreate(
+            ['name' => $request->name],
+            ['assigned_to' => $request->assigned_to, 'is_dynamic' => $request->is_dynamic,'status' => 'active', 'deleted_at' => null]
+        );
 
         return to_route('admin.category.types.edit', $categoryType->id);
     }

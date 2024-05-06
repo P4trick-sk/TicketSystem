@@ -6,6 +6,7 @@ use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Models\CategoryType;
 use App\Models\Classroom;
+use App\Models\ClassroomManager;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -26,7 +27,10 @@ class ClassroomController extends Controller
      */
     public function create()
     {
-        return view('admin.classrooms.create')->with('teachers', User::whereIn('role', [UserRole::Teacher, UserRole::Admin])->get());
+        return view('admin.classrooms.create')->with([
+            'teachers' => User::whereIn('role', [UserRole::Teacher, UserRole::Admin])->get(),
+            'managableTypes' => CategoryType::where('is_dynamic', true)->get(),
+        ]);
     }
 
     /**
@@ -35,16 +39,38 @@ class ClassroomController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255', 'unique:'.Classroom::class],
-            'room_manager' => ['required', 'int'],
-            'technical_manager' => ['required', 'int'],
+            'name' => ['required', 'string', 'max:255'],
         ]);
 
-        $classroom = Classroom::create([
-            'name' => $request->name,
-            'room_manager' => $request->room_manager,
-            'technical_manager' => $request->technical_manager,
-        ]);
+        $classroom = Classroom::withTrashed()->updateOrCreate(
+            ['name' => $request->name],
+            ['status' => 'active', 'deleted_at' => null]
+        );
+
+        $managableTypes = CategoryType::where('is_dynamic', true)->get();
+
+        foreach ($managableTypes as $type)
+        {
+            $selectedId = $request['type-'. $type->id];
+            if (ClassroomManager::where('classroom_id', $classroom->id)->where('category_type_id', $type->id)->first())
+            {
+                if ($selectedId == 0) // default user selected
+                {
+                    ClassroomManager::where('classroom_id', $classroom->id)->where('category_type_id', $type->id)->delete();
+                } else {
+                    ClassroomManager::where('classroom_id', $classroom->id)->where('category_type_id', $type->id)->update(['assigned_to' => $selectedId]);
+                }
+            } else {
+                if ($selectedId != 0)
+                {
+                    ClassroomManager::create([
+                        'classroom_id' => $classroom->id,
+                        'category_type_id' => $type->id,
+                        'assigned_to' => $selectedId,
+                    ]);
+                }
+            }
+        }
 
         return to_route('admin.classrooms.edit', $classroom->id);
     }

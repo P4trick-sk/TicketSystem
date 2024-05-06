@@ -53,7 +53,7 @@ class Ticket extends Model implements AttachmentsEnabledInterface
 
     public function classroom() : BelongsTo
     {
-        return $this->belongsTo(Classroom::class, 'classroom_id');
+        return $this->belongsTo(Classroom::class, 'classroom_id')->withTrashed();
     }
 
     /**
@@ -66,6 +66,6 @@ class Ticket extends Model implements AttachmentsEnabledInterface
 
     public function category(): BelongsTo
     {
-        return $this->belongsTo(Category::class, 'category_id');
+        return $this->belongsTo(Category::class, 'category_id')->withTrashed();
     }
 }

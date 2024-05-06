@@ -89,7 +89,7 @@
             @endif
             <div class="flex">
                 <div class="text-gray-900 dark:text-gray-100">
-                    <b>{{ $ticket->createdBy->name }}</b> - <i>{{ $ticket->created_on }}</i>
+                    <b>{{ $ticket->createdBy->name }}</b> - <i>{{ date('d.m.Y, H:i', strtotime($ticket->created_on)) }}</i>
                 </div>
             </div>
         </div>
@@ -112,7 +112,7 @@
                 @endif
                 <div class="flex">
                     <div class="text-gray-900 dark:text-gray-100">
-                        <b>{{ $response->responseBy->name }}</b> - <i>{{ $response->send_on }}</i> @if(isset($response->updated_on)) <i>({{ $response->updated_on }})</i>@endif
+                        <b>{{ $response->responseBy->name }}</b> - <i>{{ date('d.m.Y, H:i', strtotime($response->send_on )) }}</i> @if(isset($response->updated_on)) <i>({{ date('d.m.Y, H:i', strtotime($response->updated_on )) }})</i>@endif
                     </div>
                     @can('update', $response)
                     <a class="font-semibold text-gray-900 dark:text-gray-100 ml-auto"

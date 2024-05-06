@@ -98,6 +98,9 @@ class GroupTicketsController extends Controller
             $ticket->status = 'closed';
             $ticket->deleted_at = now();
             $ticket->save();
+
+            $groupTicket = GroupTicket::where('group_id', $group->id)->where('ticket_id', $ticket->id)->first();
+            $groupTicket->forceDelete();
         }
 
         return to_route('groups.show', $group->id);

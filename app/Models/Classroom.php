@@ -31,6 +31,7 @@ class Classroom extends Model
         'technical_manager',
         'updated_on',
         'status',
+        'deleted_at',
     ];
 
     public function managers() : HasMany
