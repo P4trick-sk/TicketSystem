@@ -56,7 +56,7 @@ class TicketPolicy
      */
     public function update(User $user, Ticket $ticket): Response
     {
-        return ($user->id == $ticket->createdBy->id || $user->id == $ticket->assignedTo->id) && $ticket->status != 'closed'
+        return ($user->id == $ticket->createdBy->id || $user->id == $ticket->assignedTo->id) && $ticket->deleted_at == null
             ? Response::allow()
             : Response::deny('Nemáte oprávnenie na editovanie ticketu.');
     }
@@ -66,7 +66,7 @@ class TicketPolicy
      */
     public function updateBasic(User $user, Ticket $ticket): Response
     {
-        return $user->id == $ticket->createdBy->id && $ticket->status != 'closed'
+        return $user->id == $ticket->createdBy->id && $ticket->deleted_at == null
             ? Response::allow()
             : Response::deny('Nemáte oprávnenie na editovanie ticketu.');
     }
@@ -76,7 +76,7 @@ class TicketPolicy
      */
     public function updateAdvanced(User $user, Ticket $ticket): Response
     {
-        return $user->id == $ticket->assignedTo->id && $ticket->status != 'closed'
+        return $user->id == $ticket->assignedTo->id && $ticket->deleted_at == null
             ? Response::allow()
             : Response::deny('Nemáte oprávnenie na editovanie ticketu.');
     }
@@ -112,7 +112,7 @@ class TicketPolicy
      */
     public function canRespond(User $user, Ticket $ticket): Response
     {
-        return ($user->id == $ticket->createdBy->id || $user->id == $ticket->assignedTo?->id) && $ticket->status != 'closed'
+        return ($user->id == $ticket->createdBy->id || $user->id == $ticket->assignedTo?->id) && $ticket->deleted_at == null
             ? Response::allow()
             : Response::deny('Nemáte oprávnenie na tento ticket odpovedať.');
     }

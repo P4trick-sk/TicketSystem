@@ -152,7 +152,7 @@
         </div>
     </div>
     @endcan
-    @if($ticket->status == 'closed')
+    @if($ticket->deleted_at)
         @can('delete', $ticket)
             <div class="mt-6 mx-auto sm:px-6 lg:px-8">
                 <div class="p-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
@@ -167,6 +167,19 @@
                             <x-input-error :messages="$errors->get('summary')" class="mt-2" />
                         </div>
 
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="success" id="successful" {{$ticket->status == 'closed_successful' ? 'checked' : null}} value="1">
+                            <label class="form-check-label" for="successful">
+                                Úspešné riešenie
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="success" id="failed" {{$ticket->status == 'closed_failed' ? 'checked' : null}} value="0">
+                            <label class="form-check-label" for="failed">
+                                Neúspešné riešenie
+                            </label>
+                        </div>
+
                         <div class="flex items-center justify-end mt-4">
                             <x-primary-button class="ml-4">
                                 {{ __('Uložiť') }}
@@ -175,6 +188,16 @@
                     </form>
                 </div>
             </div>
+        @else
+                <div class="mt-6 mx-auto sm:px-6 lg:px-8">
+                    <div class="p-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                        <div>
+                            <x-input-label for="summary" :value="__('Krátky popis vyriešenia ticketu')" />
+                            <x-text-input id="summary" class="block mt-1 w-full" type="text" name="summary" :value="$ticket->summary" disabled autofocus autocomplete="name" />
+                            <x-input-error :messages="$errors->get('summary')" class="mt-2" />
+                        </div>
+                    </div>
+                </div>
         @endcan
     @endif
 </x-app-layout>

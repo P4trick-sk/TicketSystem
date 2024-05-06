@@ -54,14 +54,14 @@ class TicketsController extends Controller
     public function indexCreatedClosed(Request $request)
     {
         return view('dashboard.createdClosed')->with([
-            'tickets' => Ticket::where('status', 'closed')->where('created_by', $request->user()->id)->orderBy('created_on', 'desc')->paginate(15),
+            'tickets' => Ticket::where('status', 'LIKE', 'closed%')->where('created_by', $request->user()->id)->orderBy('created_on', 'desc')->paginate(15),
         ]);
     }
 
     public function indexAssignedClosed(Request $request)
     {
         return view('dashboard.assignedClosed')->with([
-            'tickets' => Ticket::where('status', 'closed')->where('assigned_to', $request->user()->id)->orderBy('created_on', 'desc')->paginate(15),
+            'tickets' => Ticket::where('status', 'LIKE', 'closed%')->where('assigned_to', $request->user()->id)->orderBy('created_on', 'desc')->paginate(15),
         ]);
     }
 
@@ -148,6 +148,14 @@ class TicketsController extends Controller
         $request->validate([
             'summary' => ['string', 'nullable']
         ]);
+
+
+        if ($request->success == "1")
+        {
+            $ticket->status = 'closed_successful';
+        } else {
+            $ticket->status = 'closed_failed';
+        }
 
         $ticket->summary = $request->summary;
         $ticket->save();
@@ -238,8 +246,14 @@ class TicketsController extends Controller
             'summary' => ['string', 'nullable']
         ]);
 
+        if ($request->success == "1")
+        {
+            $ticket->status = 'closed_successful';
+        } else {
+            $ticket->status = 'closed_failed';
+        }
+
         $ticket->summary = $request->summary;
-        $ticket->status = 'closed';
         $ticket->deleted_at = now();
         $ticket->save();
 

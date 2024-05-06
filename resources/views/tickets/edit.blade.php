@@ -128,6 +128,19 @@
                         </div>
                     </div>
 
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="success" id="successful" checked value="1">
+                        <label class="form-check-label" for="successful">
+                            Úspešné riešenie
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="success" id="failed" value="0">
+                        <label class="form-check-label" for="failed">
+                            Neúspešné riešenie
+                        </label>
+                    </div>
+
                     <x-primary-button class="mt-4">
                         Uzatvoriť ticket
                     </x-primary-button>

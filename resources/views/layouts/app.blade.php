@@ -44,7 +44,7 @@
                             alt="question-circle"
                         />
                         @else
-                        <a href="{{ route('tickets.index.created') }}" class="py-0">                        
+                        <a href="{{ route('tickets.index.created') }}" class="py-0">
                             <img
                             class="change_color"
                             src="{{ asset('icons/nav/question-circle.svg') }}"
@@ -183,20 +183,20 @@
                     <a href="{{ route('tickets.index.created') }}" class="drop_button_menu {{ request()->routeIs('tickets.index.created') ? 'active' : null }}">
                         <p>Moje tickety</p>
                         <div class="icon">
-                            {{ \App\Models\Ticket::where('created_by', Auth::user()->id)->whereNot('status', 'closed')->count() }}
+                            {{ \App\Models\Ticket::where('created_by', Auth::user()->id)->whereNot('status', 'LIKE', 'closed%')->count() }}
                         </div>
                     </a>
                     <a href="{{ route('tickets.index.created.closed') }}" class="drop_button_menu {{ request()->routeIs('tickets.index.created.closed') ? 'active' : null }}">
                         <p>Moje zatvorené tickety</p>
                         <div class="icon">
-                            {{ \App\Models\Ticket::where('created_by', Auth::user()->id)->where('status', 'closed')->count() }}
+                            {{ \App\Models\Ticket::where('created_by', Auth::user()->id)->where('status', 'LIKE', 'closed%')->count() }}
                         </div>
                     </a>
                     @if(Auth::user()->isTeacher())
                         <a href="{{ route('tickets.index.assigned') }}" class="drop_button_menu {{ request()->routeIs('tickets.index.assigned') ? 'active' : null }}">
                             <p>Mne pridelené tickety</p>
                             <div class="icon">
-                                {{ \App\Models\Ticket::where('assigned_to', Auth::user()->id)->whereNot('status', 'closed')->count() }}
+                                {{ \App\Models\Ticket::where('assigned_to', Auth::user()->id)->whereNot('status', 'LIKE', 'closed%')->count() }}
                             </div>
                         </a>
                     @endif
@@ -204,7 +204,7 @@
                         <a href="{{ route('tickets.index.assigned.closed') }}" class="drop_button_menu {{ request()->routeIs('tickets.index.assigned.closed') ? 'active' : null }}">
                             <p>Mne pridelené zatvorené tickety</p>
                             <div class="icon">
-                                {{ \App\Models\Ticket::where('assigned_to', Auth::user()->id)->where('status', 'closed')->count() }}
+                                {{ \App\Models\Ticket::where('assigned_to', Auth::user()->id)->where('status', 'LIKE', 'closed%')->count() }}
                             </div>
                         </a>
                     @endif
@@ -231,7 +231,7 @@
         </div>
         </div>
 
-        <script src="https://unpkg.com/intro.js/intro.js">           
+        <script src="https://unpkg.com/intro.js/intro.js">
         </script>
         <script>
             top_icons.addEventListener("click", function() {
@@ -259,6 +259,6 @@
                 $('select').select2();
             });
         </script>
-        
+
     </body>
 </html>
