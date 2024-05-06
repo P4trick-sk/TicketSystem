@@ -129,7 +129,7 @@
                                             <td>{{ $ticket->id }}</td>
                                             <td>{{ $ticket->createdBy->name }}</td>
                                             <td>{{ $ticket->subject }}</td>
-                                            <td>{{ $ticket->description }}</td>
+                                            <td>{{ $ticket->summary }}</td>
                                             <td>{{ $ticket->created_on }}</td>
                                             <td>{{ $ticket->deleted_at }}</td>
                                             <td>{{ $ticket->assignedTo->name }}</td>
@@ -171,7 +171,7 @@
                                             <td>{{ $ticket->id }}</td>
                                             <td>{{ $ticket->createdBy->name }}</td>
                                             <td>{{ $ticket->subject }}</td>
-                                            <td>{{ $ticket->description }}</td>
+                                            <td>{{ $ticket->summary }}</td>
                                             <td>{{ $ticket->created_on }}</td>
                                             <td>{{ $ticket->deleted_at }}</td>
                                             <td>{{ $ticket->assignedTo->name }}</td>
@@ -213,7 +213,7 @@
                                             <td>{{ $ticket->id }}</td>
                                             <td>{{ $ticket->createdBy->name }}</td>
                                             <td>{{ $ticket->subject }}</td>
-                                            <td>{{ $ticket->description }}</td>
+                                            <td>{{ $ticket->summary }}</td>
                                             <td>{{ $ticket->created_on }}</td>
                                             <td>{{ $ticket->deleted_at }}</td>
                                             <td>{{ $ticket->assignedTo->name }}</td>
