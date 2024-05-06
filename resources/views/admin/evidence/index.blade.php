@@ -104,7 +104,7 @@
                 </div>
 
                 @php
-                    $last24HoursTickets = \App\Models\Ticket::where('created_on', '>=', now()->subHours(24))->get();
+                    $last24HoursTickets = \App\Models\Ticket::where('deleted_at', '>=', now()->subHours(24))->get();
                 @endphp
 
                 <div id="last24HoursTickets" class="hide ticket-table">
@@ -116,18 +116,26 @@
                                     <th>Created By</th>
                                     <th>Subject</th>
                                     <th>Description</th>
+                                    <th>Created On</th>
+                                    <th>Closed On</th>
+                                    <th>Closed By</th>
                                     <!-- Add more table headers as needed -->
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($last24HoursTickets as $ticket)
-                                    <tr>
-                                        <td>{{ $ticket->id }}</td>
-                                        <td>{{ $ticket->createdBy->name }}</td>
-                                        <td>{{ $ticket->subject }}</td>
-                                        <td>{{ $ticket->description }}</td>
-                                        <!-- Add more table cells for other ticket attributes -->
-                                    </tr>
+                                    @if($ticket->status == "closed_successful" || $ticket->status == "closed_failed")
+                                        <tr>
+                                            <td>{{ $ticket->id }}</td>
+                                            <td>{{ $ticket->createdBy->name }}</td>
+                                            <td>{{ $ticket->subject }}</td>
+                                            <td>{{ $ticket->summary }}</td>
+                                            <td>{{ $ticket->created_on }}</td>
+                                            <td>{{ $ticket->deleted_at }}</td>
+                                            <td>{{ $ticket->assignedTo->name }}</td>
+                                            <!-- Add more table cells for other ticket attributes -->
+                                        </tr>
+                                    @endif
                                 @endforeach
                             </tbody>
                         </table>
@@ -138,7 +146,7 @@
 
                 <!-- Tickets for the last 7 days -->
                 @php
-                    $last7DaysTickets = \App\Models\Ticket::where('created_on', '>=', now()->subDays(7))->get();
+                    $last7DaysTickets = \App\Models\Ticket::where('deleted_at', '>=', now()->subDays(7))->get();
                 @endphp
 
                 <div id="last7DaysTickets" class="hide ticket-table">
@@ -150,18 +158,26 @@
                                     <th>Created By</th>
                                     <th>Subject</th>
                                     <th>Description</th>
+                                    <th>Created On</th>
+                                    <th>Closed On</th>
+                                    <th>Closed By</th>
                                     <!-- Add more table headers as needed -->
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($last7DaysTickets as $ticket)
-                                    <tr>
-                                        <td>{{ $ticket->id }}</td>
-                                        <td>{{ $ticket->createdBy->name }}</td>
-                                        <td>{{ $ticket->subject }}</td>
-                                        <td>{{ $ticket->description }}</td>
-                                        <!-- Add more table cells for other ticket attributes -->
-                                    </tr>
+                                    @if($ticket->status == "closed_successful" || $ticket->status == "closed_failed")
+                                        <tr>
+                                            <td>{{ $ticket->id }}</td>
+                                            <td>{{ $ticket->createdBy->name }}</td>
+                                            <td>{{ $ticket->subject }}</td>
+                                            <td>{{ $ticket->summary }}</td>
+                                            <td>{{ $ticket->created_on }}</td>
+                                            <td>{{ $ticket->deleted_at }}</td>
+                                            <td>{{ $ticket->assignedTo->name }}</td>
+                                            <!-- Add more table cells for other ticket attributes -->
+                                        </tr>
+                                    @endif
                                 @endforeach
                             </tbody>
                         </table>
@@ -172,7 +188,7 @@
 
                 <!-- Tickets for the last 30 days -->
                 @php
-                    $last30DaysTickets = \App\Models\Ticket::where('created_on', '>=', now()->subDays(30))->get();
+                    $last30DaysTickets = \App\Models\Ticket::where('deleted_at', '>=', now()->subDays(30))->get();
                 @endphp
 
                 <div id="last30DaysTickets" class="hide ticket-table">
@@ -184,18 +200,26 @@
                                     <th>Created By</th>
                                     <th>Subject</th>
                                     <th>Description</th>
+                                    <th>Created On</th>
+                                    <th>Closed On</th>
+                                    <th>Closed By</th>
                                     <!-- Add more table headers as needed -->
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($last30DaysTickets as $ticket)
-                                    <tr>
-                                        <td>{{ $ticket->id }}</td>
-                                        <td>{{ $ticket->createdBy->name }}</td>
-                                        <td>{{ $ticket->subject }}</td>
-                                        <td>{{ $ticket->description }}</td>
-                                        <!-- Add more table cells for other ticket attributes -->
-                                    </tr>
+                                    @if($ticket->status == "closed_successful" || $ticket->status == "closed_failed")
+                                        <tr>
+                                            <td>{{ $ticket->id }}</td>
+                                            <td>{{ $ticket->createdBy->name }}</td>
+                                            <td>{{ $ticket->subject }}</td>
+                                            <td>{{ $ticket->summary }}</td>
+                                            <td>{{ $ticket->created_on }}</td>
+                                            <td>{{ $ticket->deleted_at }}</td>
+                                            <td>{{ $ticket->assignedTo->name }}</td>
+                                            <!-- Add more table cells for other ticket attributes -->
+                                        </tr>
+                                    @endif
                                 @endforeach
                             </tbody>
                         </table>
