@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -37,7 +38,7 @@ class Ticket extends Model
     protected function casts(): array
     {
         return [
-            'custom_data' => 'array',
+            'custom_data' => 'array'
         ];
     }
 

@@ -1,5 +1,4 @@
 <x-app-layout>
-    @error()
     <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
         <div class="space-y-3">
             <dl class="flex flex-col sm:flex-row gap-1">

@@ -16,6 +16,6 @@ class SelectInput extends Component
 
     public function render()
     {
-        return view('components.inputs.radio');
+        return view('components.inputs.select');
     }
 }

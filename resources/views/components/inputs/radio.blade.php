@@ -9,7 +9,7 @@
                 class="flex p-3 w-full bg-white border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400"
             >
                 <input
-                    wire:model="{{ $model }}"
+                    wire:model="value"
                     type="radio"
                     name="{{ $name }}"
                     id="{{ $name }}_{{ $index }}"

@@ -2,7 +2,7 @@
     <form wire:submit.prevent="submitForm">
         @csrf
 
-        <livewire:inputs.text-input wire:model="subject" name="subject" label="Pomenujte problém" :required="true" />
+        <livewire:inputs.text-input wire:model="subject" name="subject" label="Pomenujte problém" :required="true"/>
 
 
         <div wire:ignore class="w-full mb-4">
@@ -27,38 +27,35 @@
                 @endif
             </select>
             @error('category_id')
-                @foreach($errors->get('category_id') as $message)
-                    <p class="text-sm text-red-600 mt-2" id="hs-validation-name-error-helper">{{ $message }}</p>
-                @endforeach
+            @foreach($errors->get('category_id') as $message)
+                <p class="text-sm text-red-600 mt-2" id="hs-validation-name-error-helper">{{ $message }}</p>
+            @endforeach
             @enderror
         </div>
 
-        <livewire:inputs.textarea wire:model="description" name="description" label="Detailne popíšte problém" :required="true" />
+        <livewire:inputs.textarea wire:model="description" name="description" label="Detailne popíšte problém"
+                                  :required="true"/>
 
-        @if($categoryFields)
-            <div class="py-3 flex items-center text-sm text-gray-800 before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:before:border-neutral-600 dark:after:border-neutral-600">Ďalšie údaje</div>
+        @if($categoryInputs)
+            <div
+                class="py-3 flex items-center text-sm text-gray-800 before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:before:border-neutral-600 dark:after:border-neutral-600">
+                Ďalšie údaje
+            </div>
             <div>
-                @foreach ($categoryFields as $field)
+                @foreach ($category->inputs as $input)
                     @php
-                        $fieldLabel = ucfirst(str_replace('_', ' ', $field['field_name']));
-                        $options = json_decode($field['options'], true) ?? [];
+                        $fieldLabel = ucfirst(str_replace('_', ' ', $input->field_name));
+                        $componentName = 'inputs.' . $input->field_type . '-input';
                     @endphp
 
-                    @if ($field['field_type'] === 'text')
-                        <livewire:inputs.text-input wire:model="dynamicInputs.{{ $field['field_name'] }}" :name="$field['field_name']" :label="$fieldLabel" :required="$field['is_required']" />
-                    @elseif ($field['field_type'] === 'textarea')
-                        <livewire:inputs.textarea wire:model="dynamicInputs.{{ $field['field_name'] }}" :name="$field['field_name']" :label="$fieldLabel" :required="$field['is_required']" />
-                    @elseif ($field['field_type'] === 'select')
-                        <livewire:inputs.select-input wire:model="dynamicInputs.{{ $field['field_name'] }}" :name="$field['field_name']" :label="$fieldLabel" :options="$options" :required="$field['is_required']" />
-                    @elseif ($field['field_type'] === 'checkbox')
-                        <livewire:inputs.checkbox-input wire:model="dynamicInputs.{{ $field['field_name'] }}" :name="$field['field_name']" :label="$fieldLabel" :options="$options" />
-                    @elseif ($field['field_type'] === 'radio')
-                        <livewire:inputs.radio-input wire:model="dynamicInputs.{{ $field['field_name'] }}" :name="$field['field_name']" :label="$fieldLabel" :options="$options" :required="$field['is_required']" />
-                    @endif
+                    <livewire:dynamic-component :is="$componentName" wire:model="dynamicInputs.{{ $input->field_name }}"
+                                                                  :name="$input->field_name" :label="$fieldLabel"
+                                                                  :options="$input->options" :required="$input->is_required"/>
                 @endforeach
             </div>
         @endif
-        <button type="submit" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+        <button type="submit"
+                class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
             Vytvoriť ticket
         </button>
     </form>

@@ -20,6 +20,14 @@ class CategoryInput extends Model
         'is_required',
     ];
 
+    protected function casts()
+    {
+        return [
+            'options' => 'array', // Cast options to an array
+            'is_required' => 'boolean', // Cast is_required to a boolean
+        ];
+    }
+
     /**
      * Get the category associated with the input.
      */

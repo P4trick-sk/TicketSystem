@@ -3,3 +3,4 @@
 // TODO: Vytvoriť seedery
 // FIXME: Pri vytvárení ticketu aktuálne nemá užívateľ možnosť pridať prílohy, rozhodnúť sa, či ich pridáme priamo do ticketu alebo ako ďalšiu správu, teoreticky urobiť celkový zoznam príloh
 // TODO: Prerobyť každý input component na dynamický komponent, tie potom spojiť s form builderom
+// TODO: nastaviť defaultny čas pre vytvorenie v db
