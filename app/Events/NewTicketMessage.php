@@ -2,7 +2,9 @@
 
 namespace App\Events;
 
+use App\Models\Ticket;
 use App\Models\TicketMessage;
+use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -16,13 +18,17 @@ class NewTicketMessage implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $message;
+    public $ticket;
+    public $user;
 
     /**
      * Create a new event instance.
      */
-    public function __construct(TicketMessage $message)
+    public function __construct(TicketMessage $message, Ticket $ticket, User $user)
     {
         $this->message = $message;
+        $this->ticket = $ticket;
+        $this->user = $user;
     }
 
     /**
@@ -33,26 +39,31 @@ class NewTicketMessage implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('ticket.' . $this->message->ticket_id),
+            new PrivateChannel('ticket.' . $this->ticket->id),
         ];
     }
 
     /**
-     * Get the data to broadcast.
+     * The data to broadcast with the event.
      *
      * @return array
      */
-    public function broadcastWith()
+    public function broadcastWith(): array
     {
         return [
-            'id' => $this->message->id,
-            'message' => $this->message->message,
-            'created_at' => $this->message->created_at,
-            'user' => [
-                'id' => $this->message->user->id,
-                'name' => $this->message->user->name,
+            'ticket' => [
+                'id' => $this->ticket->id,
             ],
-            'attachments' => $this->message->attachments
+            'message' => [
+                'id' => $this->message->id,
+                'message' => $this->message->message,
+                'created_at' => $this->message->created_at,
+                'attachments' => $this->message->attachments,
+            ],
+            'user' => [
+                'id' => $this->user->id,
+                'name' => $this->user->name,
+            ],
         ];
     }
 }

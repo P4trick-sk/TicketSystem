@@ -18,14 +18,18 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('ticket.{ticketId}', function ($user, $ticketId) {
-    // Check if user is authorized to listen to this ticket's channel
-    // You might want to check if the user is the ticket creator or an assignee
-    return \App\Models\Ticket::where('id', $ticketId)
-        ->where(function($query) use ($user) {
-            $query->where('created_by', $user->id)
-                  ->orWhereHas('assignees', function($q) use ($user) {
-                      $q->where('users.id', $user->id);
-                  });
-        })
-        ->exists();
+    $ticket = App\Models\Ticket::find($ticketId);
+
+    // Allow if user is the creator of the ticket
+    if ($user->id === $ticket->created_by) {
+        return true;
+    }
+
+    // Allow if user is assigned to the ticket
+    if ($ticket->assignees->contains($user->id)) {
+        return true;
+    }
+
+    // Allow if user is an admin or has specific permission
+    return $user->hasRole('admin') || $user->can('view tickets');
 });
