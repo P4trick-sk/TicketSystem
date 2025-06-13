@@ -35,57 +35,7 @@ class TicketController extends Controller
     ]
     public function store(Request $request)
     {
-        $request->validate([
-            'subject' => ['required', 'max:255'],
-            'category_id' => ['required', 'integer', 'exists:categories,id'],
-            'description' => ['required'],
-        ]);
 
-        $fields = Category::find($request->category_id)->inputs;
-        $data = [];
-        $rules = [];
-
-        foreach ($fields as $field) {
-            $data[$field] = $request->get($field);
-            $rule = [];
-
-            if ($field->is_required) {
-                $rule[] = 'required';
-            }
-
-            // Add type-specific rules
-            switch ($field->field_type) {
-                case 'textarea':
-                case 'text':
-                    $rule[] = 'string';
-                    break;
-                case 'select':
-                case 'radio':
-                    $rule[] = 'in:' . implode(',', json_decode($field->options, true));
-                    break;
-                case 'checkbox':
-                    $rule[] = 'array';
-                    break;
-                default:
-                    $rule[] = 'nullable'; // Allow other types to be empty
-                    break;
-            }
-
-            // Assign the rule to the field name
-            $rules[$field->field_name] = implode('|', $rule);
-        }
-
-        $request->validate($rules);
-
-        $ticket = Ticket::create([
-            'user_id' => auth()->id(),
-            "subject" => $request->subject,
-            "category_id" => $request->category_id,
-            "description" => $request->description,
-            "custom_data" => $data,
-        ]);
-
-        return to_route('tickets.show', $ticket->id);
     }
 
     /**

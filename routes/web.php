@@ -31,6 +31,6 @@ Route::middleware(['auth:sanctum', 'verified'])
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::post('/tickets/message', [TicketMessageController::class, 'store'])->name('tickets.message');
+    Route::post('/tickets/{ticket}/message', [TicketMessageController::class, 'store'])->name('tickets.message');
     Route::delete('/tickets/{ticketMessage}', [TicketMessageController::class, 'destroy'])->name('tickets.message.destroy');
 });
